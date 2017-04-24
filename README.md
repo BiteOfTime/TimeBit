@@ -20,6 +20,10 @@ The following functionality will be implemented:
 - [ ] User can set pomodoro work schedule. This option will set the phone in DND mode. (optional)
 - [ ] User can end an already running activity by detecting shake event. (optional)
 
+Here's a walkthrough of the wireframe:
+
+![Animated Screenshot](/TimeTrack.gif?raw=true "Animated Screenshot")
+
 
 Copyright [2017] [Krishna Alex, Namrata Mehta and Anisha Jain]. All rights reserved.
 
