@@ -6,6 +6,9 @@
 build/
 DerivedData/
 
+## Parse secret file
+TimeBit/Secrets.swift
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
