@@ -1,0 +1,6 @@
+framework module Pods_TimeBitUITests {
+  umbrella header "Pods-TimeBitUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
