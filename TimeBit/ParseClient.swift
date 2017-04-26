@@ -10,14 +10,16 @@ import UIKit
 import Parse
 
 class ParseClient: NSObject {
+
+   // let secret: Secret!
     
     override init() {
         super.init()
         
         Parse.initialize(with: ParseClientConfiguration(block: { (configuration: ParseMutableClientConfiguration) in
-            configuration.applicationId = ""
-            configuration.clientKey = ""
-            configuration.server = ""
+            configuration.applicationId = Secrets.getApplicationId()
+            configuration.clientKey = Secrets.getClientKey()
+            configuration.server = Secrets.getServer()
         }))
     }
     
