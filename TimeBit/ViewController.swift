@@ -31,44 +31,29 @@ class ViewController: UIViewController {
         let acivityName = newActivityText.text
         let activityDesc = newActivityDesc.text
         
-        // Create Parse object PFObject
-        let activityObject = PFObject(className: "ActivityTest")
-        
-        // Add relevant fields to the object
-        activityObject["activity_name"] = acivityName
-        activityObject["activity_desc"] = activityDesc
-        
-        activityObject.saveInBackground { (success: Bool, error: Error?) in
-            if (success) {
-                print("Saved activity")
-            } else {
-                print(" There was a problem, check error.description", error?.localizedDescription as Any)
+        if !(acivityName?.isEmpty)! {
+            let params = ["activityName": acivityName!, "activityDesc": activityDesc!] as [String : Any]
+            ParseClient.sharedInstance.saveNewActivity(params: params as NSDictionary?) { (PFObject, Error) -> () in
+                if Error != nil {
+                    NSLog("Error saving to Parse")
+                } else {
+                    NSLog("Saved activity to Parse")
+                }
             }
-            
         }
-        newActivityText.text = ""
-        newActivityDesc.text = ""
     }
     
 
     @IBAction func onGetActivityButton(_ sender: Any) {
-        var query = PFQuery(className:"ActivityTest")
-        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
-            if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) scores.")
-                // Do something with the found objects
-                if let objects = objects {
-                    for object in objects {
-                        print(object)
-                    }
-                }
+        ParseClient.sharedInstance.getActivities() { (activities: [Activity]?, error: Error?) -> Void in
+            if error != nil {
+                NSLog("Error getting activities from Parse")
             } else {
-                // Log details of the failure
-                print("Error: \(error!) \(error!.localizedDescription)")
+                self.activities = activities!
+                NSLog("Items from Parse")
             }
-            
         }
+        
     }
 
 }
