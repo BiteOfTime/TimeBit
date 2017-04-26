@@ -10,8 +10,6 @@ import UIKit
 import Parse
 
 class ParseClient: NSObject {
-
-   // let secret: Secret!
     
     override init() {
         super.init()
@@ -30,9 +28,14 @@ class ParseClient: NSObject {
         return Static.instance
     }
     
-//    func getCurrentUser() -> PFUser? {
-//        return PFUser.currentUser()
-//    }
+    func getCurrentUser() -> String? {
+        if let currentUser = User.currentUser {
+            return currentUser
+        } else {
+            User.currentUser = User.userId // set the current user, saves in NSDefaults to persist user
+            return User.userId
+        }
+    }
     
     
     func saveNewActivity(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
@@ -40,9 +43,10 @@ class ParseClient: NSObject {
         let activityEntry = PFObject(className: "ActivityTest")
         
         print("params")
-        print(params)
+        print(params as Any)
         
         // Add relevant fields to the object
+        activityEntry["activity_id"] = getCurrentUser()
         activityEntry["activity_name"] = params!["activityName"] as! String
         activityEntry["activity_desc"] = params!["activityDesc"] as! String
         
@@ -59,17 +63,17 @@ class ParseClient: NSObject {
     }
     
     func getActivities(completion: @escaping (_ activities: [Activity]?, _ error: Error?) -> ()) {
-        var activityQuery = PFQuery(className: "ActivityTest")
-        //activityQuery.includeKey("User")
+        let activityQuery = PFQuery(className: "ActivityTest")
+        activityQuery.whereKey("activity_id", equalTo: getCurrentUser()!)
         
         activityQuery.findObjectsInBackground { (objects, error) -> Void in
             if error == nil {
-                let PFActivities = objects as! [PFObject]
-                let activities = Activity.ActivitiesWithArray(dictionaries: PFActivities)
-                print(objects)
+                let PFActivities = objects
+                let activities = Activity.ActivitiesWithArray(dictionaries: PFActivities!)
+                print(objects as Any)
                 completion(activities, nil)
             } else {
-                NSLog("error: \(error)")
+                NSLog("error: \(String(describing: error))")
                 completion(nil, error)
             }
         }

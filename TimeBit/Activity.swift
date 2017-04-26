@@ -11,20 +11,20 @@ import Parse
 
 class Activity: NSObject {
     
-//    var activity_id: Int?
+    var activity_id: String?
     var activity_name: String?
     var activity_desc: String?
 
     init(dictionary: NSDictionary) {
- //       activity_id = dictionary["activity_id"] as? Int
+        activity_id = dictionary["activity_id"] as? String
         activity_name = dictionary["activity_name"] as? String
         activity_desc = dictionary["activity_desc"] as? String
     }
     
     init(pfobj: PFObject) {
- //       self.activity_id = pfobj["activity_id"] as Int
-        self.activity_name = pfobj["activity_name"] as! String
-        self.activity_desc = pfobj["activity_desc"] as! String
+        self.activity_id = pfobj["activity_id"] as? String
+        self.activity_name = pfobj["activity_name"] as? String
+        self.activity_desc = pfobj["activity_desc"] as? String
     }
     
     class func ActivitiesWithArray(dictionaries: [PFObject]) -> [Activity] {
