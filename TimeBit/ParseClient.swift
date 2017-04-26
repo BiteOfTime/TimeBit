@@ -46,7 +46,7 @@ class ParseClient: NSObject {
         print(params as Any)
         
         // Add relevant fields to the object
-        activityEntry["activity_id"] = getCurrentUser()
+        activityEntry["user_id"] = getCurrentUser()
         activityEntry["activity_name"] = params!["activityName"] as! String
         activityEntry["activity_desc"] = params!["activityDesc"] as! String
         
@@ -64,7 +64,7 @@ class ParseClient: NSObject {
     
     func getActivities(completion: @escaping (_ activities: [Activity]?, _ error: Error?) -> ()) {
         let activityQuery = PFQuery(className: "ActivityTest")
-        activityQuery.whereKey("activity_id", equalTo: getCurrentUser()!)
+        activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
         
         activityQuery.findObjectsInBackground { (objects, error) -> Void in
             if error == nil {
