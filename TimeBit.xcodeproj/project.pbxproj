@@ -18,6 +18,17 @@
 		6B49522D1EAFFEAF006645D5 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B49522C1EAFFEAF006645D5 /* ParseClient.swift */; };
 		6B49522F1EB129EA006645D5 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B49522E1EB129EA006645D5 /* Secrets.swift */; };
 		6B4952311EB13AC0006645D5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4952301EB13AC0006645D5 /* User.swift */; };
+		6B4952331EB3DD51006645D5 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4952321EB3DD51006645D5 /* Goal.swift */; };
+		6B4952351EB3E876006645D5 /* GoalSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4952341EB3E876006645D5 /* GoalSettingViewController.swift */; };
+		6B4952371EB3E90E006645D5 /* GoalSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952361EB3E90E006645D5 /* GoalSettingViewController.xib */; };
+		6B49523A1EB5146C006645D5 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4952381EB5146C006645D5 /* DemoViewController.swift */; };
+		6B49523B1EB5146C006645D5 /* DemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952391EB5146C006645D5 /* DemoViewController.xib */; };
+		6B49523E1EB543A7006645D5 /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B49523C1EB543A7006645D5 /* ReportViewController.swift */; };
+		6B49523F1EB543A7006645D5 /* ReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B49523D1EB543A7006645D5 /* ReportViewController.xib */; };
+		6B4952421EB543C7006645D5 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4952401EB543C7006645D5 /* NotificationViewController.swift */; };
+		6B4952431EB543C7006645D5 /* NotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952411EB543C7006645D5 /* NotificationViewController.xib */; };
+		6B4952461EB5442C006645D5 /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4952441EB5442C006645D5 /* GoalsViewController.swift */; };
+		6B4952471EB5442C006645D5 /* GoalsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952451EB5442C006645D5 /* GoalsViewController.xib */; };
 		6E4B3CE5A4C5B40A4B9F60DF /* Pods_TimeBitUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E249913954E15995F02A01 /* Pods_TimeBitUITests.framework */; };
 		A5764ED13E954BFBB12497EF /* Pods_TimeBitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78EB96CA347EF1C14436DA37 /* Pods_TimeBitTests.framework */; };
 		F8A2C6A61EB5A62E005CC925 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */; };
@@ -68,6 +79,17 @@
 		6B49522C1EAFFEAF006645D5 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		6B49522E1EB129EA006645D5 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		6B4952301EB13AC0006645D5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6B4952321EB3DD51006645D5 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		6B4952341EB3E876006645D5 /* GoalSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalSettingViewController.swift; sourceTree = "<group>"; };
+		6B4952361EB3E90E006645D5 /* GoalSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalSettingViewController.xib; sourceTree = "<group>"; };
+		6B4952381EB5146C006645D5 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
+		6B4952391EB5146C006645D5 /* DemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoViewController.xib; sourceTree = "<group>"; };
+		6B49523C1EB543A7006645D5 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		6B49523D1EB543A7006645D5 /* ReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReportViewController.xib; sourceTree = "<group>"; };
+		6B4952401EB543C7006645D5 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		6B4952411EB543C7006645D5 /* NotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationViewController.xib; sourceTree = "<group>"; };
+		6B4952441EB5442C006645D5 /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
+		6B4952451EB5442C006645D5 /* GoalsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalsViewController.xib; sourceTree = "<group>"; };
 		769BF63BC7610A30DC7BEE6D /* Pods-TimeBitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBitTests/Pods-TimeBitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		78EB96CA347EF1C14436DA37 /* Pods_TimeBitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeBitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B08A7E26325A76113F4F7572 /* Pods-TimeBit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBit/Pods-TimeBit.debug.xcconfig"; sourceTree = "<group>"; };
@@ -150,8 +172,8 @@
 				F8D731101EB3C8CB0080039E /* Views */,
 				F8D731061EB3AEF90080039E /* Nib */,
 				6B49522B1EAFF4F1006645D5 /* API */,
-				6B4952281EAFDB23006645D5 /* View Controllers */,
 				6B4952271EAFDB1A006645D5 /* Model */,
+				6B4952281EAFDB23006645D5 /* View Controllers */,
 				6B4951F91EAE5F9B006645D5 /* AppDelegate.swift */,
 				F8A2C6A71EB5B695005CC925 /* Main.storyboard */,
 				6B4952001EAE5F9B006645D5 /* Assets.xcassets */,
@@ -185,6 +207,7 @@
 				6B49522E1EB129EA006645D5 /* Secrets.swift */,
 				6B4952291EAFDB4D006645D5 /* Activity.swift */,
 				6B4952301EB13AC0006645D5 /* User.swift */,
+				6B4952321EB3DD51006645D5 /* Goal.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -194,6 +217,16 @@
 			children = (
 				6B4951FB1EAE5F9B006645D5 /* ViewController.swift */,
 				F8D731091EB3C5290080039E /* HomeViewController.swift */,
+				6B4952341EB3E876006645D5 /* GoalSettingViewController.swift */,
+				6B4952361EB3E90E006645D5 /* GoalSettingViewController.xib */,
+				6B4952381EB5146C006645D5 /* DemoViewController.swift */,
+				6B4952391EB5146C006645D5 /* DemoViewController.xib */,
+				6B49523C1EB543A7006645D5 /* ReportViewController.swift */,
+				6B49523D1EB543A7006645D5 /* ReportViewController.xib */,
+				6B4952401EB543C7006645D5 /* NotificationViewController.swift */,
+				6B4952411EB543C7006645D5 /* NotificationViewController.xib */,
+				6B4952441EB5442C006645D5 /* GoalsViewController.swift */,
+				6B4952451EB5442C006645D5 /* GoalsViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -357,6 +390,12 @@
 				F8A2C6A91EB5B695005CC925 /* Main.storyboard in Resources */,
 				F8D731161EB3D80F0080039E /* ActivityCell.xib in Resources */,
 				F8A2C6A61EB5A62E005CC925 /* HomeViewController.xib in Resources */,
+				6B49523F1EB543A7006645D5 /* ReportViewController.xib in Resources */,
+				6B4952371EB3E90E006645D5 /* GoalSettingViewController.xib in Resources */,
+				6B4951FF1EAE5F9B006645D5 /* Main.storyboard in Resources */,
+				6B4952471EB5442C006645D5 /* GoalsViewController.xib in Resources */,
+				6B49523B1EB5146C006645D5 /* DemoViewController.xib in Resources */,
+				6B4952431EB543C7006645D5 /* NotificationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,7 +559,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B49522A1EAFDB4D006645D5 /* Activity.swift in Sources */,
+				6B4952421EB543C7006645D5 /* NotificationViewController.swift in Sources */,
 				6B49522F1EB129EA006645D5 /* Secrets.swift in Sources */,
+				6B4952351EB3E876006645D5 /* GoalSettingViewController.swift in Sources */,
+				6B49523A1EB5146C006645D5 /* DemoViewController.swift in Sources */,
+				6B4952461EB5442C006645D5 /* GoalsViewController.swift in Sources */,
 				6B4952311EB13AC0006645D5 /* User.swift in Sources */,
 				6B4951FC1EAE5F9B006645D5 /* ViewController.swift in Sources */,
 				F8D731141EB3D6E70080039E /* ActivityCell.swift in Sources */,
@@ -528,6 +571,8 @@
 				F8D7310A1EB3C5290080039E /* HomeViewController.swift in Sources */,
 				F8D731121EB3C9120080039E /* TimerView.swift in Sources */,
 				6B4951FA1EAE5F9B006645D5 /* AppDelegate.swift in Sources */,
+				6B49523E1EB543A7006645D5 /* ReportViewController.swift in Sources */,
+				6B4952331EB3DD51006645D5 /* Goal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

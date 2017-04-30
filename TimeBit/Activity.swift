@@ -16,7 +16,7 @@ class Activity: NSObject {
     var activityDescription: String?
     var activityImage: UIImage?
     var activityImageFile: PFFile?
-    
+
     init(dictionary: NSDictionary) {
         userId = dictionary["user_id"] as? String
         activityName = dictionary["activity_name"] as? String
