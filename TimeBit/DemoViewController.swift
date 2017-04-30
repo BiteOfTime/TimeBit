@@ -15,6 +15,8 @@ class DemoViewController: UIViewController {
     
     var activity: Activity!
     var activities: [Activity]!
+    var goal: Goal!
+    var goals: [Goal]!
 
 
     override func viewDidLoad() {
@@ -76,10 +78,22 @@ class DemoViewController: UIViewController {
         //        gvc.activity = activity;
         gvc.activityName = "walk"
         gvc.goalSetting = "Update"
-        navigationController?.pushViewController(gvc, animated: true);
+        navigationController?.pushViewController(gvc, animated: true)
+    }
+    
+    @IBAction func onGetGoalButton(_ sender: Any) {
+        ParseClient.sharedInstance.getGoals() { (goals: [Goal]?, error: Error?) -> Void in
+            if error != nil {
+                NSLog("Error getting goals from Parse")
+            } else {
+                self.goals = goals!
+                NSLog("Items from Parse")
+            }
+        }
         
         
     }
+    
 
 
 }

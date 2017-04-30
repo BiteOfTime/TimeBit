@@ -106,7 +106,25 @@ class ParseClient: NSObject {
         }
     }
     
-    func getActivityGoals(activityName: String?, completion: @escaping (_ goals: [Goal]?, _ error: Error?) -> ()) {
+    func getGoals(completion: @escaping (_ goals: [Goal]?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "GoalTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        //goalQuery.whereKey("activity_name", equalTo: activityName!)
+        
+        goalQuery.findObjectsInBackground { (objects, error) -> Void in
+            if error == nil {
+                let PFGoals = objects
+                let goals = Goal.GoalsWithArray(dictionaries: PFGoals!)
+                print(objects as Any)
+                completion(goals, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getActivityGoals(activityName: String?, completion: @escaping (_ goal: [Goal]?, _ error: Error?) -> ()) {
         let goalQuery = PFQuery(className: "GoalTest")
         goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
         goalQuery.whereKey("activity_name", equalTo: activityName!)
@@ -123,6 +141,29 @@ class ParseClient: NSObject {
             }
         }
     }
+    
+    func updateGoal(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "GoalTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        goalQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
+        
+        goalQuery.getFirstObjectInBackground {(object, error) -> Void in
+            if error != nil {
+                print(error)
+            } else {
+                if let object = object {
+                    object["limit"] = params!["limit"] as! String
+                    object["hours"] = params!["hours"] as! String
+                    object["mins"] = params!["mins"] as! String
+                    object["frequency"] = params!["frequency"] as! String
+                }
+                object!.saveInBackground()
+            }
+        }
+    }
+
+    
+    
     
 
 }
