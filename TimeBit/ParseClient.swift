@@ -30,13 +30,42 @@ class ParseClient: NSObject {
     
     func getCurrentUser() -> String? {
         if let currentUser = User.currentUser {
+            print("Userid", User.userId!)
             return currentUser
         } else {
             User.currentUser = User.userId // set the current user, saves in NSDefaults to persist user
+            print("Userid", User.userId!)
             return User.userId
         }
     }
     
+    func saveMultipleActivities(activities: [Activity?], completion: @escaping (_ parseObj: [PFObject]?, _ error: Error?) -> ()) {
+        var activityObjects: [PFObject] = []
+        for activity in activities {
+            let activityEntry = PFObject(className: "ActivityTest")
+            print("activity", activity!)
+            
+            let imageData = UIImagePNGRepresentation(activity!.activityImage!)
+            
+            // Add relevant fields to the object
+            activityEntry["user_id"] = getCurrentUser()
+            activityEntry["activity_name"] = activity!.activityName!
+            activityEntry["activity_desc"] = activity!.activityDescription!
+            //activityEntry["activity_image"] = activity!.activityImage!
+            activityEntry["activity_image"] = PFFile(name: "\(activity!.activityName!).png", data: imageData!)
+
+
+            activityObjects.append(activityEntry)
+        }
+        do {
+            try PFObject.saveAll(activityObjects)
+        } catch let error {
+            print("There was a problem, check error.description", error.localizedDescription as Any)
+            completion(nil, error)
+            return
+        }
+        completion(activityObjects, nil)
+    }
     
     func saveNewActivity(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject
@@ -68,17 +97,102 @@ class ParseClient: NSObject {
         
         activityQuery.findObjectsInBackground { (objects, error) -> Void in
             if error == nil {
-                let PFActivities = objects
+                var PFActivities = objects
+//                for object in objects! {
+//                    print(object.objectId!)
+//                }
                 let activities = Activity.ActivitiesWithArray(dictionaries: PFActivities!)
-                print(objects as Any)
+                //print(objects as Any)
                 completion(activities, nil)
             } else {
                 NSLog("error: \(String(describing: error))")
                 completion(nil, error)
             }
         }
+
+    }
+    
+    func saveNewGoal(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        // Create Parse object PFObject
+        let goalEntry = PFObject(className: "GoalTest")
         
+        print("params")
+        print(params as Any)
         
+        // Add relevant fields to the object
+        goalEntry["user_id"] = getCurrentUser()
+        goalEntry["activity_name"] = params!["activityName"] as! String
+        goalEntry["limit"] = params!["limit"] as! String
+        goalEntry["frequency"] = params!["frequency"] as! String
+        goalEntry["hours"] = params!["hours"] as! String
+        goalEntry["mins"] = params!["mins"] as! String
+        
+        // Save object (following function will save the object in Parse asynchronously)
+        goalEntry.saveInBackground { (success: Bool, error: Error?) in
+            if success {
+                print("Inside completion", goalEntry)
+                completion(goalEntry, nil)
+            } else {
+                print("There was a problem, check error.description", error?.localizedDescription as Any)
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getGoals(completion: @escaping (_ goals: [Goal]?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "GoalTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        //goalQuery.whereKey("activity_name", equalTo: activityName!)
+        
+        goalQuery.findObjectsInBackground { (objects, error) -> Void in
+            if error == nil {
+                let PFGoals = objects
+                let goals = Goal.GoalsWithArray(dictionaries: PFGoals!)
+                print(objects as Any)
+                completion(goals, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getActivityGoals(activityName: String?, completion: @escaping (_ goal: [Goal]?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "GoalTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        goalQuery.whereKey("activity_name", equalTo: activityName!)
+        
+        goalQuery.findObjectsInBackground { (objects, error) -> Void in
+            if error == nil {
+                let PFGoals = objects
+                let goals = Goal.GoalsWithArray(dictionaries: PFGoals!)
+                print(objects as Any)
+                completion(goals, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func updateGoal(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "GoalTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        goalQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
+        
+        goalQuery.getFirstObjectInBackground {(object, error) -> Void in
+            if error != nil {
+                print(error)
+            } else {
+                if let object = object {
+                    object["limit"] = params!["limit"] as! String
+                    object["hours"] = params!["hours"] as! String
+                    object["mins"] = params!["mins"] as! String
+                    object["frequency"] = params!["frequency"] as! String
+                }
+                object!.saveInBackground()
+            }
+        }
     }
     
     
@@ -127,6 +241,5 @@ class ParseClient: NSObject {
             }
         }
     }
-    
 
 }

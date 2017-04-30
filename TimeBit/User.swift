@@ -9,7 +9,7 @@
 import UIKit
 
 class User: NSObject {
-    static var userId = UIDevice.current.identifierForVendor!.uuidString
+    static var userId: String? = UIDevice.current.identifierForVendor!.uuidString
     static var _currentUser: String?
     
     class var currentUser: String? {
