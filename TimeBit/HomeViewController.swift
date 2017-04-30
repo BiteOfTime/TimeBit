@@ -73,12 +73,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //                Activity("Eat", "Eat", convertToPFFile(#imageLiteral(resourceName: "Eat"),activityName: "Eat")),
 //                Activity("Sleep", "Sleep", convertToPFFile(#imageLiteral(resourceName: "Sleep"),activityName: "Sleep"))]
 //    }
-//    
-//    func convertToPFFile(_ uiImage:UIImage, activityName: String) -> PFFile? {
-//        let imageData = UIImagePNGRepresentation(uiImage)
-//        let image = PFFile(name: "\(activityName).png", data: imageData!)
-//        return image
-//    }
+    
+    func convertToPFFile(_ uiImage:UIImage, activityName: String) -> PFFile? {
+        let imageData = UIImagePNGRepresentation(uiImage)
+        let image = PFFile(name: "\(activityName).png", data: imageData!)
+        return image
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return activities.count
@@ -95,6 +95,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //cell.activityImageView.image = activities[indexPath.row].activityImage
         cell.activityNameLabel.text = activities[indexPath.row].activityName
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
+        detailActivityViewController.activity_name = activities[indexPath.row].activityName!
+        navigationController?.pushViewController(detailActivityViewController, animated: true);
     }
 
     func timerView(onStopTimer timerView: TimerView, timeElapsed: UInt64) {

@@ -15,8 +15,8 @@ class DetailActivityViewController: UIViewController {
     var detailActivity1Cell: DetailActivity1Cell!
     var detailActivity4Cell: DetailActivity4Cell!
     // Expecting this value from the calling screen.
-    //var activity_name: String!
-    var activity_name: String = "Dance"
+    var activity_name: String!
+    //var activity_name: String = "Dance"
     var activityToday: [ActivityLog]!
     
     override func viewDidLoad() {
@@ -94,20 +94,16 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
         
         if indexPath.section == 1 {
             print("Set a goal")
-            /*
             let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
             gvc.activityName = activity_name
-            gvc.goalSetting = "Set"
+            gvc.goalSetting = "Save"
             navigationController?.pushViewController(gvc, animated: true);
-            */
         } else if indexPath.section == 2 {
-            print("Update a goal")
-            /*
+            print("Share with friends")
             let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
             gvc.activityName = activity_name
             gvc.goalSetting = "Update"
             navigationController?.pushViewController(gvc, animated: true);
-             */
         }
         
         tableView.reloadData()

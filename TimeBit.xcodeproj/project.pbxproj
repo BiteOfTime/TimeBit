@@ -72,7 +72,6 @@
 		6696D97FCBC1A0FF722CE363 /* Pods-TimeBit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBit/Pods-TimeBit.release.xcconfig"; sourceTree = "<group>"; };
 		6B4951F61EAE5F9B006645D5 /* TimeBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B4951F91EAE5F9B006645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6B4951FB1EAE5F9B006645D5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6B4952001EAE5F9B006645D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B4952031EAE5F9B006645D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B4952051EAE5F9B006645D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,8 +88,6 @@
 		6B4952321EB3DD51006645D5 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		6B4952341EB3E876006645D5 /* GoalSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalSettingViewController.swift; sourceTree = "<group>"; };
 		6B4952361EB3E90E006645D5 /* GoalSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalSettingViewController.xib; sourceTree = "<group>"; };
-		6B4952381EB5146C006645D5 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
-		6B4952391EB5146C006645D5 /* DemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DemoViewController.xib; sourceTree = "<group>"; };
 		6B49523C1EB543A7006645D5 /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		6B49523D1EB543A7006645D5 /* ReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReportViewController.xib; sourceTree = "<group>"; };
 		6B4952401EB543C7006645D5 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -233,14 +230,11 @@
 		6B4952281EAFDB23006645D5 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6B4951FB1EAE5F9B006645D5 /* ViewController.swift */,
 				9303B90B1EB57B3C0086F0FB /* DetailActivityViewController.swift */,
 				9303B9151EB5BA8D0086F0FB /* DetailActivityViewController.xib */,
 				F8D731091EB3C5290080039E /* HomeViewController.swift */,
 				6B4952341EB3E876006645D5 /* GoalSettingViewController.swift */,
 				6B4952361EB3E90E006645D5 /* GoalSettingViewController.xib */,
-				6B4952381EB5146C006645D5 /* DemoViewController.swift */,
-				6B4952391EB5146C006645D5 /* DemoViewController.xib */,
 				6B49523C1EB543A7006645D5 /* ReportViewController.swift */,
 				6B49523D1EB543A7006645D5 /* ReportViewController.xib */,
 				6B4952401EB543C7006645D5 /* NotificationViewController.swift */,
