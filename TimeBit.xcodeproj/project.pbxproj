@@ -10,7 +10,6 @@
 		35D2516808207E8A1B9F8A98 /* Pods_TimeBit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 156B77C2EC8E40D45C57B407 /* Pods_TimeBit.framework */; };
 		6B4951FA1EAE5F9B006645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4951F91EAE5F9B006645D5 /* AppDelegate.swift */; };
 		6B4951FC1EAE5F9B006645D5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4951FB1EAE5F9B006645D5 /* ViewController.swift */; };
-		6B4951FF1EAE5F9B006645D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4951FD1EAE5F9B006645D5 /* Main.storyboard */; };
 		6B4952011EAE5F9B006645D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952001EAE5F9B006645D5 /* Assets.xcassets */; };
 		6B4952041EAE5F9B006645D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952021EAE5F9B006645D5 /* LaunchScreen.storyboard */; };
 		6B49520F1EAE5F9B006645D5 /* TimeBitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B49520E1EAE5F9B006645D5 /* TimeBitTests.swift */; };
@@ -21,6 +20,8 @@
 		6B4952311EB13AC0006645D5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4952301EB13AC0006645D5 /* User.swift */; };
 		6E4B3CE5A4C5B40A4B9F60DF /* Pods_TimeBitUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E249913954E15995F02A01 /* Pods_TimeBitUITests.framework */; };
 		A5764ED13E954BFBB12497EF /* Pods_TimeBitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78EB96CA347EF1C14436DA37 /* Pods_TimeBitTests.framework */; };
+		F8A2C6A61EB5A62E005CC925 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */; };
+		F8A2C6A91EB5B695005CC925 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8A2C6A71EB5B695005CC925 /* Main.storyboard */; };
 		F8D7310A1EB3C5290080039E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731091EB3C5290080039E /* HomeViewController.swift */; };
 		F8D7310F1EB3C7530080039E /* TimerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8D7310E1EB3C7530080039E /* TimerView.xib */; };
 		F8D731121EB3C9120080039E /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731111EB3C9120080039E /* TimerView.swift */; };
@@ -54,7 +55,6 @@
 		6B4951F61EAE5F9B006645D5 /* TimeBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B4951F91EAE5F9B006645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B4951FB1EAE5F9B006645D5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6B4951FE1EAE5F9B006645D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6B4952001EAE5F9B006645D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B4952031EAE5F9B006645D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B4952051EAE5F9B006645D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +72,8 @@
 		78EB96CA347EF1C14436DA37 /* Pods_TimeBitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeBitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B08A7E26325A76113F4F7572 /* Pods-TimeBit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBit/Pods-TimeBit.debug.xcconfig"; sourceTree = "<group>"; };
 		C9B5FD66C06BBA440B24E233 /* Pods-TimeBitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBitUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBitUITests/Pods-TimeBitUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		F8A2C6A81EB5B695005CC925 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8D731091EB3C5290080039E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F8D7310E1EB3C7530080039E /* TimerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimerView.xib; sourceTree = "<group>"; };
 		F8D731111EB3C9120080039E /* TimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
@@ -151,7 +153,7 @@
 				6B4952281EAFDB23006645D5 /* View Controllers */,
 				6B4952271EAFDB1A006645D5 /* Model */,
 				6B4951F91EAE5F9B006645D5 /* AppDelegate.swift */,
-				6B4951FD1EAE5F9B006645D5 /* Main.storyboard */,
+				F8A2C6A71EB5B695005CC925 /* Main.storyboard */,
 				6B4952001EAE5F9B006645D5 /* Assets.xcassets */,
 				6B4952021EAE5F9B006645D5 /* LaunchScreen.storyboard */,
 				6B4952051EAE5F9B006645D5 /* Info.plist */,
@@ -219,6 +221,7 @@
 			children = (
 				F8D7310E1EB3C7530080039E /* TimerView.xib */,
 				F8D731151EB3D80F0080039E /* ActivityCell.xib */,
+				F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */,
 			);
 			name = Nib;
 			sourceTree = "<group>";
@@ -351,8 +354,9 @@
 				6B4952041EAE5F9B006645D5 /* LaunchScreen.storyboard in Resources */,
 				6B4952011EAE5F9B006645D5 /* Assets.xcassets in Resources */,
 				F8D7310F1EB3C7530080039E /* TimerView.xib in Resources */,
+				F8A2C6A91EB5B695005CC925 /* Main.storyboard in Resources */,
 				F8D731161EB3D80F0080039E /* ActivityCell.xib in Resources */,
-				6B4951FF1EAE5F9B006645D5 /* Main.storyboard in Resources */,
+				F8A2C6A61EB5A62E005CC925 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,20 +563,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6B4951FD1EAE5F9B006645D5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6B4951FE1EAE5F9B006645D5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6B4952021EAE5F9B006645D5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				6B4952031EAE5F9B006645D5 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F8A2C6A71EB5B695005CC925 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8A2C6A81EB5B695005CC925 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

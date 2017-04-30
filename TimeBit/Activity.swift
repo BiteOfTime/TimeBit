@@ -14,8 +14,8 @@ class Activity: NSObject {
     var userId: String?
     var activityName: String?
     var activityDescription: String?
-    var activityImage: PFFile?
-    
+    var activityImage: UIImage?
+    var activityImageFile: PFFile?
     
     init(dictionary: NSDictionary) {
         userId = dictionary["user_id"] as? String
@@ -23,7 +23,7 @@ class Activity: NSObject {
         activityDescription = dictionary["activity_desc"] as? String
     }
     
-    init(_ activityName: String, _ activityDescription: String, _ activityImage: PFFile?) {
+    init(_ activityName: String, _ activityDescription: String, _ activityImage: UIImage?) {
         self.activityName = activityName
         self.activityDescription = activityDescription
         self.activityImage = activityImage
@@ -33,7 +33,7 @@ class Activity: NSObject {
         self.userId = pfobj["user_id"] as? String
         self.activityName = pfobj["activity_name"] as? String
         self.activityDescription = pfobj["activity_desc"] as? String
-        self.activityImage = pfobj["activity_image"] as? PFFile
+        self.activityImageFile = pfobj["activity_image"] as? PFFile
     }
     
     class func ActivitiesWithArray(dictionaries: [PFObject]) -> [Activity] {
@@ -47,5 +47,5 @@ class Activity: NSObject {
         }
         return activities
     }
-
+    
 }

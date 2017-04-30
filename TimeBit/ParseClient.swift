@@ -44,12 +44,17 @@ class ParseClient: NSObject {
         for activity in activities {
             let activityEntry = PFObject(className: "ActivityTest")
             print("activity", activity!)
-
+            
+            let imageData = UIImagePNGRepresentation(activity!.activityImage!)
+            
             // Add relevant fields to the object
             activityEntry["user_id"] = getCurrentUser()
             activityEntry["activity_name"] = activity!.activityName!
             activityEntry["activity_desc"] = activity!.activityDescription!
-            activityEntry["activity_image"] = activity!.activityImage!
+            //activityEntry["activity_image"] = activity!.activityImage!
+            activityEntry["activity_image"] = PFFile(name: "\(activity!.activityName!).png", data: imageData!)
+
+
             activityObjects.append(activityEntry)
         }
         do {

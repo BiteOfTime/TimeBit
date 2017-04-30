@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import ParseUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TimerViewDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TimerViewDelegate, ActivityCellDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
@@ -63,17 +63,23 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func defaultActivitiesList () -> [Activity] {
-        return [Activity("Work", "Work", convertToPFFile(#imageLiteral(resourceName: "Work"),activityName: "Work")),
-                Activity("Eat", "Eat", convertToPFFile(#imageLiteral(resourceName: "Eat"),activityName: "Eat")),
-                Activity("Sleep", "Sleep", convertToPFFile(#imageLiteral(resourceName: "Sleep"),activityName: "Sleep"))]
+        return [Activity("Work", "Work", #imageLiteral(resourceName: "Work")),
+                Activity("Eat", "Eat", #imageLiteral(resourceName: "Eat")),
+                Activity("Sleep", "Sleep", #imageLiteral(resourceName: "Sleep"))]
     }
     
-    func convertToPFFile(_ uiImage:UIImage, activityName: String) -> PFFile? {
-        let imageData = UIImagePNGRepresentation(uiImage)
-        let image = PFFile(name: "\(activityName).png", data: imageData!)
-        return image
-    }
- 
+//    func defaultActivitiesList () -> [Activity] {
+//        return [Activity("Work", "Work", convertToPFFile(#imageLiteral(resourceName: "Work"),activityName: "Work")),
+//                Activity("Eat", "Eat", convertToPFFile(#imageLiteral(resourceName: "Eat"),activityName: "Eat")),
+//                Activity("Sleep", "Sleep", convertToPFFile(#imageLiteral(resourceName: "Sleep"),activityName: "Sleep"))]
+//    }
+//    
+//    func convertToPFFile(_ uiImage:UIImage, activityName: String) -> PFFile? {
+//        let imageData = UIImagePNGRepresentation(uiImage)
+//        let image = PFFile(name: "\(activityName).png", data: imageData!)
+//        return image
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return activities.count
     }
@@ -82,7 +88,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         
         //Loading PFFile to PFImageView
-        let pfImage = activities[indexPath.row].activityImage
+        let pfImage = activities[indexPath.row].activityImageFile
         cell.activityImageView.file = pfImage
         cell.activityImageView.loadInBackground()
         
@@ -100,4 +106,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Call 
     }
     
+    func activityCell(onPanGesture activityCell: ActivityCell) {
+        //
+        let activityName = activityCell.activityNameLabel.text
+        print("on tap", activityName)
+    }
 }

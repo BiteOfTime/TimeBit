@@ -16,6 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window!.tintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        let vc = HomeViewController(nibName: "HomeViewController", bundle: nil)
+        window?.rootViewController = vc
+        window?.makeKeyAndVisible()
         return true
     }
 
