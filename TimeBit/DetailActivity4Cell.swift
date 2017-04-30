@@ -59,14 +59,16 @@ class DetailActivity4Cell: UITableViewCell {
             hourLabel.text = "00"
             secondLabel.text = "00"
             
-            // TODO save the activity in db
+            var currentDate = formatDate(dateString: String(describing: Date()))
+            print("currentDate is \(currentDate)")
+            
             print("Saving the activity in db")
             print("startDate \(startDate)")
             print("endDate \(Date())")
             print("duration \(passedSeconds)")
             
             if (!activity_name.isEmpty) {
-                let params = ["activity_name": activity_name, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_date": Date() ] as [String : Any]
+                let params = ["activity_name": activity_name, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate] as [String : Any]
                 ParseClient.sharedInstance.saveActivityLog(params: params as NSDictionary?) { (PFObject, Error) -> () in
                     if Error != nil {
                         NSLog("Error saving to the log for the activity \(self.activity_name)")
@@ -106,6 +108,18 @@ class DetailActivity4Cell: UITableViewCell {
         secondLabel.text = String(second)
         minuteLabel.text = String(minutes)
         hourLabel.text = String(hours)
+    }
+    
+    func formatDate(dateString: String) -> String? {
+        
+        let formatter = DateFormatter()
+        let currentDateFormat = DateFormatter.dateFormat(fromTemplate: "MMddyyyy", options: 0, locale: NSLocale(localeIdentifier: "en-GB") as Locale)
+        
+        formatter.dateFormat = currentDateFormat
+        let formattedDate = formatter.string(from: Date())
+        // gbSwiftDayString now contains the string "02/06/2014".
+        
+        return formattedDate
     }
     
 }

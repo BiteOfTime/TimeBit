@@ -209,7 +209,8 @@ class ParseClient: NSObject {
         activityLog["activity_start_time"] = params!["activity_start_time"] as! NSDate
         activityLog["activity_end_time"] = params!["activity_end_time"] as! NSDate
         activityLog["activity_duration"] = params!["activity_duration"] as! Int
-        activityLog["activity_date"] = params!["activity_date"] as! Date
+        activityLog["activity_event_date"] = params!["activity_event_date"] as! String
+            
         
         // Save object (following function will save the object in Parse asynchronously)
         activityLog.saveInBackground { (success: Bool, error: Error?) in
@@ -227,6 +228,7 @@ class ParseClient: NSObject {
         let activityQuery = PFQuery(className: "ActivityLog")
         activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
         activityQuery.whereKey("activity_name", equalTo: params!["activity_name"] as! String)
+        activityQuery.whereKey("activity_event_date", equalTo: params!["activity_event_date"] as! String)
         
         activityQuery.findObjectsInBackground { (objects, error) -> Void in
             if error == nil {

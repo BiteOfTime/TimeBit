@@ -42,7 +42,11 @@ class DetailActivityViewController: UIViewController {
     }
     
     func todayCount() {
-        let params = ["activity_name": activity_name] as [String : Any]
+        
+        var currentDate = formatDate(dateString: String(describing: Date()))
+        print("currentDate is \(currentDate)")
+        
+        let params = ["activity_name": activity_name, "activity_event_date": currentDate] as [String : Any]
         ParseClient.sharedInstance.getTodayCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
             if error != nil {
                 NSLog("Error getting activities from Parse")
@@ -51,6 +55,18 @@ class DetailActivityViewController: UIViewController {
                 NSLog("Items from Parse \(self.activityToday)")
             }
         }
+    }
+    
+    func formatDate(dateString: String) -> String? {
+        
+        let formatter = DateFormatter()
+        let currentDateFormat = DateFormatter.dateFormat(fromTemplate: "MMddyyyy", options: 0, locale: NSLocale(localeIdentifier: "en-GB") as Locale)
+        
+        formatter.dateFormat = currentDateFormat
+        let formattedDate = formatter.string(from: Date())
+        // contains the string "22/06/2014".
+        
+        return formattedDate
     }
 
 }
