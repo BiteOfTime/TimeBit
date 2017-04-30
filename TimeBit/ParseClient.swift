@@ -13,7 +13,7 @@ class ParseClient: NSObject {
     
     override init() {
         super.init()
-        
+
         Parse.initialize(with: ParseClientConfiguration(block: { (configuration: ParseMutableClientConfiguration) in
             configuration.applicationId = Secrets.getApplicationId()
             configuration.clientKey = Secrets.getClientKey()
@@ -30,13 +30,37 @@ class ParseClient: NSObject {
     
     func getCurrentUser() -> String? {
         if let currentUser = User.currentUser {
+            print("Userid", User.userId!)
             return currentUser
         } else {
             User.currentUser = User.userId // set the current user, saves in NSDefaults to persist user
+            print("Userid", User.userId!)
             return User.userId
         }
     }
     
+    func saveMultipleActivities(activities: [Activity?], completion: @escaping (_ parseObj: [PFObject]?, _ error: Error?) -> ()) {
+        var activityObjects: [PFObject] = []
+        for activity in activities {
+            let activityEntry = PFObject(className: "ActivityTest")
+            print("activity", activity!)
+
+            // Add relevant fields to the object
+            activityEntry["user_id"] = getCurrentUser()
+            activityEntry["activity_name"] = activity!.activityName!
+            activityEntry["activity_desc"] = activity!.activityDescription!
+            activityEntry["activity_image"] = activity!.activityImage!
+            activityObjects.append(activityEntry)
+        }
+        do {
+            try PFObject.saveAll(activityObjects)
+        } catch let error {
+            print("There was a problem, check error.description", error.localizedDescription as Any)
+            completion(nil, error)
+            return
+        }
+        completion(activityObjects, nil)
+    }
     
     func saveNewActivity(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject
@@ -68,17 +92,18 @@ class ParseClient: NSObject {
         
         activityQuery.findObjectsInBackground { (objects, error) -> Void in
             if error == nil {
-                let PFActivities = objects
+                var PFActivities = objects
+//                for object in objects! {
+//                    print(object.objectId!)
+//                }
                 let activities = Activity.ActivitiesWithArray(dictionaries: PFActivities!)
-                print(objects as Any)
+                //print(objects as Any)
                 completion(activities, nil)
             } else {
                 NSLog("error: \(String(describing: error))")
                 completion(nil, error)
             }
         }
-        
-        
     }
 
 }

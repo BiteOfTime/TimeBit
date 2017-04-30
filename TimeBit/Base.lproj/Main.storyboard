@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BxF-6k-lHJ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -79,6 +79,78 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140" y="118.29085457271366"/>
+        </scene>
+        <!--TimeBit-->
+        <scene sceneID="nP2-Bh-3Y8">
+            <objects>
+                <viewController storyboardIdentifier="HomeViewController" id="mmO-RQ-mxh" customClass="HomeViewController" customModule="TimeBit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MjW-NY-r0W"/>
+                        <viewControllerLayoutGuide type="bottom" id="uQN-XD-lZA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9HF-y9-olA">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="b1N-J6-M5s">
+                                <rect key="frame" x="0.0" y="160" width="375" height="443"/>
+                                <color key="backgroundColor" red="0.88554485100000002" green="0.88554485100000002" blue="0.88554485100000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="1" id="XSH-FY-MIX">
+                                    <size key="itemSize" width="156" height="140"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESn-aU-OTz" customClass="TimerView" customModule="TimeBit" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="khv-oi-SSB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ESn-aU-OTz" firstAttribute="top" secondItem="MjW-NY-r0W" secondAttribute="bottom" id="487-y8-BvV"/>
+                            <constraint firstItem="b1N-J6-M5s" firstAttribute="top" secondItem="ESn-aU-OTz" secondAttribute="bottom" id="8Ok-zH-f9Y"/>
+                            <constraint firstItem="ESn-aU-OTz" firstAttribute="leading" secondItem="9HF-y9-olA" secondAttribute="leading" id="MJl-EM-Uhv"/>
+                            <constraint firstAttribute="trailing" secondItem="ESn-aU-OTz" secondAttribute="trailing" id="ORb-iP-eUf"/>
+                            <constraint firstItem="b1N-J6-M5s" firstAttribute="width" secondItem="ESn-aU-OTz" secondAttribute="width" id="UOK-Wj-eAP"/>
+                            <constraint firstAttribute="trailing" secondItem="b1N-J6-M5s" secondAttribute="trailing" id="ZbT-PJ-8Pr"/>
+                            <constraint firstItem="uQN-XD-lZA" firstAttribute="top" secondItem="b1N-J6-M5s" secondAttribute="bottom" id="ruf-w6-2iM"/>
+                            <constraint firstItem="b1N-J6-M5s" firstAttribute="leading" secondItem="ESn-aU-OTz" secondAttribute="leading" id="ujg-mF-a4s"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="TimeBit" id="V3k-87-TT8"/>
+                    <connections>
+                        <outlet property="collectionView" destination="b1N-J6-M5s" id="BQP-sB-zmG"/>
+                        <outlet property="timerView" destination="ESn-aU-OTz" id="KZX-xX-EcB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iW2-We-w0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1079.2" y="811.84407796101959"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WDJ-Il-27e">
+            <objects>
+                <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="BxF-6k-lHJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="1vz-tX-qUR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.66980415579999997" blue="0.94023269409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="mmO-RQ-mxh" kind="relationship" relationship="rootViewController" id="Fab-BT-WQt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HsR-um-V42" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="140" y="811.84407796101959"/>
         </scene>
     </scenes>
 </document>

@@ -26,13 +26,15 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     @IBAction func onSaveActivityButton(_ sender: Any) {
         
         let acivityName = newActivityText.text
         let activityDesc = newActivityDesc.text
         
         if !(acivityName?.isEmpty)! {
-            let params = ["activityName": acivityName!, "activityDesc": activityDesc!] as [String : Any]
+            let params = ["activityName": acivityName!, "activityDesc": activityDesc!] as [String : String]
             ParseClient.sharedInstance.saveNewActivity(params: params as NSDictionary?) { (PFObject, Error) -> () in
                 if Error != nil {
                     NSLog("Error saving to Parse")

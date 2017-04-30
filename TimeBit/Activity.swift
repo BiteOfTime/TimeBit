@@ -11,27 +11,38 @@ import Parse
 
 class Activity: NSObject {
     
-    var user_id: String?
-    var activity_name: String?
-    var activity_desc: String?
-
+    var userId: String?
+    var activityName: String?
+    var activityDescription: String?
+    var activityImage: PFFile?
+    
+    
     init(dictionary: NSDictionary) {
-        user_id = dictionary["user_id"] as? String
-        activity_name = dictionary["activity_name"] as? String
-        activity_desc = dictionary["activity_desc"] as? String
+        userId = dictionary["user_id"] as? String
+        activityName = dictionary["activity_name"] as? String
+        activityDescription = dictionary["activity_desc"] as? String
+    }
+    
+    init(_ activityName: String, _ activityDescription: String, _ activityImage: PFFile?) {
+        self.activityName = activityName
+        self.activityDescription = activityDescription
+        self.activityImage = activityImage
     }
     
     init(pfobj: PFObject) {
-        self.user_id = pfobj["user_id"] as? String
-        self.activity_name = pfobj["activity_name"] as? String
-        self.activity_desc = pfobj["activity_desc"] as? String
+        self.userId = pfobj["user_id"] as? String
+        self.activityName = pfobj["activity_name"] as? String
+        self.activityDescription = pfobj["activity_desc"] as? String
+        self.activityImage = pfobj["activity_image"] as? PFFile
     }
     
     class func ActivitiesWithArray(dictionaries: [PFObject]) -> [Activity] {
         var activities = [Activity]()
         
         for pfobj in dictionaries {
+            
             let activity = Activity(pfobj: pfobj)
+            print("activity here....", activity)
             activities.append(activity)
         }
         return activities

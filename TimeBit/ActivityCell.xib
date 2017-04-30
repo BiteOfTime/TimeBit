@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="TimeBit" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ActivityCell" id="Phu-Yi-PzG" customClass="ActivityCell" customModule="TimeBit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="160" height="140"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="160" height="140"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eat" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8t1-Js-Znh">
+                        <rect key="frame" x="62" y="90" width="36" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" misplaced="YES" image="Sleep" translatesAutoresizingMaskIntoConstraints="NO" id="6PO-hg-I5T" customClass="PFImageView">
+                        <rect key="frame" x="48" y="8" width="64" height="64"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Hrs" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntm-C7-b7C">
+                        <rect key="frame" x="62" y="115" width="36" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="6PO-hg-I5T" firstAttribute="leading" secondItem="Phu-Yi-PzG" secondAttribute="leading" constant="48" id="2vP-Gl-m5i"/>
+                <constraint firstItem="6PO-hg-I5T" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Phu-Yi-PzG" secondAttribute="top" constant="8" id="AjZ-gZ-7jT"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Ntm-C7-b7C" secondAttribute="trailing" constant="62" id="DFV-5W-34s"/>
+                <constraint firstItem="Ntm-C7-b7C" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Phu-Yi-PzG" secondAttribute="leading" constant="62" id="Ha1-mh-fJT"/>
+                <constraint firstAttribute="trailing" secondItem="6PO-hg-I5T" secondAttribute="trailing" constant="48" id="TNZ-fO-xQt"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="8t1-Js-Znh" secondAttribute="trailing" constant="62" id="VfN-Fe-2Jg"/>
+                <constraint firstItem="8t1-Js-Znh" firstAttribute="top" secondItem="6PO-hg-I5T" secondAttribute="bottom" constant="8" id="l0B-6b-nyM"/>
+                <constraint firstAttribute="bottom" secondItem="Ntm-C7-b7C" secondAttribute="bottom" constant="8" id="qp7-ip-Dsb"/>
+                <constraint firstItem="Ntm-C7-b7C" firstAttribute="top" secondItem="8t1-Js-Znh" secondAttribute="bottom" constant="8" id="utj-M7-6ls"/>
+                <constraint firstItem="8t1-Js-Znh" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Phu-Yi-PzG" secondAttribute="leading" constant="62" id="yjy-jV-l2M"/>
+            </constraints>
+            <size key="customSize" width="188" height="157"/>
+            <connections>
+                <outlet property="activityImageView" destination="6PO-hg-I5T" id="YSU-d4-McR"/>
+                <outlet property="activityNameLabel" destination="8t1-Js-Znh" id="QMA-KM-Z1H"/>
+                <outlet property="timeSpentLabel" destination="Ntm-C7-b7C" id="8fb-QL-xXF"/>
+            </connections>
+            <point key="canvasLocation" x="-5" y="-83"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Sleep" width="128" height="128"/>
+    </resources>
+</document>
