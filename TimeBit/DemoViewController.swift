@@ -1,31 +1,44 @@
 //
-//  ViewController.swift
+//  DemoViewController.swift
 //  TimeBit
 //
-//  Created by Krishna Alex on 4/24/17.
+//  Created by Krishna Alex on 4/29/17.
 //  Copyright © 2017 BiteOfTime. All rights reserved.
 //
 
 import UIKit
-import Parse
 
-class ViewController: UIViewController {
-
+class DemoViewController: UIViewController {
+    
     @IBOutlet weak var newActivityText: UITextField!
     @IBOutlet weak var newActivityDesc: UITextField!
     
     var activity: Activity!
     var activities: [Activity]!
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    
     @IBAction func onSaveActivityButton(_ sender: Any) {
         
         let acivityName = newActivityText.text
@@ -43,7 +56,7 @@ class ViewController: UIViewController {
         }
     }
     
-
+    
     @IBAction func onGetActivityButton(_ sender: Any) {
         ParseClient.sharedInstance.getActivities() { (activities: [Activity]?, error: Error?) -> Void in
             if error != nil {
@@ -57,16 +70,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onSetGoalButton(_ sender: Any) {
-//        activity.user_id = "2011AFF9-BA54-4669-9454-757CDCDF847C"
-//        activity.activity_name = "walk"
+        //        activity.user_id = "2011AFF9-BA54-4669-9454-757CDCDF847C"
+        //        activity.activity_name = "walk"
         let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
-//        gvc.activity = activity;
+        //        gvc.activity = activity;
         gvc.activityName = "walk"
+        gvc.goalSetting = "Update"
         navigationController?.pushViewController(gvc, animated: true);
-
+        
         
     }
-    
+
 
 }
-

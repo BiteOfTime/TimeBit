@@ -16,6 +16,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window!.tintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        let barColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        let pressedTintColor = UIColor.white
+        UITabBar.appearance().barTintColor = barColor
+        UITabBar.appearance().tintColor = pressedTintColor
+        
+        let tabBarController = UITabBarController()
+        let tabViewController1 = DemoViewController()
+        let tabViewController2 = ReportViewController()
+        let tabViewController3 = GoalSettingViewController()
+        let tabViewController4 = NotificationViewController()
+        
+        let controllers = [tabViewController1, tabViewController2, tabViewController3, tabViewController4]
+        tabBarController.viewControllers = controllers
+        let navigationController = UINavigationController(rootViewController: tabBarController)
+        navigationController.navigationBar.barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        navigationController.navigationBar.barStyle = UIBarStyle.black
+
+        tabViewController1.tabBarItem = UITabBarItem(
+            title: "Home",
+            image: UIImage(named: "Home"),
+            tag: 1)
+        tabViewController2.tabBarItem = UITabBarItem(
+            title: "Report",
+            image:UIImage(named: "Report") ,
+            tag:2)
+        tabViewController3.tabBarItem = UITabBarItem(
+            title: "Goal",
+            image:UIImage(named: "Goals") ,
+            tag:2)
+        tabViewController4.tabBarItem = UITabBarItem(
+            title: "Notification",
+            image:UIImage(named: "Notifications") ,
+            tag:2)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        if let window = window {
+            window.backgroundColor = UIColor.white
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
+        }
 
         return true
     }

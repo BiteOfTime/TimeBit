@@ -14,6 +14,7 @@ class Activity: NSObject {
     var user_id: String?
     var activity_name: String?
     var activity_desc: String?
+    var goal: PFObject?
 
     init(dictionary: NSDictionary) {
         user_id = dictionary["user_id"] as? String
