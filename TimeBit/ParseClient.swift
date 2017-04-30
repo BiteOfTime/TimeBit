@@ -80,5 +80,53 @@ class ParseClient: NSObject {
         
         
     }
+    
+    
+    func saveActivityLog(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        // Create Parse object PFObject
+        let activityLog = PFObject(className: "ActivityLog")
+        
+        print("params")
+        print(params as Any)
+        
+        // Add relevant fields to the object
+        activityLog["user_id"] = getCurrentUser()
+        activityLog["activity_name"] = params!["activity_name"] as! String
+        activityLog["activity_start_time"] = params!["activity_start_time"] as! NSDate
+        activityLog["activity_end_time"] = params!["activity_end_time"] as! NSDate
+        activityLog["activity_duration"] = params!["activity_duration"] as! Int
+        activityLog["activity_date"] = params!["activity_date"] as! Date
+        
+        // Save object (following function will save the object in Parse asynchronously)
+        activityLog.saveInBackground { (success: Bool, error: Error?) in
+            if success {
+                completion(activityLog, nil)
+                print("Activity saved :: ", activityLog)
+            } else {
+                print("ERROR:: In saveActivityLog, ", error?.localizedDescription as Any)
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func getTodayCountForActivity(params: NSDictionary?, completion: @escaping (_ activities: [ActivityLog]?, _ error: Error?) -> ()) {
+        let activityQuery = PFQuery(className: "ActivityLog")
+        activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        activityQuery.whereKey("activity_name", equalTo: params!["activity_name"] as! String)
+        
+        activityQuery.findObjectsInBackground { (objects, error) -> Void in
+            if error == nil {
+                let PFActivities = objects
+                let activity = ActivityLog.ActivityLogWithArray(dictionaries: PFActivities!)
+                print(objects as Any)
+                //completion(nil, nil)
+                completion(activity, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+    }
+    
 
 }
