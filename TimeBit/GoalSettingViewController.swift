@@ -59,16 +59,16 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 NSLog("Error getting goals from Parse")
             } else {
                 self.goal = goals![0]
-                print(self.goal)
-                let hrs = self.goal.hours
-                let mins = self.goal.mins
-                print(hrs, mins)
-                let goalHrs = "\(hrs ?? 0)" + "hr "
-                let goalMins = "\(mins ?? 0)" + "min "
-                let currentGoal = self.goal.limit! + " " + goalHrs + goalMins + self.goal.frequency!
-                
-                //let currentGoal = ("\(self.goal.limit) \(self.goal.hours)hr \(self.goal.mins)mins \(self.goal.frequency)")
-                self.currentGoalLabel.text = currentGoal
+//                print(self.goal.limit)
+//                let hrs = ("\(self.goal.hours!)")
+//                let mins = self.goal.mins!
+//                print(hrs, mins)
+//                let goalHrs = "\(hrs ?? 0)" + "hr "
+//                let goalMins = "\(mins ?? 0)" + "min "
+//                let currentGoal = self.goal.limit! + " " + goalHrs + goalMins + self.goal.frequency!
+//                
+//                //let currentGoal = ("\(self.goal.limit) \(self.goal.hours)hr \(self.goal.mins)mins \(self.goal.frequency)")
+//                self.currentGoalLabel.text = currentGoal
                 NSLog("Items from Parse")
             }
         }
