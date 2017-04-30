@@ -39,9 +39,9 @@
 		9303B90E1EB59A180086F0FB /* ActivityLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9303B90D1EB59A180086F0FB /* ActivityLog.swift */; };
 		9303B9161EB5BA8D0086F0FB /* DetailActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9303B9151EB5BA8D0086F0FB /* DetailActivityViewController.xib */; };
 		A5764ED13E954BFBB12497EF /* Pods_TimeBitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78EB96CA347EF1C14436DA37 /* Pods_TimeBitTests.framework */; };
+		F89BB1751EB5F1C70096EC17 /* TimerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89BB1741EB5F1C70096EC17 /* TimerView.xib */; };
 		F8A2C6A61EB5A62E005CC925 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */; };
 		F8D7310A1EB3C5290080039E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731091EB3C5290080039E /* HomeViewController.swift */; };
-		F8D7310F1EB3C7530080039E /* TimerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8D7310E1EB3C7530080039E /* TimerView.xib */; };
 		F8D731121EB3C9120080039E /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731111EB3C9120080039E /* TimerView.swift */; };
 		F8D731141EB3D6E70080039E /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731131EB3D6E70080039E /* ActivityCell.swift */; };
 		F8D731161EB3D80F0080039E /* ActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8D731151EB3D80F0080039E /* ActivityCell.xib */; };
@@ -109,9 +109,9 @@
 		9303B9151EB5BA8D0086F0FB /* DetailActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailActivityViewController.xib; sourceTree = "<group>"; };
 		B08A7E26325A76113F4F7572 /* Pods-TimeBit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBit/Pods-TimeBit.debug.xcconfig"; sourceTree = "<group>"; };
 		C9B5FD66C06BBA440B24E233 /* Pods-TimeBitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBitUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBitUITests/Pods-TimeBitUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F89BB1741EB5F1C70096EC17 /* TimerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimerView.xib; sourceTree = "<group>"; };
 		F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		F8D731091EB3C5290080039E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		F8D7310E1EB3C7530080039E /* TimerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimerView.xib; sourceTree = "<group>"; };
 		F8D731111EB3C9120080039E /* TimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		F8D731131EB3D6E70080039E /* ActivityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
 		F8D731151EB3D80F0080039E /* ActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityCell.xib; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 		F8D731061EB3AEF90080039E /* Nib */ = {
 			isa = PBXGroup;
 			children = (
-				F8D7310E1EB3C7530080039E /* TimerView.xib */,
+				F89BB1741EB5F1C70096EC17 /* TimerView.xib */,
 				F8D731151EB3D80F0080039E /* ActivityCell.xib */,
 				F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */,
 			);
@@ -414,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9303B9021EB5779A0086F0FB /* DetailActivity2Cell.xib in Resources */,
+				F89BB1751EB5F1C70096EC17 /* TimerView.xib in Resources */,
 				6B4952041EAE5F9B006645D5 /* LaunchScreen.storyboard in Resources */,
 				9303B9061EB577C70086F0FB /* DetailActivity3Cell.xib in Resources */,
 				6B4952011EAE5F9B006645D5 /* Assets.xcassets in Resources */,

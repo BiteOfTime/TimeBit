@@ -22,6 +22,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
+        //collectionView.backgroundColor = .gray
+        
         loadActivities()
     }
 
@@ -65,7 +67,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func defaultActivitiesList () -> [Activity] {
         return [Activity("Work", "Work", #imageLiteral(resourceName: "Work")),
                 Activity("Eat", "Eat", #imageLiteral(resourceName: "Eat")),
-                Activity("Sleep", "Sleep", #imageLiteral(resourceName: "Sleep"))]
+                Activity("Sleep", "Sleep", #imageLiteral(resourceName: "Sleep")),
+                Activity("Read", "Read", #imageLiteral(resourceName: "Read")),
+                Activity("Walk", "Walk", #imageLiteral(resourceName: "Walk")),
+                Activity("Internet", "Internet", #imageLiteral(resourceName: "Internet")),
+                Activity("Shop", "Shop", #imageLiteral(resourceName: "Shop")),
+                Activity("Excercise", "Excercise", #imageLiteral(resourceName: "Exercise")),
+                Activity("Sport", "Sport", #imageLiteral(resourceName: "Sport"))]
     }
     
 //    func defaultActivitiesList () -> [Activity] {
@@ -86,13 +94,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
+        cell.delegate = self
+        
+        cell.layer.borderColor = UIColor.darkGray.cgColor
+        cell.layer.borderWidth = 0.5
         
         //Loading PFFile to PFImageView
         let pfImage = activities[indexPath.row].activityImageFile
-        cell.activityImageView.file = pfImage
-        cell.activityImageView.loadInBackground()
+        if let imageFile : PFFile = pfImage{
+            imageFile.getDataInBackground(block: { (data, error) in
+                if error == nil {
+                        let image = UIImage(data: data!)
+                        cell.activityImage.setImage(image, for: UIControlState.normal)
+                } else {
+                    print(error!.localizedDescription)
+                }
+            })
+        }
         
-        //cell.activityImageView.image = activities[indexPath.row].activityImage
+        cell.activityImage.tintColor = .white
         cell.activityNameLabel.text = activities[indexPath.row].activityName
         return cell
     }
@@ -112,9 +132,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Call 
     }
     
-    func activityCell(onPanGesture activityCell: ActivityCell) {
-        //
+    func activityCell(onStartActivity activityCell: ActivityCell) {
         let activityName = activityCell.activityNameLabel.text
-        print("on tap", activityName)
+        timerView.onStartTimer()
+        print("Start", activityCell.activityNameLabel!.text!)
+    }
+    
+    func activityCell(onStopActivity activityCell: ActivityCell) {
+        print("Stop", activityCell.activityNameLabel!.text!)
+        timerView.onStopTimer()
     }
 }

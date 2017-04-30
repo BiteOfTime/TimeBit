@@ -17,7 +17,7 @@ class TimerView: UIView{
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var startStopButton: UIButton!
+    //@IBOutlet weak var startStopButton: UIButton!
     
     weak var delegate: TimerViewDelegate?
     
@@ -43,23 +43,21 @@ class TimerView: UIView{
         contentView.frame = bounds
         addSubview(contentView)
         
-        startStopButton.setImage(#imageLiteral(resourceName: "Play"), for: UIControlState.normal)
-        startStopButton.setImage(#imageLiteral(resourceName: "Stop"), for: UIControlState.selected)
-        
-        timerLabel.text = "00:00:00"
+        contentView.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+//        startStopButton.setImage(#imageLiteral(resourceName: "Play"), for: UIControlState.normal)
+//        startStopButton.setImage(#imageLiteral(resourceName: "Stop"), for: UIControlState.selected)
     }
     
-    @IBAction func onStartTimer(_ sender: Any) {
-        startStopButton.isSelected = !(startStopButton.isSelected)
-        if startStopButton.isSelected {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(TimerView.updateTimer), userInfo: nil, repeats: true)
-            print("Timer started")
-            delegate?.timerView(onStartTimer: self)
-        } else {
-            print("Timer Stopped")
-            timer.invalidate()
-            delegate?.timerView(onStopTimer: self, timeElapsed: 100)
-        }
+    func onStartTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(TimerView.updateTimer), userInfo: nil, repeats: true)
+        //print("Timer started")
+        //delegate?.timerView(onStartTimer: self)
+    }
+    
+    func onStopTimer() {
+        timer.invalidate()
+        resetTimer()
+        //delegate?.timerView(onStopTimer: self, timeElapsed: 100)
     }
     
     func updateTimer() {
@@ -83,6 +81,13 @@ class TimerView: UIView{
         
         stopTimerString = "\(hoursString):\(minutuesString):\(secondsString)"
         timerLabel.text = stopTimerString
+    }
+    
+    func resetTimer() {
+        seconds = 0
+        minutes = 0
+        hours = 0
+        timerLabel.text = "00:00:00"
     }
     
     func getTimeElapsedInSeconds() {

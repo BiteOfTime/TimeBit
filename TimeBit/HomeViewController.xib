@@ -24,32 +24,32 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghs-wG-9ty">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="IuE-KY-Qaf">
+                            <rect key="frame" x="0.0" y="220" width="375" height="454"/>
+                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lL8-gB-sR1">
+                                <size key="itemSize" width="160" height="100"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
                         <view contentMode="scaleToFill" restorationIdentifier="TimerView" translatesAutoresizingMaskIntoConstraints="NO" id="wSo-Ep-3vm" customClass="TimerView" customModule="TimeBit" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                            <rect key="frame" x="0.0" y="60" width="375" height="160"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="160" id="sYN-Sc-O8X"/>
                             </constraints>
                         </view>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="IuE-KY-Qaf">
-                            <rect key="frame" x="0.0" y="160" width="375" height="507"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="1" id="lL8-gB-sR1">
-                                <size key="itemSize" width="156" height="140"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
-                            </collectionViewFlowLayout>
-                        </collectionView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="IuE-KY-Qaf" secondAttribute="bottom" id="40M-al-wuX"/>
-                        <constraint firstItem="wSo-Ep-3vm" firstAttribute="top" secondItem="ghs-wG-9ty" secondAttribute="top" id="4Zl-hr-Uzw"/>
                         <constraint firstAttribute="trailing" secondItem="wSo-Ep-3vm" secondAttribute="trailing" id="8jq-2S-8Fp"/>
-                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="top" secondItem="wSo-Ep-3vm" secondAttribute="bottom" id="MxD-u2-ygZ"/>
-                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="width" secondItem="wSo-Ep-3vm" secondAttribute="width" id="baz-Ro-LBI"/>
-                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="leading" secondItem="ghs-wG-9ty" secondAttribute="leading" id="neJ-tG-khv"/>
-                        <constraint firstAttribute="trailing" secondItem="IuE-KY-Qaf" secondAttribute="trailing" id="zUt-18-HFq"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="top" secondItem="wSo-Ep-3vm" secondAttribute="bottom" id="Bxk-JT-9XD"/>
+                        <constraint firstItem="wSo-Ep-3vm" firstAttribute="top" secondItem="ghs-wG-9ty" secondAttribute="top" constant="60" id="ESq-GJ-R1c"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="trailing" secondItem="wSo-Ep-3vm" secondAttribute="trailing" id="EiE-hG-7hY"/>
+                        <constraint firstAttribute="bottom" secondItem="IuE-KY-Qaf" secondAttribute="bottom" constant="-7" id="NMB-kY-woj"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="leading" secondItem="wSo-Ep-3vm" secondAttribute="leading" id="m2C-eb-hBf"/>
                         <constraint firstItem="wSo-Ep-3vm" firstAttribute="leading" secondItem="ghs-wG-9ty" secondAttribute="leading" id="zqW-lm-tNQ"/>
                     </constraints>
                 </view>
@@ -61,7 +61,7 @@
                 <constraint firstItem="ghs-wG-9ty" firstAttribute="leading" secondItem="TrZ-9w-ccg" secondAttribute="leading" id="s1i-PZ-XZH"/>
                 <constraint firstItem="ghs-wG-9ty" firstAttribute="top" secondItem="TrZ-9w-ccg" secondAttribute="top" id="xjj-ji-j3T"/>
             </constraints>
-            <point key="canvasLocation" x="-222" y="235"/>
+            <point key="canvasLocation" x="-222.5" y="234.5"/>
         </view>
     </objects>
 </document>
