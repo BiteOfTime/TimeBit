@@ -25,9 +25,9 @@ App Design:
 ![App Design](/Allscreens.png?raw=true "App Design Screenshot")
 
 
-Here's a walkthrough of the wireframe:
+Here's a walkthrough:
 
-![Animated Screenshot](/TimeTrack.gif?raw=true "Animated Screenshot")
+![Animated Screenshot](/TimeBitDemoSprint1.gif?raw=true "Animated Screenshot")
 
 
 Copyright [2017] [Krishna Alex, Namrata Mehta and Anisha Jain]. All rights reserved.
