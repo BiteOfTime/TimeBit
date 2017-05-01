@@ -20,10 +20,11 @@ The following functionality will be implemented:
 - [ ] User can end an already running activity by detecting shake event. (optional)
 - [ ] User can backup and restore data through iCloud. (optional)
 
-Here's a walkthrough of the wireframe:
-
+App Design:
 ![App Design](/Allscreens.png?raw=true "App Design Screenshot")
 
+
+Here's a walkthrough of the wireframe:
 ![Animated Screenshot](/TimeTrack.gif?raw=true "Animated Screenshot")
 
 
