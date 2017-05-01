@@ -201,14 +201,14 @@ class ParseClient: NSObject {
         let activityLog = PFObject(className: "ActivityLog")
         
         print("params")
-        print(params as Any)
+        print(params! as Any)
         
         // Add relevant fields to the object
         activityLog["user_id"] = getCurrentUser()
         activityLog["activity_name"] = params!["activity_name"] as! String
         activityLog["activity_start_time"] = params!["activity_start_time"] as! NSDate
         activityLog["activity_end_time"] = params!["activity_end_time"] as! NSDate
-        activityLog["activity_duration"] = params!["activity_duration"] as! Int
+        activityLog["activity_duration"] = params!["activity_duration"] as! Int64
         activityLog["activity_event_date"] = params!["activity_event_date"] as! String
             
         
@@ -234,7 +234,26 @@ class ParseClient: NSObject {
             if error == nil {
                 let PFActivities = objects
                 let activity = ActivityLog.ActivityLogWithArray(dictionaries: PFActivities!)
-                print(objects as Any)
+                print("getTodayCountForActivity", objects!)
+                //completion(nil, nil)
+                completion(activity, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+    }
+
+    func getTodayCountForAllActivities(params: NSDictionary?, completion: @escaping (_ activities: [ActivityLog]?, _ error: Error?) -> ()) {
+        let activityQuery = PFQuery(className: "ActivityLog")
+        activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        activityQuery.whereKey("activity_event_date", equalTo: params!["activity_event_date"] as! String)
+        
+        activityQuery.findObjectsInBackground { (objects, error) -> Void in
+            if error == nil {
+                let PFActivities = objects
+                let activity = ActivityLog.ActivityLogWithArray(dictionaries: PFActivities!)
+                print("getTodayCountForActivity", objects!)
                 //completion(nil, nil)
                 completion(activity, nil)
             } else {

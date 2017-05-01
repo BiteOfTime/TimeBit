@@ -10,11 +10,11 @@ import UIKit
 
 final class Secrets {
     //Replace with your parse application id
-    private static let applicationId = "JzrfNZLuikBwvqxcycixNcAYJxfqGJr3"
+    private static let applicationId = ""
     //Replace with your parse client key
-    private static let clientKey = "nHAgsgzisC8xptiEgUvqVLVMTXhoyWqD"
+    private static let clientKey = ""
     //Replace with your parse server
-    private static let server = "http://45.32.129.176:1337/parse"
+    private static let server = ""
     
     class func getApplicationId() -> String {
         return Secrets.applicationId

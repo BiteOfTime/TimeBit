@@ -8,10 +8,10 @@
 
 import UIKit
 
-@objc protocol TimerViewDelegate {
-    func timerView(onStartTimer timerView: TimerView)
-    func timerView(onStopTimer timerView: TimerView, timeElapsed: UInt64)
-}
+//@objc protocol TimerViewDelegate {
+//    func timerView(onStartTimer timerView: TimerView)
+//    func timerView(onStopTimer timerView: TimerView, timeElapsed: UInt64)
+//}
 
 class TimerView: UIView{
 
@@ -19,12 +19,13 @@ class TimerView: UIView{
     @IBOutlet weak var timerLabel: UILabel!
     //@IBOutlet weak var startStopButton: UIButton!
     
-    weak var delegate: TimerViewDelegate?
+    //weak var delegate: TimerViewDelegate?
     
     var timer = Timer()
     var hours: Int = 0
     var minutes: Int = 0
     var seconds: Int = 0
+    var passedSeconds: Int64 = 0
     var stopTimerString: String = ""
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,20 +44,25 @@ class TimerView: UIView{
         contentView.frame = bounds
         addSubview(contentView)
         
-        contentView.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        //contentView.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
 //        startStopButton.setImage(#imageLiteral(resourceName: "Play"), for: UIControlState.normal)
 //        startStopButton.setImage(#imageLiteral(resourceName: "Stop"), for: UIControlState.selected)
     }
     
     func onStartTimer() {
+        passedSeconds = 0
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(TimerView.updateTimer), userInfo: nil, repeats: true)
+        
         //print("Timer started")
         //delegate?.timerView(onStartTimer: self)
     }
     
-    func onStopTimer() {
+    func onStopTimer() -> Int64{
+        passedSeconds = Int64(hours*60*60 + minutes*60 + seconds)
+        print("passed seconds", passedSeconds)
         timer.invalidate()
         resetTimer()
+        return passedSeconds
         //delegate?.timerView(onStopTimer: self, timeElapsed: 100)
     }
     

@@ -10,19 +10,23 @@ import UIKit
 import Parse
 import ParseUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TimerViewDelegate, ActivityCellDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
     
     var activities: [Activity] = []
+    var activitiesTodayLog: Dictionary<String, [ActivityLog]> = Dictionary()
+
+    var currentActivityIndex: Int = -1
+    var startDate: Date?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
-        //collectionView.backgroundColor = .gray
         
         loadActivities()
     }
@@ -56,11 +60,27 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 if error != nil {
                     NSLog("Error getting activities from Parse")
                 } else {
-                    NSLog("Items from Parse")
+                    NSLog("getActivities from Parse")
                     self.activities = activities!
-                    self.collectionView.reloadData()
+                    let currentDate = Utils.formatDate(dateString: String(describing: Date()))
+                    let params = ["activity_event_date": currentDate!] as [String : Any]
+                    ParseClient.sharedInstance.getTodayCountForAllActivities(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
+                        if error != nil {
+                            NSLog("Error getting activities from Parse")
+                        } else {
+                            for activity in activities! {
+                                var activityLogs = self.activitiesTodayLog[activity.activity_name!] ?? []
+                                activityLogs.append(activity)
+                                self.activitiesTodayLog[activity.activity_name!] = activityLogs
+                                
+                            }
+                            NSLog("Items from Parse for getTodayCountForActivity \(self.activitiesTodayLog)")
+                            self.collectionView.reloadData()
+                        }
+                    }
                 }
             }
+                
         }
     }
     
@@ -98,14 +118,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         cell.layer.borderColor = UIColor.darkGray.cgColor
         cell.layer.borderWidth = 0.5
+        cell.isSelected = indexPath.row == currentActivityIndex
         
         //Loading PFFile to PFImageView
-        let pfImage = activities[indexPath.row].activityImageFile
+        let activity = activities[indexPath.row]
+        let pfImage = activity.activityImageFile
         if let imageFile : PFFile = pfImage{
             imageFile.getDataInBackground(block: { (data, error) in
                 if error == nil {
-                        let image = UIImage(data: data!)
-                        cell.activityImage.setImage(image, for: UIControlState.normal)
+                    let image = UIImage(data: data!)
+                    cell.activityImage.setImage(image, for: UIControlState.normal)
+                    cell.activityImage.setImage(image, for: UIControlState.selected)
                 } else {
                     print(error!.localizedDescription)
                 }
@@ -113,8 +136,22 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         cell.activityImage.tintColor = .white
-        cell.activityNameLabel.text = activities[indexPath.row].activityName
+        cell.activityNameLabel.text = activity.activityName
+        let activityLog = activitiesTodayLog[activity.activityName!]
+        let totalTimeSpentToday = getTimeSpentToday(activityLog: activityLog )
+        if totalTimeSpentToday == "0" {
+            cell.timeSpentLabel.isHidden = true
+        } else {
+            cell.timeSpentLabel.isHidden = false
+            cell.timeSpentLabel.text = totalTimeSpentToday
+        }
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width/2, height: 100);
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -123,23 +160,78 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         navigationController?.pushViewController(detailActivityViewController, animated: true);
     }
 
-    func timerView(onStopTimer timerView: TimerView, timeElapsed: UInt64) {
-        // Call database API to save timeElapsed
+    func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
+        if(activityLog == nil || activityLog?.count == 0) {
+            return "0"
+        }
+        var totalTimeSpentToday: Int64 = 0
+        for log in activityLog! {
+            if log.activity_duration != nil {
+                totalTimeSpentToday += Int64(log.activity_duration!)
+            }
+        }
+        let seconds = totalTimeSpentToday % 60
+        let minutes = totalTimeSpentToday / 60
+        let hours = totalTimeSpentToday / 3600
+        //print("totalTimeSpentToday:", totalTimeSpentToday)
         
+        if hours > 0 {
+            return minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+        }
+        
+        if minutes > 0 {
+            return seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+        }
+        
+        return "\(seconds) sec today"
+
     }
     
-    func timerView(onStartTimer timerView: TimerView) {
-        // Call 
-    }
-    
-    func activityCell(onStartActivity activityCell: ActivityCell) {
-        let activityName = activityCell.activityNameLabel.text
-        timerView.onStartTimer()
-        print("Start", activityCell.activityNameLabel!.text!)
-    }
-    
-    func activityCell(onStopActivity activityCell: ActivityCell) {
-        print("Stop", activityCell.activityNameLabel!.text!)
-        timerView.onStopTimer()
+    func activityCell(onStartStop activityCell: ActivityCell) {
+        let clickActivityIndex = collectionView.indexPath(for: activityCell)!.row
+        if currentActivityIndex == -1 {
+            activityCell.isSelected = true
+            currentActivityIndex = (collectionView.indexPath(for: activityCell)?.row)!
+            print("Timer started")
+            startDate = Date()
+            timerView.onStartTimer()
+        } else if clickActivityIndex == currentActivityIndex {
+            activityCell.isSelected = false
+            currentActivityIndex = -1
+            print("Timer Stopped")
+            let passedSeconds = timerView.onStopTimer()
+            
+            let currentDate = utils.formatDate(dateString: String(describing: Date()))
+            print("currentDate is \(currentDate!)")
+            
+            print("Saving the activity in db")
+            print("startDate \(startDate!)")
+            print("endDate \(Date())")
+            print("duration \(passedSeconds)")
+            
+            if (!(activityCell.activityNameLabel.text?.isEmpty)!) {
+                let params = ["activity_name": activityCell.activityNameLabel.text!, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary
+                
+                //Showing locally
+                var activityLogs = self.activitiesTodayLog[activityCell.activityNameLabel.text!] ?? []
+                activityLogs.append(ActivityLog(dictionary: params))
+                self.activitiesTodayLog[activityCell.activityNameLabel.text!] = activityLogs
+                self.collectionView.reloadData()
+                
+                ParseClient.sharedInstance.saveActivityLog(params: params as NSDictionary?) { (PFObject, Error) -> () in
+                    if Error != nil {
+                        NSLog("Error saving to the log for the activity")
+                    } else {
+                        NSLog("Saved the activity for", activityCell.activityNameLabel.text!)
+                    }
+                }
+            }
+            
+            startDate = nil
+            
+//            UserDefaults.standard.set(isActivityRunning, forKey:"quitActivityRunning")
+//            UserDefaults.standard.synchronize()
+
+        }
     }
 }

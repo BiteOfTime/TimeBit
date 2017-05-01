@@ -40,6 +40,7 @@
 		9303B9161EB5BA8D0086F0FB /* DetailActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9303B9151EB5BA8D0086F0FB /* DetailActivityViewController.xib */; };
 		A5764ED13E954BFBB12497EF /* Pods_TimeBitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78EB96CA347EF1C14436DA37 /* Pods_TimeBitTests.framework */; };
 		F89BB1751EB5F1C70096EC17 /* TimerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89BB1741EB5F1C70096EC17 /* TimerView.xib */; };
+		F89BB1791EB69EC90096EC17 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BB1781EB69EC90096EC17 /* Utils.swift */; };
 		F8A2C6A61EB5A62E005CC925 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */; };
 		F8D7310A1EB3C5290080039E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731091EB3C5290080039E /* HomeViewController.swift */; };
 		F8D731121EB3C9120080039E /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731111EB3C9120080039E /* TimerView.swift */; };
@@ -110,6 +111,7 @@
 		B08A7E26325A76113F4F7572 /* Pods-TimeBit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBit/Pods-TimeBit.debug.xcconfig"; sourceTree = "<group>"; };
 		C9B5FD66C06BBA440B24E233 /* Pods-TimeBitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBitUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBitUITests/Pods-TimeBitUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F89BB1741EB5F1C70096EC17 /* TimerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimerView.xib; sourceTree = "<group>"; };
+		F89BB1781EB69EC90096EC17 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		F8D731091EB3C5290080039E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F8D731111EB3C9120080039E /* TimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,10 @@
 		6B4951F81EAE5F9B006645D5 /* TimeBit */ = {
 			isa = PBXGroup;
 			children = (
+				F89BB1771EB69E910096EC17 /* Utils */,
+				9303B8EA1EB4571C0086F0FB /* View */,
+				F8D731101EB3C8CB0080039E /* Views */,
+				F8D731061EB3AEF90080039E /* Nib */,
 				6B49522B1EAFF4F1006645D5 /* API */,
 				6B4952271EAFDB1A006645D5 /* Model */,
 				9303B8EA1EB4571C0086F0FB /* View */,
@@ -279,6 +285,33 @@
 				25E249913954E15995F02A01 /* Pods_TimeBitUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F89BB1771EB69E910096EC17 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F89BB1781EB69EC90096EC17 /* Utils.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		F8D731061EB3AEF90080039E /* Nib */ = {
+			isa = PBXGroup;
+			children = (
+				F89BB1741EB5F1C70096EC17 /* TimerView.xib */,
+				F8D731151EB3D80F0080039E /* ActivityCell.xib */,
+				F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */,
+			);
+			name = Nib;
+			sourceTree = "<group>";
+		};
+		F8D731101EB3C8CB0080039E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F8D731111EB3C9120080039E /* TimerView.swift */,
+				F8D731131EB3D6E70080039E /* ActivityCell.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -578,6 +611,7 @@
 				6B49522F1EB129EA006645D5 /* Secrets.swift in Sources */,
 				6B4952351EB3E876006645D5 /* GoalSettingViewController.swift in Sources */,
 				6B4952461EB5442C006645D5 /* GoalsViewController.swift in Sources */,
+				F89BB1791EB69EC90096EC17 /* Utils.swift in Sources */,
 				6B4952311EB13AC0006645D5 /* User.swift in Sources */,
 				9303B90C1EB57B3C0086F0FB /* DetailActivityViewController.swift in Sources */,
 				9303B9091EB578110086F0FB /* DetailActivity4Cell.swift in Sources */,

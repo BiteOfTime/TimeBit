@@ -34,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController(rootViewController: tabBarController)
         navigationController.navigationBar.barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
         navigationController.navigationBar.barStyle = UIBarStyle.black
-
+        navigationController.navigationItem.title = "TimeBit"
+        
         tabViewController1.tabBarItem = UITabBarItem(
             title: "Home",
             image: UIImage(named: "Home"),
