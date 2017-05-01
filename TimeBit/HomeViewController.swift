@@ -201,7 +201,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("Timer Stopped")
             let passedSeconds = timerView.onStopTimer()
             
-            let currentDate = utils.formatDate(dateString: String(describing: Date()))
+            let currentDate = Utils.formatDate(dateString: String(describing: Date()))
             print("currentDate is \(currentDate!)")
             
             print("Saving the activity in db")
