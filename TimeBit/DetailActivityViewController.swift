@@ -70,13 +70,11 @@ class DetailActivityViewController: UIViewController {
                 
                 if hours > 0 {
                     self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
-                }
-                
-                if minutes > 0 {
+                } else if minutes > 0 {
                     self.today_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                } else {
+                    self.today_Count = "\(seconds) sec today"
                 }
-                
-                self.today_Count = "\(seconds) sec today"
             }
             
             print("output of today_Count inside \(self.today_Count)")
@@ -123,14 +121,11 @@ class DetailActivityViewController: UIViewController {
                 
                 if hours > 0 {
                     self.tillDate_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
-                }
-                
-                if minutes > 0 {
+                } else if minutes > 0 {
                     self.tillDate_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                } else {
+                    self.tillDate_Count = "\(seconds) sec today"
                 }
-                
-                self.tillDate_Count = "\(seconds) sec today"
-                
             }
             
             print("output tillDate_Count inside \(self.tillDate_Count)")
