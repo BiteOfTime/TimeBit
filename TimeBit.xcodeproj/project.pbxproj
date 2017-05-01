@@ -190,9 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				F89BB1771EB69E910096EC17 /* Utils */,
-				9303B8EA1EB4571C0086F0FB /* View */,
-				F8D731101EB3C8CB0080039E /* Views */,
-				F8D731061EB3AEF90080039E /* Nib */,
 				6B49522B1EAFF4F1006645D5 /* API */,
 				6B4952271EAFDB1A006645D5 /* Model */,
 				9303B8EA1EB4571C0086F0FB /* View */,
@@ -267,6 +264,10 @@
 		9303B8EA1EB4571C0086F0FB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F8D731111EB3C9120080039E /* TimerView.swift */,
+				F8D731131EB3D6E70080039E /* ActivityCell.swift */,
+				F89BB1741EB5F1C70096EC17 /* TimerView.xib */,
+				F8D731151EB3D80F0080039E /* ActivityCell.xib */,
 				9303B8FB1EB5771A0086F0FB /* DetailActivity1Cell.swift */,
 				9303B8FC1EB5771A0086F0FB /* DetailActivity1Cell.xib */,
 				9303B8FF1EB5779A0086F0FB /* DetailActivity2Cell.swift */,
@@ -275,10 +276,6 @@
 				9303B9041EB577C70086F0FB /* DetailActivity3Cell.xib */,
 				9303B9071EB578110086F0FB /* DetailActivity4Cell.swift */,
 				9303B9081EB578110086F0FB /* DetailActivity4Cell.xib */,
-				F8D731111EB3C9120080039E /* TimerView.swift */,
-				F8D731131EB3D6E70080039E /* ActivityCell.swift */,
-				F89BB1741EB5F1C70096EC17 /* TimerView.xib */,
-				F8D731151EB3D80F0080039E /* ActivityCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -299,25 +296,6 @@
 				F89BB1781EB69EC90096EC17 /* Utils.swift */,
 			);
 			name = Utils;
-			sourceTree = "<group>";
-		};
-		F8D731061EB3AEF90080039E /* Nib */ = {
-			isa = PBXGroup;
-			children = (
-				F89BB1741EB5F1C70096EC17 /* TimerView.xib */,
-				F8D731151EB3D80F0080039E /* ActivityCell.xib */,
-				F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */,
-			);
-			name = Nib;
-			sourceTree = "<group>";
-		};
-		F8D731101EB3C8CB0080039E /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F8D731111EB3C9120080039E /* TimerView.swift */,
-				F8D731131EB3D6E70080039E /* ActivityCell.swift */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
