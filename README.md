@@ -21,10 +21,12 @@ The following functionality will be implemented:
 - [ ] User can backup and restore data through iCloud. (optional)
 
 App Design:
+
 ![App Design](/Allscreens.png?raw=true "App Design Screenshot")
 
 
 Here's a walkthrough of the wireframe:
+
 ![Animated Screenshot](/TimeTrack.gif?raw=true "Animated Screenshot")
 
 
