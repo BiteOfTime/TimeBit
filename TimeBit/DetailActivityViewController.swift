@@ -28,6 +28,8 @@ class DetailActivityViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        self.navigationItem.title = activity_name
+        
         tableView.register(UINib(nibName: "DetailActivity1Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity1Cell")
         tableView.register(UINib(nibName: "DetailActivity2Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity2Cell")
         tableView.register(UINib(nibName: "DetailActivity3Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity3Cell")
