@@ -74,7 +74,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <color key="backgroundColor" red="0.088180954028164532" green="0.23299686852797957" blue="0.27486516497461932" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                <color key="backgroundColor" red="0.078431372549019607" green="0.19215686274509802" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="hourLabel" destination="QzH-Cg-th6" id="SF8-8a-Yx1"/>

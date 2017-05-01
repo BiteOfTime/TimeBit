@@ -26,11 +26,15 @@ class DetailActivity4Cell: UITableViewCell {
     var startActivity: Bool = false
     var isActivityRunning: Bool = false
     var isActivityPaused: Bool = false
-    var passedSeconds: Int = 0
+    var passedSeconds: Int64 = 0
     var startDate: Date?
     var quitDate: Date?
     var activityTimer: Timer?
-    var totalduration: NSInteger = 0
+    var totalduration: Int = 0
+    
+    var hours: Int = 0
+    var minutes: Int = 0
+    var seconds: Int = 0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -109,6 +113,7 @@ class DetailActivity4Cell: UITableViewCell {
         minuteLabel.text = String(minutes)
         hourLabel.text = String(hours)
     }
+    
     
     func formatDate(dateString: String) -> String? {
         
