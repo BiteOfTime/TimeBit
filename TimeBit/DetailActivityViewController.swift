@@ -35,6 +35,7 @@ class DetailActivityViewController: UIViewController {
         
         // Today's activity update
         
+        
         tableView.reloadData()
         todayCount()
         tillDateCount()
@@ -62,18 +63,21 @@ class DetailActivityViewController: UIViewController {
                 
                 self.activityToday.forEach { x in
                     countDuration = countDuration + x.activity_duration!
+                    print(countDuration)
                 }
+                
+                self.today_Count = String(self.countDuration)
                 
                 let seconds = self.countDuration % 60
                 let minutes = self.countDuration / 60
                 let hours = self.countDuration / 3600
                 
                 if hours > 0 {
-                    self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+                    self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
                 } else if minutes > 0 {
-                    self.today_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                    self.today_Count = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
                 } else {
-                    self.today_Count = "\(seconds) sec today"
+                    self.today_Count = "\(seconds) sec"
                 }
             }
             
@@ -120,11 +124,11 @@ class DetailActivityViewController: UIViewController {
                 let hours = self.countDuration / 3600
                 
                 if hours > 0 {
-                    self.tillDate_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+                    self.tillDate_Count = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
                 } else if minutes > 0 {
-                    self.tillDate_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                    self.tillDate_Count = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
                 } else {
-                    self.tillDate_Count = "\(seconds) sec today"
+                    self.tillDate_Count = "\(seconds) sec"
                 }
             }
             
