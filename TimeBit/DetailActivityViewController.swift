@@ -34,10 +34,11 @@ class DetailActivityViewController: UIViewController {
         tableView.register(UINib(nibName: "DetailActivity4Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity4Cell")
         
         // Today's activity update
-        todayCount()
-        tillDateCount()
+        
         
         tableView.reloadData()
+        todayCount()
+        tillDateCount()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,18 +63,21 @@ class DetailActivityViewController: UIViewController {
                 
                 self.activityToday.forEach { x in
                     countDuration = countDuration + x.activity_duration!
+                    print(countDuration)
                 }
+                
+                self.today_Count = String(self.countDuration)
                 
                 let seconds = self.countDuration % 60
                 let minutes = self.countDuration / 60
                 let hours = self.countDuration / 3600
                 
                 if hours > 0 {
-                    self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+                    self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
                 } else if minutes > 0 {
-                    self.today_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                    self.today_Count = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
                 } else {
-                    self.today_Count = "\(seconds) sec today"
+                    self.today_Count = "\(seconds) sec"
                 }
             }
             
@@ -120,47 +124,18 @@ class DetailActivityViewController: UIViewController {
                 let hours = self.countDuration / 3600
                 
                 if hours > 0 {
-                    self.tillDate_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+                    self.tillDate_Count = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
                 } else if minutes > 0 {
-                    self.tillDate_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                    self.tillDate_Count = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
                 } else {
-                    self.tillDate_Count = "\(seconds) sec today"
+                    self.tillDate_Count = "\(seconds) sec"
                 }
             }
             
             print("output tillDate_Count inside \(self.tillDate_Count)")
         }
         print("output \(tillDate_Count)")
-        //return tillDate_Count!
     }
-    
-    func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
-        if(activityLog == nil || activityLog?.count == 0) {
-            return "0"
-        }
-        var totalTimeSpentToday: Int64 = 0
-        for log in activityLog! {
-            if log.activity_duration != nil {
-                totalTimeSpentToday += Int64(log.activity_duration!)
-            }
-        }
-        let seconds = totalTimeSpentToday % 60
-        let minutes = totalTimeSpentToday / 60
-        let hours = totalTimeSpentToday / 3600
-        //print("totalTimeSpentToday:", totalTimeSpentToday)
-        
-        if hours > 0 {
-            return minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
-        }
-        
-        if minutes > 0 {
-            return seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
-        }
-        
-        return "\(seconds) sec today"
-        
-    }
-
 }
 
 extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSource {
