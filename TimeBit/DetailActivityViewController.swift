@@ -109,17 +109,15 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 1 {
-            print("Set a goal")
+            print("Set/Update a goal")
             let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
             gvc.activityName = activity_name
-            gvc.goalSetting = "Save"
             navigationController?.pushViewController(gvc, animated: true);
         } else if indexPath.section == 2 {
             print("Share with friends")
-            let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
-            gvc.activityName = activity_name
-            gvc.goalSetting = "Update"
-            navigationController?.pushViewController(gvc, animated: true);
+//            let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
+//            gvc.activityName = activity_name
+//            navigationController?.pushViewController(gvc, animated: true);
         }
         
         tableView.reloadData()

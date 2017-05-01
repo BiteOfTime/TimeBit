@@ -123,9 +123,9 @@ class ParseClient: NSObject {
         goalEntry["user_id"] = getCurrentUser()
         goalEntry["activity_name"] = params!["activityName"] as! String
         goalEntry["limit"] = params!["limit"] as! String
-        goalEntry["frequency"] = params!["frequency"] as! String
         goalEntry["hours"] = params!["hours"] as! String
         goalEntry["mins"] = params!["mins"] as! String
+        goalEntry["frequency"] = params!["frequency"] as! String
         
         // Save object (following function will save the object in Parse asynchronously)
         goalEntry.saveInBackground { (success: Bool, error: Error?) in
@@ -157,17 +157,17 @@ class ParseClient: NSObject {
         }
     }
     
-    func getActivityGoals(activityName: String?, completion: @escaping (_ goal: [Goal]?, _ error: Error?) -> ()) {
+    func getActivityGoals(activityName: String?, completion: @escaping (_ goal: Goal?, _ error: Error?) -> ()) {
         let goalQuery = PFQuery(className: "GoalTest")
         goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
         goalQuery.whereKey("activity_name", equalTo: activityName!)
         
-        goalQuery.findObjectsInBackground { (objects, error) -> Void in
+        goalQuery.getFirstObjectInBackground { (object, error) -> Void in
             if error == nil {
-                let PFGoals = objects
-                let goals = Goal.GoalsWithArray(dictionaries: PFGoals!)
-                print(objects as Any)
-                completion(goals, nil)
+                let PFGoal = object
+                let goal = Goal.init(pfobj: PFGoal!)
+                print(object as Any)
+                completion(goal, nil)
             } else {
                 NSLog("error: \(String(describing: error))")
                 completion(nil, error)

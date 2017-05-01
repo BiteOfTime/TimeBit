@@ -14,23 +14,26 @@ class Goal: NSObject {
     var userId : String?
     var activityName : String?
     var limit: String? //equal, atleast or atmax
-    var frequency: String? //today, daily, weekly or monthly
     var hours: Int? // 1 - 24 hrs
     var mins: Int? //  1 - 60 mins
+    var frequency: String? //today, daily, weekly or monthly
     
-//    init(dictionary: NSDictionary) {
-//        user_id = dictionary["user_id"] as? String
-//        activity_name = dictionary["activity_name"] as? String
-//        activity_desc = dictionary["activity_desc"] as? String
-//    }
+    init(dictionary: NSDictionary) {
+        userId = dictionary["user_id"] as? String
+        activityName = dictionary["activity_name"] as? String
+        limit = dictionary["limit"] as? String
+        hours = dictionary["limit"] as? Int
+        mins = dictionary["limit"] as? Int
+        frequency = dictionary["limit"] as? String
+    }
     
     init(pfobj: PFObject) {
         self.userId = pfobj["user_id"] as? String
         self.activityName = pfobj["activity_name"] as? String
         self.limit = pfobj["limit"] as? String
+        self.hours = Int(pfobj["hours"]! as? String ?? "") ?? 0
+        self.mins = Int(pfobj["mins"]! as? String ?? "") ?? 0
         self.frequency = pfobj["frequency"] as? String
-        self.hours = pfobj["hours"] as? Int
-        self.mins = pfobj["mins"] as? Int
     }
     
     class func GoalsWithArray(dictionaries: [PFObject]) -> [Goal] {

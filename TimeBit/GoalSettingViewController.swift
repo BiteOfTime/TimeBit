@@ -36,12 +36,8 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.pickerView.dataSource = self
         //set Navigation bar title and color
         self.tabBarController?.navigationItem.title = "Goals"
-        self.navigationItem.title = "Goals"
+        self.navigationItem.title = "Goal Setting"
         
-//        let UserId = activity.user_id
-  //      let activityName = activity.activity_name
- //       activityNameLabel.text = activityName
-        let goalSetting = self.goalSetting
         activityNameLabel.text = self.activityName
         
         // Input data into the PickerArray:
@@ -49,26 +45,25 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                       ["0hr", "1hr", "2hr", "3hr", "4hr", "5hr", "6hr", "7hr", "8hr", "9hr", "10hr", "11hr", "12hr", "13hr", "14hr", "15hr", "16hr", "17hr", "18hr", "19hr", "20hr", "21hr", "22hr", "23hr", "24hr"],
                       ["00min", "05min", "10min", "15min", "20min", "25min", "30min", "35min", "40min", "45min", "50min", "55min", "60min"],
                       ["Today", "Daily", "Weekly"]]
+        self.currentGoalLabel.text = "No goal set"
         
-        if goalSetting == "Update" {
-            saveGoalButton.setTitle("Update", for: .normal)
-       
-            ParseClient.sharedInstance.getActivityGoals(activityName: activityName as String?) { (goals: [Goal]?, error: Error?) -> Void in
-                if error != nil {
-                    NSLog("Error getting goals from Parse")
-                } else {
-                    self.goal = goals![0]
-//                  print(self.goal.limit)
-//                  let hrs = ("\(self.goal.hours!)")
-//                  let mins = self.goal.mins!
-//                  print(hrs, mins)
-//                  let goalHrs = "\(hrs ?? 0)" + "hr "
-//                  let goalMins = "\(mins ?? 0)" + "min "
-//                  let currentGoal = self.goal.limit! + " " + goalHrs + goalMins + self.goal.frequency!
-//                
-//                //let currentGoal = ("\(self.goal.limit) \(self.goal.hours)hr \(self.goal.mins)mins \(self.goal.frequency)")
-//                  self.currentGoalLabel.text = currentGoal
+        //Check if goal exist, then update or else add anew goal.
+        ParseClient.sharedInstance.getActivityGoals(activityName: activityName as String?) { (goal: Goal?, error: Error?) -> Void in
+            if error != nil {
+                NSLog("Error getting goals from Parse")
+            } else {
+                if let goalForActivity = goal {
+                    self.goalSetting = "Update"
+                    self.saveGoalButton.setTitle("Update", for: .normal)
+                    self.goal = goalForActivity
+                    let hrsString = "\(goalForActivity.hours!)" + "hr "
+                    let minsString = "\(goalForActivity.mins!)" + "min "
+                    let currentGoal = goalForActivity.limit! + " " + hrsString + minsString + goalForActivity.frequency!
+                    self.currentGoalLabel.text = currentGoal
                     NSLog("Items from Parse")
+                } else {
+                    self.goalSetting = "Save"
+                    self.saveGoalButton.setTitle("Save", for: .normal)
                 }
             }
         }
@@ -136,6 +131,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                     NSLog("Error saving to Parse")
                 } else {
                     NSLog("Saved activity goal to Parse")
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         } else {
@@ -144,6 +140,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                     NSLog("Error updating goal to Parse")
                 } else {
                     NSLog("Updated activity goal to Parse")
+                    self.dismiss(animated: true, completion: nil)
                 }
             })
         }
