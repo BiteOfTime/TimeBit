@@ -24,8 +24,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghs-wG-9ty">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
+                        <view contentMode="scaleToFill" restorationIdentifier="TimerView" translatesAutoresizingMaskIntoConstraints="NO" id="wSo-Ep-3vm" customClass="TimerView" customModule="TimeBit" customModuleProvider="target">
+                            <rect key="frame" x="4" y="60" width="367" height="140"/>
+                            <color key="backgroundColor" red="0.035294117649999998" green="0.1450980392" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="140" id="sYN-Sc-O8X"/>
+                            </constraints>
+                        </view>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="IuE-KY-Qaf">
-                            <rect key="frame" x="0.0" y="220" width="375" height="454"/>
+                            <rect key="frame" x="0.0" y="260" width="375" height="414"/>
                             <color key="backgroundColor" red="0.035294117649999998" green="0.1450980392" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lL8-gB-sR1">
                                 <size key="itemSize" width="160" height="100"/>
@@ -34,23 +41,35 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <view contentMode="scaleToFill" restorationIdentifier="TimerView" translatesAutoresizingMaskIntoConstraints="NO" id="wSo-Ep-3vm" customClass="TimerView" customModule="TimeBit" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="60" width="375" height="160"/>
-                            <color key="backgroundColor" red="0.035294117649999998" green="0.1450980392" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGz-bb-uAx">
+                            <rect key="frame" x="156.5" y="210" width="63" height="34"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MuF-gp-kH6">
+                            <rect key="frame" x="137.5" y="242" width="100" height="2"/>
+                            <color key="backgroundColor" red="0.0" green="0.66980415579999997" blue="0.94023269409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="160" id="sYN-Sc-O8X"/>
+                                <constraint firstAttribute="width" constant="100" id="aHC-9U-Ue7"/>
+                                <constraint firstAttribute="height" constant="2" id="pud-3A-yfI"/>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.035294117649999998" green="0.1450980392" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="wSo-Ep-3vm" secondAttribute="trailing" id="8jq-2S-8Fp"/>
-                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="top" secondItem="wSo-Ep-3vm" secondAttribute="bottom" id="Bxk-JT-9XD"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="top" secondItem="MuF-gp-kH6" secondAttribute="bottom" constant="16" id="7oh-wk-uFd"/>
+                        <constraint firstAttribute="trailing" secondItem="wSo-Ep-3vm" secondAttribute="trailing" constant="4" id="8jq-2S-8Fp"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="top" secondItem="wSo-Ep-3vm" secondAttribute="bottom" constant="60" id="Bxk-JT-9XD"/>
                         <constraint firstItem="wSo-Ep-3vm" firstAttribute="top" secondItem="ghs-wG-9ty" secondAttribute="top" constant="60" id="ESq-GJ-R1c"/>
-                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="trailing" secondItem="wSo-Ep-3vm" secondAttribute="trailing" id="EiE-hG-7hY"/>
                         <constraint firstAttribute="bottom" secondItem="IuE-KY-Qaf" secondAttribute="bottom" constant="-7" id="NMB-kY-woj"/>
-                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="leading" secondItem="wSo-Ep-3vm" secondAttribute="leading" id="m2C-eb-hBf"/>
-                        <constraint firstItem="wSo-Ep-3vm" firstAttribute="leading" secondItem="ghs-wG-9ty" secondAttribute="leading" id="zqW-lm-tNQ"/>
+                        <constraint firstAttribute="trailing" secondItem="IuE-KY-Qaf" secondAttribute="trailing" id="Tez-Gx-Pa0"/>
+                        <constraint firstItem="gGz-bb-uAx" firstAttribute="top" secondItem="wSo-Ep-3vm" secondAttribute="bottom" constant="10" id="dZa-x5-dG9"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="top" secondItem="gGz-bb-uAx" secondAttribute="bottom" constant="16" id="koL-SG-PI5"/>
+                        <constraint firstItem="gGz-bb-uAx" firstAttribute="centerX" secondItem="ghs-wG-9ty" secondAttribute="centerX" id="oMD-NB-V0i"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="leading" secondItem="ghs-wG-9ty" secondAttribute="leading" id="qRl-Zc-wD1"/>
+                        <constraint firstItem="MuF-gp-kH6" firstAttribute="centerX" secondItem="ghs-wG-9ty" secondAttribute="centerX" id="yHR-ZO-3tI"/>
+                        <constraint firstItem="wSo-Ep-3vm" firstAttribute="leading" secondItem="ghs-wG-9ty" secondAttribute="leading" constant="4" id="zqW-lm-tNQ"/>
                     </constraints>
                 </view>
             </subviews>

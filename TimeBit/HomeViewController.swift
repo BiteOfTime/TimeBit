@@ -96,12 +96,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 Activity("Sport", "Sport", #imageLiteral(resourceName: "Sport"))]
     }
     
-//    func defaultActivitiesList () -> [Activity] {
-//        return [Activity("Work", "Work", convertToPFFile(#imageLiteral(resourceName: "Work"),activityName: "Work")),
-//                Activity("Eat", "Eat", convertToPFFile(#imageLiteral(resourceName: "Eat"),activityName: "Eat")),
-//                Activity("Sleep", "Sleep", convertToPFFile(#imageLiteral(resourceName: "Sleep"),activityName: "Sleep"))]
-//    }
-    
     func convertToPFFile(_ uiImage:UIImage, activityName: String) -> PFFile? {
         let imageData = UIImagePNGRepresentation(uiImage)
         let image = PFFile(name: "\(activityName).png", data: imageData!)
@@ -176,14 +170,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //print("totalTimeSpentToday:", totalTimeSpentToday)
         
         if hours > 0 {
-            return minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+            return minutes > 0 ? "\(hours)hr \(minutes)min today" : "\(hours)hr today"
         }
         
         if minutes > 0 {
-            return seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+            return seconds > 0  ? "\(minutes)min \(seconds)sec today" : "\(minutes)min today"
         }
         
-        return "\(seconds) sec today"
+        return "\(seconds)sec today"
 
     }
     
@@ -192,22 +186,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if currentActivityIndex == -1 {
             activityCell.isSelected = true
             currentActivityIndex = (collectionView.indexPath(for: activityCell)?.row)!
-            print("Timer started")
+            //print("Timer started")
             startDate = Date()
             timerView.onStartTimer()
         } else if clickActivityIndex == currentActivityIndex {
             activityCell.isSelected = false
             currentActivityIndex = -1
-            print("Timer Stopped")
+            //print("Timer Stopped")
             let passedSeconds = timerView.onStopTimer()
             
             let currentDate = Utils.formatDate(dateString: String(describing: Date()))
-            print("currentDate is \(currentDate!)")
-            
-            print("Saving the activity in db")
-            print("startDate \(startDate!)")
-            print("endDate \(Date())")
-            print("duration \(passedSeconds)")
+//            print("currentDate is \(currentDate!)")
+//            print("Saving the activity in db")
+//            print("startDate \(startDate!)")
+//            print("endDate \(Date())")
+//            print("duration \(passedSeconds)")
             
             if (!(activityCell.activityNameLabel.text?.isEmpty)!) {
                 let params = ["activity_name": activityCell.activityNameLabel.text!, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary
@@ -228,10 +221,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             
             startDate = nil
-            
-//            UserDefaults.standard.set(isActivityRunning, forKey:"quitActivityRunning")
-//            UserDefaults.standard.synchronize()
-
         }
     }
 }

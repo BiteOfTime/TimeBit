@@ -8,18 +8,10 @@
 
 import UIKit
 
-//@objc protocol TimerViewDelegate {
-//    func timerView(onStartTimer timerView: TimerView)
-//    func timerView(onStopTimer timerView: TimerView, timeElapsed: UInt64)
-//}
-
 class TimerView: UIView{
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
-    //@IBOutlet weak var startStopButton: UIButton!
-    
-    //weak var delegate: TimerViewDelegate?
     
     var timer = Timer()
     var hours: Int = 0
@@ -43,18 +35,13 @@ class TimerView: UIView{
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
-        
-        //contentView.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
-//        startStopButton.setImage(#imageLiteral(resourceName: "Play"), for: UIControlState.normal)
-//        startStopButton.setImage(#imageLiteral(resourceName: "Stop"), for: UIControlState.selected)
+        contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.darkGray.cgColor
     }
     
     func onStartTimer() {
         passedSeconds = 0
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(TimerView.updateTimer), userInfo: nil, repeats: true)
-        
-        //print("Timer started")
-        //delegate?.timerView(onStartTimer: self)
     }
     
     func onStopTimer() -> Int64{
@@ -63,7 +50,6 @@ class TimerView: UIView{
         timer.invalidate()
         resetTimer()
         return passedSeconds
-        //delegate?.timerView(onStopTimer: self, timeElapsed: 100)
     }
     
     func updateTimer() {
@@ -94,9 +80,5 @@ class TimerView: UIView{
         minutes = 0
         hours = 0
         timerLabel.text = "00:00:00"
-    }
-    
-    func getTimeElapsedInSeconds() {
-        
     }
 }
