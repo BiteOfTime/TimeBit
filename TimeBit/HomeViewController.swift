@@ -28,7 +28,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         
+        let addNewActivityButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: "addNewActivityAction")
+        self.tabBarController?.navigationItem.rightBarButtonItem = addNewActivityButton
+        self.tabBarController?.navigationItem.title = "Home"
+
         loadActivities()
+    }
+    
+    func addNewActivityAction() {
+        let addNewActivityViewController = AddNewActivityViewController(nibName: "AddNewActivityViewController", bundle: nil)
+        navigationController?.pushViewController(addNewActivityViewController, animated: true)
     }
 
     func loadActivities () {
@@ -151,7 +160,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
         detailActivityViewController.activity_name = activities[indexPath.row].activityName!
-        navigationController?.pushViewController(detailActivityViewController, animated: true);
+        navigationController?.pushViewController(detailActivityViewController, animated: true)
     }
 
     func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
