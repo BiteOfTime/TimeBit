@@ -31,32 +31,18 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I want to spend:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fya-I8-vCo">
                     <rect key="frame" x="57" y="186" width="178" height="51"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TzM-3N-0YV">
-                    <rect key="frame" x="16" y="75" width="100" height="24"/>
+                    <rect key="frame" x="16" y="102" width="100" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <attributedString key="attributedText">
                         <fragment content="Task Name">
                             <attributes>
                                 <color key="NSColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <font key="NSFont" size="15" name="AvenirNext-Regular"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kw-U0-b5C">
-                    <rect key="frame" x="16" y="107" width="100" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <attributedString key="attributedText">
-                        <fragment content="Current Goal">
-                            <attributes>
-                                <color key="NSColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <font key="NSFont" size="15" name="AvenirNext-Regular"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
@@ -74,13 +60,26 @@
                         <action selector="onSaveUpdateButton:" destination="-1" eventType="touchUpInside" id="Ax1-zQ-XZx"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ez7-dy-bRW">
-                    <rect key="frame" x="131" y="107" width="288" height="22"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8E-th-N6q">
+                    <rect key="frame" x="131" y="103" width="173" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <attributedString key="attributedText">
-                        <fragment content="Description">
+                        <fragment content="Task Name">
                             <attributes>
                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <font key="NSFont" size="15" name="AvenirNext-Regular"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kw-U0-b5C">
+                    <rect key="frame" x="16" y="141" width="100" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <attributedString key="attributedText">
+                        <fragment content="Current Goal">
+                            <attributes>
+                                <color key="NSColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <font key="NSFont" size="15" name="AvenirNext-Regular"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
@@ -88,14 +87,15 @@
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8E-th-N6q">
-                    <rect key="frame" x="131" y="76" width="151" height="22"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ez7-dy-bRW">
+                    <rect key="frame" x="131" y="141" width="179" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <attributedString key="attributedText">
-                        <fragment content="Task Name">
+                        <fragment content="Description">
                             <attributes>
                                 <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <font key="NSFont" size="15" name="AvenirNext-Regular"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>

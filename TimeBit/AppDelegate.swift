@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image:UIImage(named: "Report") ,
             tag:2)
         tabViewController3.tabBarItem = UITabBarItem(
-            title: "Goal",
+            title: "Goals",
             image:UIImage(named: "Goals") ,
             tag:2)
         tabViewController4.tabBarItem = UITabBarItem(

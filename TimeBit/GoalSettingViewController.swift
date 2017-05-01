@@ -44,7 +44,12 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         PickerData = [["Atleast", "Atmax", "Exactly"],
                       ["0hr", "1hr", "2hr", "3hr", "4hr", "5hr", "6hr", "7hr", "8hr", "9hr", "10hr", "11hr", "12hr", "13hr", "14hr", "15hr", "16hr", "17hr", "18hr", "19hr", "20hr", "21hr", "22hr", "23hr", "24hr"],
                       ["00min", "05min", "10min", "15min", "20min", "25min", "30min", "35min", "40min", "45min", "50min", "55min", "60min"],
-                      ["Today", "Daily", "Weekly"]]
+                      ["Daily", "Weekly"]]
+        pickerView.selectRow(1, inComponent: 0, animated: true)
+        pickerView.selectRow(2, inComponent: 1, animated: true)
+        pickerView.selectRow(2, inComponent: 2, animated: true)
+        pickerView.selectRow(0, inComponent: 3, animated: true)
+        
         self.currentGoalLabel.text = "No goal set"
         
         //Check if goal exist, then update or else add anew goal.
@@ -131,7 +136,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                     NSLog("Error saving to Parse")
                 } else {
                     NSLog("Saved activity goal to Parse")
-                    self.dismiss(animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
         } else {
@@ -140,7 +145,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                     NSLog("Error updating goal to Parse")
                 } else {
                     NSLog("Updated activity goal to Parse")
-                    self.dismiss(animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
                 }
             })
         }

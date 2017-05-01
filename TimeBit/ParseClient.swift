@@ -70,6 +70,7 @@ class ParseClient: NSObject {
     func saveNewActivity(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject
         let activityEntry = PFObject(className: "ActivityTest")
+       // let imageData = UIImagePNGRepresentation(params!["activityImage"]! as! UIImage)
         
         print("params")
         print(params as Any)
@@ -78,6 +79,7 @@ class ParseClient: NSObject {
         activityEntry["user_id"] = getCurrentUser()
         activityEntry["activity_name"] = params!["activityName"] as! String
         activityEntry["activity_desc"] = params!["activityDesc"] as! String
+       // activityEntry["activity_image"] = PFFile(name: "\(params!["activityImage"]!).png", data: imageData!)
         
         // Save object (following function will save the object in Parse asynchronously)
         activityEntry.saveInBackground { (success: Bool, error: Error?) in
