@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import ParseUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate, AddNewActivityViewControllerDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
@@ -28,9 +28,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         
-        let addNewActivityButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: "addNewActivityAction")
+        let addNewActivityButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(HomeViewController.addNewActivityAction))
         self.tabBarController?.navigationItem.rightBarButtonItem = addNewActivityButton
-        self.tabBarController?.navigationItem.title = "Home"
+        self.tabBarController?.navigationItem.title = "TimeBit"
 
         loadActivities()
     }
@@ -38,6 +38,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func addNewActivityAction() {
         let addNewActivityViewController = AddNewActivityViewController(nibName: "AddNewActivityViewController", bundle: nil)
         navigationController?.pushViewController(addNewActivityViewController, animated: true)
+        
+        addNewActivityViewController.delegate = self
     }
 
     func loadActivities () {
@@ -109,6 +111,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let imageData = UIImagePNGRepresentation(uiImage)
         let image = PFFile(name: "\(activityName).png", data: imageData!)
         return image
+    }
+    
+    func addNewActivityViewController(onSaveActivity newActivity: Activity) {
+        activities.append(newActivity)
+        collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -205,11 +212,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let passedSeconds = timerView.onStopTimer()
             
             let currentDate = Utils.formatDate(dateString: String(describing: Date()))
-//            print("currentDate is \(currentDate!)")
-//            print("Saving the activity in db")
-//            print("startDate \(startDate!)")
-//            print("endDate \(Date())")
-//            print("duration \(passedSeconds)")
             
             if (!(activityCell.activityNameLabel.text?.isEmpty)!) {
                 let params = ["activity_name": activityCell.activityNameLabel.text!, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary

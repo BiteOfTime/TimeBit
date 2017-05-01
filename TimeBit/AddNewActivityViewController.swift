@@ -8,12 +8,18 @@
 
 import UIKit
 
+@objc protocol AddNewActivityViewControllerDelegate {
+    func addNewActivityViewController(onSaveActivity newActivity: Activity )
+}
+
 class AddNewActivityViewController: UIViewController {
     @IBOutlet weak var newActivityText: UITextField!
     @IBOutlet weak var newActivityDesc: UITextField!
     
     var activity: Activity!
     var activities: [Activity]!
+    
+    weak var delegate: AddNewActivityViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,17 +34,19 @@ class AddNewActivityViewController: UIViewController {
     
     @IBAction func onSaveActivityButton(_ sender: Any) {
         
-        let acivityName = newActivityText.text
+        let activityName = newActivityText.text
         let activityDesc = newActivityDesc.text
 //        let activityImage = textToImage(drawText: acivityName! as NSString, inImage: UIImage(#imageLiteral(resourceName: "RoundEmptyCircle"))!, atPoint: CGPoint(x: 20, y: 20))
 //
-        if !(acivityName?.isEmpty)! {
-            let params = ["activityName": acivityName!, "activityDesc": activityDesc!] as [String : Any]
+        if !(activityName?.isEmpty)! {
+            let params = ["activityName": activityName!, "activityDesc": activityDesc!] as [String : Any]
             ParseClient.sharedInstance.saveNewActivity(params: params as NSDictionary?) { (PFObject, Error) -> () in
                 if Error != nil {
                     NSLog("Error saving to Parse")
                 } else {
                     NSLog("Saved activity to Parse")
+                    let newActivity = Activity(activityName!, activityDesc!, #imageLiteral(resourceName: "Eat"))
+                    self.delegate?.addNewActivityViewController(onSaveActivity: newActivity)
                     self.navigationController?.popViewController(animated: true)
                 }
             }
