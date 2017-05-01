@@ -15,9 +15,12 @@ class DetailActivityViewController: UIViewController {
     var detailActivity1Cell: DetailActivity1Cell!
     var detailActivity4Cell: DetailActivity4Cell!
     // Expecting this value from the calling screen.
-    var activity_name: String!
-    //var activity_name: String = "Dance"
+    //var activity_name: String!
+    var activity_name: String = "Dance"
     var activityToday: [ActivityLog]!
+    var today_Count: String?
+    var tillDate_Count: String?
+    var countDuration: Int64 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +35,7 @@ class DetailActivityViewController: UIViewController {
         
         // Today's activity update
         todayCount()
+        tillDateCount()
         
         tableView.reloadData()
     }
@@ -41,20 +45,41 @@ class DetailActivityViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func todayCount() {
-        
+    func todayCount(){
+        today_Count = "0 sec"
         var currentDate = formatDate(dateString: String(describing: Date()))
         print("currentDate is \(currentDate)")
         
         let params = ["activity_name": activity_name, "activity_event_date": currentDate] as [String : Any]
+        
         ParseClient.sharedInstance.getTodayCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
             if error != nil {
                 NSLog("Error getting activities from Parse")
             } else {
                 self.activityToday = activities!
                 NSLog("Items from Parse \(self.activityToday)")
+                var countDuration: Int64 = 0
+                
+                self.activityToday.forEach { x in
+                    countDuration = countDuration + x.activity_duration!
+                }
+                
+                let seconds = self.countDuration % 60
+                let minutes = self.countDuration / 60
+                let hours = self.countDuration / 3600
+                
+                if hours > 0 {
+                    self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+                } else if minutes > 0 {
+                    self.today_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                } else {
+                    self.today_Count = "\(seconds) sec today"
+                }
             }
+            
+            print("output of today_Count inside \(self.today_Count)")
         }
+        print("output1 \(self.today_Count)")
     }
     
     func formatDate(dateString: String) -> String? {
@@ -67,6 +92,73 @@ class DetailActivityViewController: UIViewController {
         // contains the string "22/06/2014".
         
         return formattedDate
+    }
+    
+    func tillDateCount(){
+        tillDate_Count = "0 sec"
+        var currentDate = formatDate(dateString: String(describing: Date()))
+        print("currentDate is \(currentDate)")
+        
+        let params = ["activity_name": activity_name] as [String : Any]
+        
+        ParseClient.sharedInstance.getTotalCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
+            if error != nil {
+                NSLog("Error getting activities from Parse")
+            } else {
+                self.activityToday = activities!
+                NSLog("Items from Parse \(self.activityToday)")
+                
+                self.activityToday.forEach { x in
+                    self.countDuration = self.countDuration + x.activity_duration!
+                    
+                }
+                self.tillDate_Count = String(self.countDuration)
+                //self.tillDate_Count = String(self.countDuration) + "sec"
+                
+                let seconds = self.countDuration % 60
+                let minutes = self.countDuration / 60
+                let hours = self.countDuration / 3600
+                
+                if hours > 0 {
+                    self.tillDate_Count = minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+                } else if minutes > 0 {
+                    self.tillDate_Count = seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+                } else {
+                    self.tillDate_Count = "\(seconds) sec today"
+                }
+            }
+            
+            print("output tillDate_Count inside \(self.tillDate_Count)")
+        }
+        print("output \(tillDate_Count)")
+        //return tillDate_Count!
+    }
+    
+    func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
+        if(activityLog == nil || activityLog?.count == 0) {
+            return "0"
+        }
+        var totalTimeSpentToday: Int64 = 0
+        for log in activityLog! {
+            if log.activity_duration != nil {
+                totalTimeSpentToday += Int64(log.activity_duration!)
+            }
+        }
+        let seconds = totalTimeSpentToday % 60
+        let minutes = totalTimeSpentToday / 60
+        let hours = totalTimeSpentToday / 3600
+        //print("totalTimeSpentToday:", totalTimeSpentToday)
+        
+        if hours > 0 {
+            return minutes > 0 ? "\(hours) hr \(minutes) min today" : "\(hours) hr today"
+        }
+        
+        if minutes > 0 {
+            return seconds > 0  ? "\(minutes) min \(seconds) sec today" : "\(minutes) min today"
+        }
+        
+        return "\(seconds) sec today"
+        
     }
 
 }
@@ -81,6 +173,8 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
         print("section \(indexPath.section)")
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity1Cell", for: indexPath) as! DetailActivity1Cell
+            cell.dailyCount?.text = today_Count
+            cell.sinceCreationCount?.text = tillDate_Count
             return cell
         }
         if indexPath.section == 1 {
