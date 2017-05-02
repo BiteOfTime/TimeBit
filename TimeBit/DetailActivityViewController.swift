@@ -20,8 +20,10 @@ class DetailActivityViewController: UIViewController {
     var activityToday: [ActivityLog]!
     var today_Count: String?
     var tillDate_Count: String?
+    var weekly_count: String?
     var countDuration: Int64 = 0
     var countDurationToday: Int64 = 0
+    var countDurationWeekly: Int64 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,7 @@ class DetailActivityViewController: UIViewController {
         tableView.register(UINib(nibName: "DetailActivity4Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity4Cell")
         
         todayCount()
+        getWeeklyCountForActivity()
         tillDateCount()
         
         tableView.reloadData()
@@ -50,7 +53,6 @@ class DetailActivityViewController: UIViewController {
     func todayCount(){
         today_Count = "0 sec"
         var currentDate = formatDate(dateString: String(describing: Date()))
-        
         let params = ["activity_name": activity_name, "activity_event_date": currentDate] as [String : Any]
         
         ParseClient.sharedInstance.getTodayCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
@@ -64,19 +66,7 @@ class DetailActivityViewController: UIViewController {
                     self.countDurationToday = self.countDurationToday + x.activity_duration!
                 }
                 
-                self.today_Count = String(self.countDuration)
-                
-                let seconds = self.countDurationToday % 60
-                let minutes = self.countDurationToday / 60
-                let hours = self.countDurationToday / 3600
-                
-                if hours > 0 {
-                    self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
-                } else if minutes > 0 {
-                    self.today_Count = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
-                } else {
-                    self.today_Count = "\(seconds) sec"
-                }
+                self.today_Count = self.calculateCount(duration: self.countDurationToday)
             }
             
             DispatchQueue.main.async(execute: {
@@ -98,7 +88,7 @@ class DetailActivityViewController: UIViewController {
         return formattedDate
     }
     
-    func tillDateCount(){
+    func tillDateCount() {
         tillDate_Count = "0 sec"
         var currentDate = formatDate(dateString: String(describing: Date()))
         
@@ -113,21 +103,9 @@ class DetailActivityViewController: UIViewController {
                 
                 self.activityToday.forEach { x in
                     self.countDuration = self.countDuration + x.activity_duration!
-                    
                 }
-                self.tillDate_Count = String(self.countDuration)
                 
-                let seconds = self.countDuration % 60
-                let minutes = self.countDuration / 60
-                let hours = self.countDuration / 3600
-                
-                if hours > 0 {
-                    self.tillDate_Count = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
-                } else if minutes > 0 {
-                    self.tillDate_Count = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
-                } else {
-                    self.tillDate_Count = "\(seconds) sec"
-                }
+                self.tillDate_Count = self.calculateCount(duration: self.countDuration)
             }
             
             DispatchQueue.main.async(execute: {
@@ -135,6 +113,82 @@ class DetailActivityViewController: UIViewController {
             })
         }
     }
+    
+    func getWeeklyCountForActivity() {
+        weekly_count = "0 sec"
+        
+        let params = ["activity_name": activity_name] as [String : Any]
+        
+        ParseClient.sharedInstance.getTotalCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
+            if error != nil {
+                NSLog("Error getting activities from Parse")
+            } else {
+                self.activityToday = activities!
+                NSLog("Items from Parse \(self.activityToday)")
+                
+                var weekDateRange = self.getPastDates(days: 7)
+                
+                self.activityToday.forEach { x in
+                    if(weekDateRange.contains(x.activity_event_date)) {
+                        self.countDurationWeekly = self.countDurationWeekly + x.activity_duration!
+                    }
+                }
+                self.weekly_count = self.calculateCount(duration: self.countDurationWeekly)
+            }
+            
+            DispatchQueue.main.async(execute: {
+                self.tableView.reloadData()
+            })
+        }
+    }
+    
+    func calculateCount(duration: Int64) -> String {
+        var displayStr = "0 sec"
+        let seconds = duration % 60
+        let minutes = duration / 60
+        let hours = duration / 3600
+        
+        if hours > 0 {
+            displayStr = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
+        } else if minutes > 0 {
+            displayStr = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
+        } else {
+            displayStr = "\(seconds) sec"
+        }
+        
+        return displayStr
+    }
+    
+    func getPastDates(days: Int) -> NSArray {
+        let cal = NSCalendar.current
+        var today = cal.startOfDay(for: Date())
+        var arrayDate = [String]()
+        
+        for i in 1 ... days {
+            let day = cal.component(.day, from: today)
+            let month = cal.component(.month, from: today)
+            let year = cal.component(.year, from: today)
+            
+            var dayInString: String = "00"
+            var monthInString: String = "00"
+            if day <= 9 {
+                dayInString = "0"+String(day)
+            } else {
+                dayInString = String(day)
+            }
+            if month <= 9 {
+                monthInString = "0"+String(month)
+            } else {
+                monthInString = String(month)
+            }
+            
+            arrayDate.append(dayInString + "/" + monthInString+"/" + String(year))
+                        // move back in time by one day:
+            today = cal.date(byAdding: .day, value: -1, to: today)!
+        }
+        return arrayDate as NSArray
+    }
+    
 }
 
 extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSource {
@@ -146,8 +200,17 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity1Cell", for: indexPath) as! DetailActivity1Cell
+            cell.todayView?.layer.borderColor = UIColor.white.cgColor
+            cell.todayView?.layer.borderWidth = 1
+            
+            cell.weeklyView?.layer.borderColor = UIColor.white.cgColor
+            cell.weeklyView?.layer.borderWidth = 1
+            
+            cell.tillDateView?.layer.borderColor = UIColor.white.cgColor
+            cell.tillDateView?.layer.borderWidth = 1
             
             cell.dailyCount?.text = today_Count
+            cell.weeklyCount?.text = weekly_count
             cell.sinceCreationCount?.text = tillDate_Count
             
             return cell
@@ -184,9 +247,6 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             navigationController?.pushViewController(gvc, animated: true);
         } else if indexPath.section == 2 {
             print("Share with friends")
-//            let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
-//            gvc.activityName = activity_name
-//            navigationController?.pushViewController(gvc, animated: true);
         }
         
         tableView.reloadData()
