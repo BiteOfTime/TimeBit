@@ -18,19 +18,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="361" height="301.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9j-wC-4Ba">
-                        <rect key="frame" x="99" y="108" width="146" height="39"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.17270420470788264" green="0.12013200346690682" blue="0.9993258248730964" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                        <state key="normal" title="Start Activity">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <color key="titleShadowColor" red="0.9993258248730964" green="0.60211483122455278" blue="0.80082645348469661" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        </state>
-                        <connections>
-                            <action selector="onButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="msh-UK-d3K"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QzH-Cg-th6">
                         <rect key="frame" x="99" y="66" width="26" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -73,6 +60,19 @@
                         <color key="textColor" red="0.99950428299492389" green="0.97919233415543749" blue="0.99896488052664656" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9j-wC-4Ba">
+                        <rect key="frame" x="93" y="131" width="146" height="39"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.12744489026260675" green="0.24851140312642386" blue="0.39226800679121598" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                        <state key="normal" title="Start Activity">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" red="0.9993258248730964" green="1" blue="0.80082645348469661" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                        <connections>
+                            <action selector="onButtonClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="msh-UK-d3K"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.078431372549019607" green="0.19215686274509802" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             </tableViewCellContentView>
