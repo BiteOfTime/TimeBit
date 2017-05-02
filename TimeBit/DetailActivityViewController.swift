@@ -36,12 +36,10 @@ class DetailActivityViewController: UIViewController {
         tableView.register(UINib(nibName: "DetailActivity3Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity3Cell")
         tableView.register(UINib(nibName: "DetailActivity4Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity4Cell")
         
-        // Today's activity update
-        
-        
-        tableView.reloadData()
         todayCount()
         tillDateCount()
+        
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +50,6 @@ class DetailActivityViewController: UIViewController {
     func todayCount(){
         today_Count = "0 sec"
         var currentDate = formatDate(dateString: String(describing: Date()))
-        print("currentDate is \(currentDate)")
         
         let params = ["activity_name": activity_name, "activity_event_date": currentDate] as [String : Any]
         
@@ -65,7 +62,6 @@ class DetailActivityViewController: UIViewController {
                 
                 self.activityToday.forEach { x in
                     self.countDurationToday = self.countDurationToday + x.activity_duration!
-                    print(self.countDurationToday)
                 }
                 
                 self.today_Count = String(self.countDuration)
@@ -83,9 +79,11 @@ class DetailActivityViewController: UIViewController {
                 }
             }
             
-            print("output of today_Count inside \(self.today_Count)")
+            DispatchQueue.main.async(execute: {
+                self.tableView.reloadData()
+            })
+            
         }
-        print("output1 \(self.today_Count)")
     }
     
     func formatDate(dateString: String) -> String? {
@@ -103,7 +101,6 @@ class DetailActivityViewController: UIViewController {
     func tillDateCount(){
         tillDate_Count = "0 sec"
         var currentDate = formatDate(dateString: String(describing: Date()))
-        print("currentDate is \(currentDate)")
         
         let params = ["activity_name": activity_name] as [String : Any]
         
@@ -133,9 +130,10 @@ class DetailActivityViewController: UIViewController {
                 }
             }
             
-            print("output tillDate_Count inside \(self.tillDate_Count)")
+            DispatchQueue.main.async(execute: {
+                self.tableView.reloadData()
+            })
         }
-        print("output \(tillDate_Count)")
     }
 }
 
@@ -146,11 +144,12 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("section \(indexPath.section)")
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity1Cell", for: indexPath) as! DetailActivity1Cell
+            
             cell.dailyCount?.text = today_Count
             cell.sinceCreationCount?.text = tillDate_Count
+            
             return cell
         }
         if indexPath.section == 1 {

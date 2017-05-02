@@ -64,7 +64,6 @@ class DetailActivity4Cell: UITableViewCell {
             secondLabel.text = "00"
             
             var currentDate = formatDate(dateString: String(describing: Date()))
-            print("currentDate is \(currentDate)")
             
             print("Saving the activity in db")
             print("startDate \(startDate)")
