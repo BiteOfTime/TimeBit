@@ -201,13 +201,13 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity1Cell", for: indexPath) as! DetailActivity1Cell
             cell.todayView?.layer.borderColor = UIColor.white.cgColor
-            cell.todayView?.layer.borderWidth = 1
+            cell.todayView?.layer.borderWidth = 3
             
             cell.weeklyView?.layer.borderColor = UIColor.white.cgColor
-            cell.weeklyView?.layer.borderWidth = 1
+            cell.weeklyView?.layer.borderWidth = 3
             
             cell.tillDateView?.layer.borderColor = UIColor.white.cgColor
-            cell.tillDateView?.layer.borderWidth = 1
+            cell.tillDateView?.layer.borderWidth = 3
             
             cell.dailyCount?.text = today_Count
             cell.weeklyCount?.text = weekly_count
