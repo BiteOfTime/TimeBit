@@ -263,7 +263,7 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             return 60
         }
         else if indexPath.section == 3 {
-            return 300
+            return 250
         }
         return 10
     }
