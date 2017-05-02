@@ -15,12 +15,13 @@ class DetailActivityViewController: UIViewController {
     var detailActivity1Cell: DetailActivity1Cell!
     var detailActivity4Cell: DetailActivity4Cell!
     // Expecting this value from the calling screen.
-    //var activity_name: String!
-    var activity_name: String = "Dance"
+    var activity_name: String!
+    //var activity_name: String = "Sport"
     var activityToday: [ActivityLog]!
     var today_Count: String?
     var tillDate_Count: String?
     var countDuration: Int64 = 0
+    var countDurationToday: Int64 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,18 +62,17 @@ class DetailActivityViewController: UIViewController {
             } else {
                 self.activityToday = activities!
                 NSLog("Items from Parse \(self.activityToday)")
-                var countDuration: Int64 = 0
                 
                 self.activityToday.forEach { x in
-                    countDuration = countDuration + x.activity_duration!
-                    print(countDuration)
+                    self.countDurationToday = self.countDurationToday + x.activity_duration!
+                    print(self.countDurationToday)
                 }
                 
                 self.today_Count = String(self.countDuration)
                 
-                let seconds = self.countDuration % 60
-                let minutes = self.countDuration / 60
-                let hours = self.countDuration / 3600
+                let seconds = self.countDurationToday % 60
+                let minutes = self.countDurationToday / 60
+                let hours = self.countDurationToday / 3600
                 
                 if hours > 0 {
                     self.today_Count = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
@@ -119,7 +119,6 @@ class DetailActivityViewController: UIViewController {
                     
                 }
                 self.tillDate_Count = String(self.countDuration)
-                //self.tillDate_Count = String(self.countDuration) + "sec"
                 
                 let seconds = self.countDuration % 60
                 let minutes = self.countDuration / 60
