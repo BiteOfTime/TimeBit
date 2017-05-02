@@ -10,6 +10,9 @@ import UIKit
 
 class DetailActivity1Cell: UITableViewCell {
 
+    @IBOutlet weak var tillDateView: UIView!
+    @IBOutlet weak var weeklyView: UIView!
+    @IBOutlet weak var todayView: UIView!
     @IBOutlet weak var dailyCount: UILabel!
     @IBOutlet weak var weeklyCount: UILabel!
     @IBOutlet weak var sinceCreationCount: UILabel!
