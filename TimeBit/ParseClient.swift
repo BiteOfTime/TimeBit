@@ -283,5 +283,23 @@ class ParseClient: NSObject {
             }
         }
     }
+    
+    func getActivityLog(completion: @escaping (_ activities: [ActivityLog]?, _ error: Error?) -> ()) {
+        let activityQuery = PFQuery(className: "ActivityLog")
+        activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        
+        activityQuery.findObjectsInBackground { (objects, error) -> Void in
+            if error == nil {
+                let PFActivities = objects
+                let activity = ActivityLog.ActivityLogWithArray(dictionaries: PFActivities!)
+                print(objects as Any)
+                //completion(nil, nil)
+                completion(activity, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+    }
 
 }
