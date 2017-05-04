@@ -6,7 +6,8 @@ use_frameworks!
 target 'TimeBit' do
 	pod 'Parse'
 	pod 'MBProgressHUD'
-	pod 'ParseUI'	
+	pod 'ParseUI'
+	pod 'CircleProgressView', '~> 1.0'	
 end
 
   # Pods for TimeBit

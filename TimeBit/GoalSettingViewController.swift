@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import CircleProgressView
 
 class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -17,6 +18,8 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var saveGoalButton: UIButton!
     @IBOutlet weak var currentGoalLabel: UILabel!
     @IBOutlet weak var goalCompletionPercentageLabel: UILabel!
+    @IBOutlet weak var progrssViewContainer: UIView!
+    var progressview: CircleProgressView!
     
     var PickerData: [[String]] = [[String]]()
     var activity: Activity!
@@ -28,12 +31,12 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var frequency: String!
     var goal: Goal!
     var goals: [Goal]!
-    var activityToday: [ActivityLog]!
-    var today_Count: String?
+    var activityLog: [ActivityLog]!
+    //var today_Count: String?
     var countDuration: Int64 = 0
     var countDurationToday: Int64 = 0
     var countDurationWeekly: Int64 = 0
-    var weekly_count: String?
+    //var weekly_count: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +49,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.navigationItem.title = "Goal Setting"
         
         activityNameLabel.text = self.activityName
-        self.goalCompletionPercentageLabel.text = "0"
+        self.goalCompletionPercentageLabel.text = "0%"
         
         // Input data into the PickerArray:
         PickerData = [["Atleast", "Atmax", "Exactly"],
@@ -101,6 +104,17 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
 //        self.view.addSubview(lineview)
         //lineview.release
         
+       // progrssViewContainer.addSubview(progressview)
+        progressview = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 85, height: 85))
+        //self.progressview.draw(CGRect(x: 0, y: 0, width: 300, height: 300))
+        progressview.clockwise = true
+        //self.progressview.progress = completionPercentage
+        progressview.centerFillColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
+        progressview.trackBackgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
+        progressview.backgroundColor = UIColor(displayP3Red: 0.04, green: 0.17, blue: 0.27, alpha: 1.0)
+        progressview.trackBorderColor = .blue
+        self.progrssViewContainer.addSubview(progressview)
+        self.progressview.addSubview(goalCompletionPercentageLabel)
         
     }
 
@@ -192,8 +206,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     func todayGoalPercentageCompletion(goalHours: Int, goalMins: Int){
-        today_Count = "0 sec"
-        print("todayGoalPercentageCompletion")
+        //today_Count = "0 sec"
         let currentDate = formatDate(dateString: String(describing: Date()))
         let params = ["activity_name": activityName!, "activity_event_date": currentDate] as [String : Any]
         
@@ -201,14 +214,10 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
             if error != nil {
                 NSLog("Error getting activities from Parse")
             } else {
-                self.activityToday = activities!
-                //NSLog("Items from Parse \(self.activityToday)")
-                
-                self.activityToday.forEach { x in
+                self.activityLog = activities!
+                self.activityLog.forEach { x in
                     self.countDurationToday = self.countDurationToday + x.activity_duration!
                 }
-                print("self.countDurationToday ", self.countDurationToday )
-                //let todayCountInSec = self.countDurationToday % 60
                 var goalInSec: Int64 = 0
                 if goalHours > 0 {
                     goalInSec += goalHours * 3600
@@ -216,39 +225,32 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 if goalMins > 0 {
                     goalInSec += goalMins * 60
                 }
-                print("goalInSec", goalInSec)
                 let percentageCompletion = Double(self.countDurationToday) / Double(goalInSec) * 100
-                let completionPercentage = Double(percentageCompletion).roundTo(places: 2)
-                print("percentageCompletion", percentageCompletion)
-
+                let completionPercentage = Double(percentageCompletion).roundTo(places: 1)
                 self.goalCompletionPercentageLabel.text = "\(completionPercentage)%"
 
+                let completion = completionPercentage / 100
+                self.progressview.setProgress(completion, animated: true)
             }
         }
         
     }
     
     func weeklyGoalPercentageCompletion(goalHours: Int, goalMins: Int) {
-        weekly_count = "0 sec"
-        print("weeklyGoalPercentageCompletion")
-        
+       // weekly_count = "0 sec"
         let params = ["activity_name": activityName!] as [String : Any]
         
         ParseClient.sharedInstance.getTotalCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
             if error != nil {
                 NSLog("Error getting activities from Parse")
             } else {
-                self.activityToday = activities!
-                NSLog("Items from Parse \(self.activityToday)")
-                
+                self.activityLog = activities!
                 let weekDateRange = self.getPastDates(days: 7)
-                
-                self.activityToday.forEach { x in
+                self.activityLog.forEach { x in
                     if(weekDateRange.contains(x.activity_event_date)) {
                         self.countDurationWeekly = self.countDurationWeekly + x.activity_duration!
                     }
                 }
-                //self.weekly_count = self.calculateCount(duration: self.countDurationWeekly)
                 var goalInSec: Int64 = 0
                 if goalHours > 0 {
                     goalInSec += goalHours * 3600
@@ -256,14 +258,13 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 if goalMins > 0 {
                     goalInSec += goalMins * 60
                 }
-                print("self.countDurationWeekly", self.countDurationWeekly)
-                print("goalInSec", goalInSec)
                 let percentageCompletion = Double(self.countDurationWeekly) / Double(goalInSec) * 100
-                let completionPercentage = Double(percentageCompletion).roundTo(places: 2)
-                print("percentageCompletion", String(format:"%.2f", percentageCompletion))
+                let completionPercentage = Double(percentageCompletion).roundTo(places: 1)
                 print(String(format: "%.2f", percentageCompletion))
                 
                 self.goalCompletionPercentageLabel.text = "\(completionPercentage)%"
+                let completion = completionPercentage / 100
+                self.progressview.setProgress(completion, animated: true)
             }
             
 
@@ -313,10 +314,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         return arrayDate as NSArray
     }
     
-    
-
-
-
 
     /*
     // MARK: - Navigation
