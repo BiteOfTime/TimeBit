@@ -29,9 +29,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         
         let addNewActivityButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(HomeViewController.addNewActivityAction))
-        self.tabBarController?.navigationItem.rightBarButtonItem = addNewActivityButton
-        self.tabBarController?.navigationItem.title = "TimeBit"
-
+        navigationItem.rightBarButtonItem = addNewActivityButton
+        navigationItem.title = "Home"
+        
         loadActivities()
     }
     

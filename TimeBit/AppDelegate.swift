@@ -17,25 +17,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.tintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
-        let barColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
-        let pressedTintColor = UIColor.white
-        UITabBar.appearance().barTintColor = barColor
-        UITabBar.appearance().tintColor = pressedTintColor
+        self.window!.tintColor = UIColor.white
+        UITabBar.appearance().barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        UITabBar.appearance().tintColor = UIColor.white
         
         let tabBarController = UITabBarController()
-        let tabViewController1 = HomeViewController()
-        let tabViewController2 = ReportViewController()
-        let tabViewController3 = GoalsViewController()
-        let tabViewController4 = NotificationViewController()
+        let tabViewController1 = UINavigationController(rootViewController: HomeViewController())
+        let tabViewController2 = UINavigationController(rootViewController: ReportViewController())
+        let tabViewController3 = UINavigationController(rootViewController: GoalsViewController())
+        let tabViewController4 = UINavigationController(rootViewController: NotificationViewController())
         
         let controllers = [tabViewController1, tabViewController2, tabViewController3, tabViewController4]
         tabBarController.viewControllers = controllers
-        let navigationController = UINavigationController(rootViewController: tabBarController)
-        navigationController.navigationBar.barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
-        navigationController.navigationBar.barStyle = UIBarStyle.black
-        navigationController.navigationItem.title = "TimeBit"
         
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        navigationBarAppearace.tintColor = UIColor.white
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+
         tabViewController1.tabBarItem = UITabBarItem(
             title: "Home",
             image: UIImage(named: "Home"),
@@ -56,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         if let window = window {
             window.backgroundColor = UIColor.white
-            window.rootViewController = navigationController
+            window.rootViewController = tabBarController
             window.makeKeyAndVisible()
         }
 
