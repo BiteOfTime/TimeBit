@@ -14,6 +14,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
+    var roundButton = UIButton()
     
     var activities: [Activity] = []
     var activitiesTodayLog: Dictionary<String, [ActivityLog]> = Dictionary()
@@ -28,19 +29,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         
-        let addNewActivityButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(HomeViewController.addNewActivityAction))
-        navigationItem.rightBarButtonItem = addNewActivityButton
+//        let addNewActivityButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(HomeViewController.addNewActivityAction))
+//        navigationItem.rightBarButtonItem = addNewActivityButton
         navigationItem.title = "Home"
+        
+        //Floating round button to add a new activity
+        self.roundButton = UIButton(type: .custom)
+        self.roundButton.setTitleColor(UIColor.orange, for: .normal)
+        self.roundButton.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(roundButton)
         
         loadActivities()
     }
     
-    func addNewActivityAction() {
-        let addNewActivityViewController = AddNewActivityViewController(nibName: "AddNewActivityViewController", bundle: nil)
-        navigationController?.pushViewController(addNewActivityViewController, animated: true)
-        
-        addNewActivityViewController.delegate = self
-    }
+//    func addNewActivityAction() {
+//        let addNewActivityViewController = AddNewActivityViewController(nibName: "AddNewActivityViewController", bundle: nil)
+//        navigationController?.pushViewController(addNewActivityViewController, animated: true)
+//        
+//        addNewActivityViewController.delegate = self
+//    }
 
     func loadActivities () {
         if User.currentUser == nil {
@@ -234,4 +241,26 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             startDate = nil
         }
     }
+    
+    override func viewWillLayoutSubviews() {
+        roundButton.layer.cornerRadius = roundButton.layer.frame.size.width / 2
+        roundButton.backgroundColor = UIColor.clear
+        roundButton.clipsToBounds = true
+        roundButton.setImage(UIImage(named:"Add"), for: .normal)
+        roundButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            roundButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            roundButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -53),
+            roundButton.widthAnchor.constraint(equalToConstant: 30),
+            roundButton.heightAnchor.constraint(equalToConstant:30)])
+    }
+    
+    @IBAction func ButtonClick(_ sender: UIButton){
+        let addNewActivityViewController = AddNewActivityViewController(nibName: "AddNewActivityViewController", bundle: nil)
+        navigationController?.pushViewController(addNewActivityViewController, animated: true)
+        
+        addNewActivityViewController.delegate = self
+        
+    }
+
 }

@@ -38,10 +38,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Hf-Ci-uwO">
-                    <rect key="frame" x="169" y="473" width="103" height="38"/>
+                    <rect key="frame" x="169" y="473" width="141" height="38"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.031372549019607843" green="0.23137254901960785" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                     <state key="normal" title="Save">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -50,14 +50,15 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGK-DG-k1C">
-                    <rect key="frame" x="49" y="473" width="103" height="38"/>
+                    <rect key="frame" x="8" y="473" width="153" height="38"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.031372549020000001" green="0.23137254900000001" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                     <state key="normal" title="Delete">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
+                        <action selector="onDeleteGoalButton:" destination="-1" eventType="touchUpInside" id="EVn-3m-HcK"/>
                         <action selector="onSaveUpdateButton:" destination="-1" eventType="touchUpInside" id="kjo-gZ-Btn"/>
                     </connections>
                 </button>

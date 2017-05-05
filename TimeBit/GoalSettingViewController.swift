@@ -84,31 +84,14 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                     let minsString = "\(goalForActivity.mins!)" + "min "
                     let currentGoal = goalForActivity.limit! + " " + hrsString + minsString + goalForActivity.frequency!
                     self.currentGoalLabel.text = currentGoal
-//                    print("hrs", goalForActivity.hours)
-//                    print("mins", goalForActivity.mins)
-//                    print("frequency", goalForActivity.frequency)
                     self.goalPercentageCompletion(goalFrequency: goalForActivity.frequency!, goalHours: goalForActivity.hours!, goalMins: goalForActivity.mins!)
-//                    if goalForActivity.frequency == "Daily" {
-//                        self.todayCount()
-//                    } else {
-//                        //self.weeklyCount()
-//                    }
-                    NSLog("Items from Parse")
                 }
             }
         }
         
-        //UIView *lineView = [[UIView alloc] initWithFrame,CGRectMake(0, 200, self.view.bounds.size.width, 1)];
-//        let lineview = UIView.init(frame: CGRect(x: 0, y: 0, width: 480, height: 320))
-//        lineview.backgroundColor = UIColor.gray
-//        self.view.addSubview(lineview)
-        //lineview.release
-        
-       // progrssViewContainer.addSubview(progressview)
+        //Add a circular progress view to track goal completion percentage
         progressview = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 85, height: 85))
-        //self.progressview.draw(CGRect(x: 0, y: 0, width: 300, height: 300))
         progressview.clockwise = true
-        //self.progressview.progress = completionPercentage
         progressview.centerFillColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
         progressview.trackBackgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
         progressview.backgroundColor = UIColor(displayP3Red: 0.04, green: 0.17, blue: 0.27, alpha: 1.0)
@@ -206,7 +189,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     func todayGoalPercentageCompletion(goalHours: Int, goalMins: Int){
-        //today_Count = "0 sec"
         let currentDate = formatDate(dateString: String(describing: Date()))
         let params = ["activity_name": activityName!, "activity_event_date": currentDate] as [String : Any]
         
@@ -237,7 +219,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     func weeklyGoalPercentageCompletion(goalHours: Int, goalMins: Int) {
-       // weekly_count = "0 sec"
         let params = ["activity_name": activityName!] as [String : Any]
         
         ParseClient.sharedInstance.getTotalCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
@@ -313,6 +294,19 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
         return arrayDate as NSArray
     }
+    
+    @IBAction func onDeleteGoalButton(_ sender: Any) {
+        let params = ["activityName": activityName!] as [String : Any]
+        ParseClient.sharedInstance.deleteGoal(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
+            if Error != nil {
+                NSLog("Error deleting goal from Parse")
+            } else {
+                print("Deleted activity goal from Parse")
+            }
+        })
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     
 
     /*

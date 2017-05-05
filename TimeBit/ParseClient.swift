@@ -197,6 +197,28 @@ class ParseClient: NSObject {
         }
     }
     
+    func deleteGoal(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "GoalTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        goalQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
+        
+        goalQuery.getFirstObjectInBackground {(object, error) -> Void in
+            if error != nil {
+                print(error)
+            } else {
+//                if let object = object {
+//                    object["limit"] = params!["limit"] as! String
+//                    object["hours"] = params!["hours"] as! String
+//                    object["mins"] = params!["mins"] as! String
+//                    object["frequency"] = params!["frequency"] as! String
+//                }
+                object!.deleteInBackground()
+            }
+        }
+    }
+    
+    
+    
     
     func saveActivityLog(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject
