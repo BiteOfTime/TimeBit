@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
         UITabBar.appearance().tintColor = UIColor.white
         
+        
         let tabBarController = UITabBarController()
         let tabViewController1 = UINavigationController(rootViewController: HomeViewController())
         let tabViewController2 = UINavigationController(rootViewController: ReportViewController())

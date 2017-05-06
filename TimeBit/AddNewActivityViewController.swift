@@ -24,6 +24,7 @@ class AddNewActivityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        hidesBottomBarWhenPushed = false
         self.navigationItem.title = "Add New Activity"
     }
 

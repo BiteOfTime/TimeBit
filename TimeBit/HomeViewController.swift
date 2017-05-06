@@ -11,27 +11,31 @@ import Parse
 import ParseUI
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate, AddNewActivityViewControllerDelegate {
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
     var roundButton = UIButton()
     
     var activities: [Activity] = []
     var activitiesTodayLog: Dictionary<String, [ActivityLog]> = Dictionary()
-
+    
     var currentActivityIndex: Int = -1
     var startDate: Date?
+    var selectedCell = [IndexPath]()
+    
+    var initialIndexPath: IndexPath?
+    var cellSnapshot: UIView?
+    var longPressActive = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         
-//        let addNewActivityButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(HomeViewController.addNewActivityAction))
-//        navigationItem.rightBarButtonItem = addNewActivityButton
-        navigationItem.title = "Home"
+        collectionView.allowsSelection = true
+        navigationItem.title = "TimeBit"
         
         //Floating round button to add a new activity
         self.roundButton = UIButton(type: .custom)
@@ -40,21 +44,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addSubview(roundButton)
         
         loadActivities()
+        addLongPressGesture()
+        addTapGesture()
     }
     
-//    func addNewActivityAction() {
-//        let addNewActivityViewController = AddNewActivityViewController(nibName: "AddNewActivityViewController", bundle: nil)
-//        navigationController?.pushViewController(addNewActivityViewController, animated: true)
-//        
-//        addNewActivityViewController.delegate = self
-//    }
-
     func loadActivities () {
         if User.currentUser == nil {
             print("User is looged in for first time")
             let activities = defaultActivitiesList()
             // Save default activities
-           
+            
             ParseClient.sharedInstance.saveMultipleActivities(activities: activities as [Activity?]) { (PFObject, Error) -> () in
                 if Error != nil {
                     NSLog("Error saving to Parse")
@@ -98,7 +97,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                 }
             }
-                
+            
         }
     }
     
@@ -125,8 +124,118 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.reloadData()
     }
     
+    func addLongPressGesture() {
+        let longpress = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressGesture(sender:)))
+        collectionView.addGestureRecognizer(longpress)
+    }
+    
+    func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGesture(sender:)))
+        collectionView.addGestureRecognizer(tapGesture)
+    }
+    
+    func onTapGesture(sender: UITapGestureRecognizer) {
+        if longPressActive {
+            longPressActive = false
+            collectionView.reloadData()
+        } else {
+            let locationInView = sender.location(in: collectionView)
+            let indexPath = collectionView.indexPathForItem(at: locationInView)
+            
+            let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
+            detailActivityViewController.activity_name = activities[(indexPath?.row)!].activityName!
+            navigationController?.pushViewController(detailActivityViewController, animated: true)
+            
+        }
+    }
+    
+    func onLongPressGesture(sender: UILongPressGestureRecognizer) {
+        let locationInView = sender.location(in: collectionView)
+        let indexPath = collectionView.indexPathForItem(at: locationInView)
+        
+        if sender.state == .began {
+            if indexPath != nil {
+                initialIndexPath = indexPath
+                let cell = collectionView.cellForItem(at: indexPath!)
+                cellSnapshot = snapshotOfCell(inputView: cell!)
+                cell?.isHidden = true
+                let center = cell?.center
+                cellSnapshot?.center = center!
+                cellSnapshot?.alpha = 1.0
+                cellSnapshot?.transform = (self.cellSnapshot?.transform.scaledBy(x: 1.05, y: 1.05))!
+                collectionView.addSubview(cellSnapshot!)
+                longPressActive = true
+                collectionView.reloadData()
+            }
+        } else if sender.state == .changed {
+            var center = cellSnapshot?.center
+            center?.y = locationInView.y
+            center?.x = locationInView.x
+            cellSnapshot?.center = center!
+            
+            if ((indexPath != nil) && (indexPath != initialIndexPath)) {
+                swap(&activities[indexPath!.row], &activities[initialIndexPath!.row])
+                collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
+                initialIndexPath = indexPath
+            }
+        } else if sender.state == .ended {
+            let cell = collectionView.cellForItem(at: initialIndexPath!)
+            
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                self.cellSnapshot?.center = (cell?.center)!
+            }, completion: { (finished) -> Void in
+                if finished {
+                    self.initialIndexPath = nil
+                    self.cellSnapshot?.removeFromSuperview()
+                    self.cellSnapshot = nil
+                    self.collectionView.reloadData()
+                }
+            })
+        }
+    }
+    
+    func snapshotOfCell(inputView: UIView) -> UIView {
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        let cellSnapshot = UIImageView(image: image)
+        cellSnapshot.layer.masksToBounds = false
+        cellSnapshot.layer.cornerRadius = 0.0
+        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 5.0)
+        cellSnapshot.layer.shadowRadius = 5.0
+        cellSnapshot.layer.shadowOpacity = 0.4
+        return cellSnapshot
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return activities.count
+    }
+    
+    func changeColorOfCell(activityCell: ActivityCell, index: Int) {
+        let mod = index % 6
+        switch mod {
+        case 0:
+            // blue
+            activityCell.activityImage.backgroundColor = UIColor(red: 255/255, green: 55/255, blue: 96/255, alpha: 1.0)
+        case 1:
+            // red
+            activityCell.activityImage.backgroundColor = UIColor(red: 10/255, green: 204/255, blue: 247/255, alpha: 1.0)
+        case 2:
+            // yellow
+            activityCell.activityImage.backgroundColor = UIColor(red: 255/255, green: 223/255, blue: 0/255, alpha: 1.0)
+        case 3:
+            // green
+            activityCell.activityImage.backgroundColor = UIColor(red: 66/255, green: 188/255, blue: 88/255, alpha: 1.0)
+        case 4:
+            //purple
+            activityCell.activityImage.backgroundColor = UIColor(red: 196/255, green: 44/255, blue: 196/255, alpha: 1.0)
+        default:
+            //orange
+            activityCell.activityImage.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
+        }
+            
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -135,7 +244,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         cell.layer.borderColor = UIColor.darkGray.cgColor
         cell.layer.borderWidth = 0.5
-        cell.isSelected = indexPath.row == currentActivityIndex
+        if currentActivityIndex != indexPath.row {
+            changeColorOfCell(activityCell: cell, index: indexPath.row)
+        }
+
+        cell.activityImage.isSelected = indexPath.row == currentActivityIndex
         
         //Loading PFFile to PFImageView
         let activity = activities[indexPath.row]
@@ -152,7 +265,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             })
         }
         
-        cell.activityImage.tintColor = .white
         cell.activityNameLabel.text = activity.activityName
         let activityLog = activitiesTodayLog[activity.activityName!]
         let totalTimeSpentToday = getTimeSpentToday(activityLog: activityLog )
@@ -163,18 +275,41 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.timeSpentLabel.text = totalTimeSpentToday
         }
         
+        if longPressActive && initialIndexPath == indexPath {
+            cell.isHidden = true
+        } else {
+            cell.isHidden = false
+        }
+        
+        if longPressActive && cell.transform == CGAffineTransform.identity {
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                cell.transform = (cell.transform.scaledBy(x: 0.9, y: 0.9))
+            })
+            cell.deleteActivityButton.isHidden = false
+        } else if !cell.deleteActivityButton.isHidden {
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                cell.transform = CGAffineTransform.identity
+            })
+            cell.deleteActivityButton.isHidden = true
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2, height: 100);
+        return CGSize(width: collectionView.frame.width/2, height: 120);
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
         detailActivityViewController.activity_name = activities[indexPath.row].activityName!
         navigationController?.pushViewController(detailActivityViewController, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.contentView.backgroundColor = .blue
     }
 
     func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
@@ -201,19 +336,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         return "\(seconds)sec today"
-
+        
     }
     
     func activityCell(onStartStop activityCell: ActivityCell) {
         let clickActivityIndex = collectionView.indexPath(for: activityCell)!.row
         if currentActivityIndex == -1 {
-            activityCell.isSelected = true
+            activityCell.activityImage.isSelected = true
             currentActivityIndex = (collectionView.indexPath(for: activityCell)?.row)!
             //print("Timer started")
             startDate = Date()
             timerView.onStartTimer()
         } else if clickActivityIndex == currentActivityIndex {
-            activityCell.isSelected = false
+            activityCell.activityImage.isSelected = false
             currentActivityIndex = -1
             //print("Timer Stopped")
             let passedSeconds = timerView.onStopTimer()
@@ -242,6 +377,30 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    func activityCell(onDeleteActivity activityCell: ActivityCell) {
+        let alert = UIAlertController(title: "TimeBit",
+                                      message: "Do you really want delete '\(activityCell.activityNameLabel!.text!)' activity?",
+            preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Delete", style: .default, handler: { (action) -> Void in
+            
+            let index = self.collectionView.indexPath(for: activityCell)!.row
+            self.activities.remove(at: index)
+            let params = ["activityName": activityCell.activityNameLabel!.text!] as [String : Any]
+            ParseClient.sharedInstance.deleteActivity(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
+                if Error != nil {
+                    NSLog("Error deleting goal from Parse")
+                } else {
+                    print("Deleted activity goal from Parse")
+                }
+            })
+            self.collectionView.reloadData()
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     override func viewWillLayoutSubviews() {
         roundButton.layer.cornerRadius = roundButton.layer.frame.size.width / 2
         roundButton.backgroundColor = UIColor.clear
@@ -262,5 +421,4 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         addNewActivityViewController.delegate = self
         
     }
-
 }
