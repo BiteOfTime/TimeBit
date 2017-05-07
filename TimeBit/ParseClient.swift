@@ -114,6 +114,25 @@ class ParseClient: NSObject {
 
     }
     
+    func getActivityDetails(activityName: String?, completion: @escaping (_ activity: Activity?, _ error: Error?) -> ()) {
+        let activityQuery = PFQuery(className: "ActivityTest")
+        activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        activityQuery.whereKey("activity_name", equalTo: activityName!)
+        
+        activityQuery.getFirstObjectInBackground { (object, error) -> Void in
+            if error == nil {
+                let PFActivity = object
+                let activity = Activity.init(pfobj: PFActivity!)
+                print(object as Any)
+                completion(activity, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+        
+    }
+    
     func saveNewGoal(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject
         let goalEntry = PFObject(className: "GoalTest")

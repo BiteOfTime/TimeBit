@@ -10,6 +10,8 @@
 		35D2516808207E8A1B9F8A98 /* Pods_TimeBit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 156B77C2EC8E40D45C57B407 /* Pods_TimeBit.framework */; };
 		6B36C8121EBE2D9600ACC7D0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B36C8111EBE2D9600ACC7D0 /* UserNotifications.framework */; };
 		6B36C8141EBE81F000ACC7D0 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B36C8131EBE81F000ACC7D0 /* UserNotificationsUI.framework */; };
+		6B36C8171EBF847500ACC7D0 /* GoalsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B36C8151EBF847400ACC7D0 /* GoalsTableViewCell.swift */; };
+		6B36C8181EBF847500ACC7D0 /* GoalsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6B36C8161EBF847400ACC7D0 /* GoalsTableViewCell.xib */; };
 		6B4951FA1EAE5F9B006645D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4951F91EAE5F9B006645D5 /* AppDelegate.swift */; };
 		6B4952011EAE5F9B006645D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952001EAE5F9B006645D5 /* Assets.xcassets */; };
 		6B4952041EAE5F9B006645D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B4952021EAE5F9B006645D5 /* LaunchScreen.storyboard */; };
@@ -79,6 +81,8 @@
 		6696D97FCBC1A0FF722CE363 /* Pods-TimeBit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBit/Pods-TimeBit.release.xcconfig"; sourceTree = "<group>"; };
 		6B36C8111EBE2D9600ACC7D0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		6B36C8131EBE81F000ACC7D0 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		6B36C8151EBF847400ACC7D0 /* GoalsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsTableViewCell.swift; sourceTree = "<group>"; };
+		6B36C8161EBF847400ACC7D0 /* GoalsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalsTableViewCell.xib; sourceTree = "<group>"; };
 		6B4951F61EAE5F9B006645D5 /* TimeBit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeBit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B4951F91EAE5F9B006645D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B4952001EAE5F9B006645D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -288,6 +292,8 @@
 				9303B9081EB578110086F0FB /* DetailActivity4Cell.xib */,
 				934CAD481EB8C47600A039B5 /* ReportCell.swift */,
 				934CAD491EB8C47600A039B5 /* ReportCell.xib */,
+				6B36C8151EBF847400ACC7D0 /* GoalsTableViewCell.swift */,
+				6B36C8161EBF847400ACC7D0 /* GoalsTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -433,6 +439,7 @@
 				6B4952041EAE5F9B006645D5 /* LaunchScreen.storyboard in Resources */,
 				9303B9061EB577C70086F0FB /* DetailActivity3Cell.xib in Resources */,
 				6B4952011EAE5F9B006645D5 /* Assets.xcassets in Resources */,
+				6B36C8181EBF847500ACC7D0 /* GoalsTableViewCell.xib in Resources */,
 				9303B90A1EB578110086F0FB /* DetailActivity4Cell.xib in Resources */,
 				9303B9161EB5BA8D0086F0FB /* DetailActivityViewController.xib in Resources */,
 				9303B8FE1EB5771A0086F0FB /* DetailActivity1Cell.xib in Resources */,
@@ -615,6 +622,7 @@
 				6B4952311EB13AC0006645D5 /* User.swift in Sources */,
 				934CAD4A1EB8C47600A039B5 /* ReportCell.swift in Sources */,
 				9303B90C1EB57B3C0086F0FB /* DetailActivityViewController.swift in Sources */,
+				6B36C8171EBF847500ACC7D0 /* GoalsTableViewCell.swift in Sources */,
 				9303B9091EB578110086F0FB /* DetailActivity4Cell.swift in Sources */,
 				6BE876A31EB7012000706D3A /* AddNewActivityViewController.swift in Sources */,
 				9303B9051EB577C70086F0FB /* DetailActivity3Cell.swift in Sources */,
