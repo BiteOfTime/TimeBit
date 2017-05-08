@@ -10,7 +10,7 @@ import UIKit
 import ParseUI
 
 @objc protocol ActivityCellDelegate {
-    func activityCell(onStartStop activityCell: ActivityCell)
+    //func activityCell(onStartStop activityCell: ActivityCell)
     func activityCell(onDeleteActivity activityCell: ActivityCell)
 }
 
@@ -33,9 +33,9 @@ class ActivityCell: UICollectionViewCell {
         activityImage.contentEdgeInsets = UIEdgeInsetsMake(6,6,6,6)
     }
     
-    @IBAction func onActivityImage(_ sender: Any) {
-        delegate?.activityCell(onStartStop: self)
-    }
+//    @IBAction func onActivityImage(_ sender: Any) {
+//        delegate?.activityCell(onStartStop: self)
+//    }
     
     @IBAction func onDeleteActivity(_ sender: Any) {
         delegate?.activityCell(onDeleteActivity: self)

@@ -67,30 +67,38 @@ class ParseClient: NSObject {
         completion(activityObjects, nil)
     }
     
-    func saveNewActivity(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+    func saveNewActivity(newActivity: Activity?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject
         let activityEntry = PFObject(className: "ActivityTest")
-       // let imageData = UIImagePNGRepresentation(params!["activityImage"]! as! UIImage)
+        let imageData = UIImagePNGRepresentation(newActivity!.activityImage!)
         
-        print("params")
-        print(params as Any)
+        print("newActivity")
+        print(newActivity as Any)
         
         // Add relevant fields to the object
         activityEntry["user_id"] = getCurrentUser()
-        activityEntry["activity_name"] = params!["activityName"] as! String
-        activityEntry["activity_desc"] = params!["activityDesc"] as! String
-       // activityEntry["activity_image"] = PFFile(name: "\(params!["activityImage"]!).png", data: imageData!)
-        
-        // Save object (following function will save the object in Parse asynchronously)
-        activityEntry.saveInBackground { (success: Bool, error: Error?) in
-            if success {
-                print("Inside completion", activityEntry)
-                completion(activityEntry, nil)
-            } else {
-                print("There was a problem, check error.description", error?.localizedDescription as Any)
-                completion(nil, error)
-            }
+        activityEntry["activity_name"] = newActivity?.activityName!
+        activityEntry["activity_desc"] = newActivity?.activityDescription!
+        activityEntry["activity_image"] = PFFile(name: "\(newActivity!.activityName!).png", data: imageData!)
+        do {
+            try activityEntry.save()
+        } catch let error {
+            print("There was a problem, check error.description", error.localizedDescription as Any)
+            completion(nil, error)
+            return
         }
+        completion(activityEntry, nil)
+
+//        // Save object (following function will save the object in Parse asynchronously)
+//        activityEntry.saveInBackground { (success: Bool, error: Error?) in
+//            if success {
+//                print("Inside completion", activityEntry)
+//                completion(activityEntry, nil)
+//            } else {
+//                print("There was a problem, check error.description", error?.localizedDescription as Any)
+//                completion(nil, error)
+//            }
+//        }
     }
     
     func getActivities(completion: @escaping (_ activities: [Activity]?, _ error: Error?) -> ()) {
@@ -223,7 +231,7 @@ class ParseClient: NSObject {
         
         goalQuery.getFirstObjectInBackground {(object, error) -> Void in
             if error != nil {
-                print(error)
+                print(error!)
             } else {
 //                if let object = object {
 //                    object["limit"] = params!["limit"] as! String
@@ -231,21 +239,41 @@ class ParseClient: NSObject {
 //                    object["mins"] = params!["mins"] as! String
 //                    object["frequency"] = params!["frequency"] as! String
 //                }
+                
                 object!.deleteInBackground()
             }
         }
     }
     
     func deleteActivity(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
-        let goalQuery = PFQuery(className: "ActivityTest")
-        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
-        goalQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
+        let activityQuery = PFQuery(className: "ActivityTest")
+        activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        activityQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
         
-        goalQuery.getFirstObjectInBackground {(object, error) -> Void in
+        activityQuery.getFirstObjectInBackground {(object, error) -> Void in
             if error != nil {
                 print(error!)
             } else {
                 object!.deleteInBackground()
+            }
+        }
+    }
+    
+    func deleteActivityLog(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        let activityLogQuery = PFQuery(className: "ActivityLog")
+        activityLogQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        activityLogQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
+        activityLogQuery.findObjectsInBackground { (objects: [PFObject]?, error) -> Void in
+            if error != nil {
+                print(error!)
+            } else {
+                do {
+                    try PFObject.deleteAll(objects)
+                } catch let error {
+                    print("There was a problem, check error.description", error.localizedDescription as Any)
+                    completion(nil, error)
+                    return
+                }
             }
         }
     }
