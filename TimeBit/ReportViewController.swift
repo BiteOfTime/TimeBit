@@ -41,7 +41,7 @@ class ReportViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200
         
-        tableView.register(UINib(nibName: "ReportCell", bundle: nil), forCellReuseIdentifier: "ReportCell")
+        tableView.register(UINib(nibName: "ActivityReportCell", bundle: nil), forCellReuseIdentifier: "ActivityReportCell")
         
         loadActivityForUser()
         loadActivityLog()
@@ -268,7 +268,7 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReportCell", for: indexPath) as! ReportCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityReportCell", for: indexPath) as! ActivityReportCell
         cell.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
         let activity = activities[indexPath.row]
         let pfImage = activity.activityImageFile
@@ -284,7 +284,7 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
             })
         }
         cell.activityNameLabel.text = activity.activityName
-        cell.descriptionLabel.text = activity.activityDescription
+        //cell.descriptionLabel.text = activity.activityDescription
         cell.activityImageView.tintColor = .white
         cell.activityNameLabel.text = activity.activityName
         let activityLog = activitiesLogAll[activity.activityName!]
@@ -300,7 +300,7 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        return 180
+        return 150
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
