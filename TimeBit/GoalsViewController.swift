@@ -91,7 +91,11 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
         let minsString = "\(goal.mins!)" + "min "
         let currentGoal = goal.limit! + " " + hrsString + minsString + goal.frequency!
         cell.goalLabel.text = currentGoal
-        
+        cell.activityImage?.tintColor = .white
+        let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
+        let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
+        cell.activityImage?.backgroundColor = colorArray[randomIndex]
+            
         ParseClient.sharedInstance.getActivityDetails(activityName: goal.activityName) { (activity: Activity?, error: Error?) -> Void in
             if error != nil {
                 NSLog("No current activity from Parse")
@@ -99,24 +103,38 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.activity = activity!
                 print("User activity")
                 print(self.activity)
+//                let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
+//                let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
+                let pfImage = activity?.activityImageFile
+                if let imageFile : PFFile = pfImage{
+                    imageFile.getDataInBackground(block: { (data, error) in
+                        if error == nil {
+                            let image = UIImage(data: data!)
+                            cell.activityImage?.image = image
+                            cell.activityImage?.backgroundColor = colorArray[randomIndex]
+                        } else {
+                            print(error!.localizedDescription)
+                        }
+                    })
+                }
+
             }
         }
         
-        //let activity = activities[indexPath.row]
-        let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
-        let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
-        let pfImage = activity?.activityImageFile
-        if let imageFile : PFFile = pfImage{
-            imageFile.getDataInBackground(block: { (data, error) in
-                if error == nil {
-                    let image = UIImage(data: data!)
-                    cell.activityImage?.image = image
-                    cell.activityImage?.backgroundColor = colorArray[randomIndex]
-                } else {
-                    print(error!.localizedDescription)
-                }
-            })
-        }
+//        let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
+//        let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
+//        let pfImage = activity?.activityImageFile
+//        if let imageFile : PFFile = pfImage{
+//            imageFile.getDataInBackground(block: { (data, error) in
+//                if error == nil {
+//                    let image = UIImage(data: data!)
+//                    cell.activityImage?.image = image
+//                    cell.activityImage?.backgroundColor = colorArray[randomIndex]
+//                } else {
+//                    print(error!.localizedDescription)
+//                }
+//            })
+//        }
         //cell.activityImage.image = try! UIImage(data: (imageFile.getData()))
         }
         return cell

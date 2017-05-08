@@ -32,7 +32,7 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
         tableView.register(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "NotificationTableViewCell")
         
 //        getPendingNotifications()
-//        tableView.reloadData()
+        tableView.reloadData()
         
     }
     
