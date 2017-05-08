@@ -35,6 +35,8 @@ class DetailActivity4Cell: UITableViewCell {
     var hours: Int = 0
     var minutes: Int = 0
     var seconds: Int = 0
+    var trackPassedSecond: Int64 = 0
+    var startNewTimer: Bool = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,7 +51,7 @@ class DetailActivity4Cell: UITableViewCell {
     @IBAction func onButtonClick(_ sender: Any) {
         print("Button is clicked before \(startActivity)")
         startActivity = !startActivity
-        if(startActivity) {
+        if(startActivity && startNewTimer) {
             startButton.setTitle("Stop Activity", for: UIControlState())
             startDate = Date()
             passedSeconds = 0
@@ -100,6 +102,7 @@ class DetailActivity4Cell: UITableViewCell {
     func startActivityTimer() {
         activityTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(DetailActivity4Cell.updateLabel), userInfo: nil, repeats: true)
     }
+    
     
     func updateLabel() {
         passedSeconds += 1
