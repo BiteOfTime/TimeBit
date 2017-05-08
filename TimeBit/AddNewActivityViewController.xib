@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,7 +11,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddNewActivityViewController" customModule="TimeBit" customModuleProvider="target">
             <connections>
+                <outlet property="addNewActivityView" destination="i5M-Pr-FkT" id="EAe-t1-Edx"/>
+                <outlet property="defaultImagesView" destination="j9g-pb-8gy" id="2e8-KT-eyY"/>
                 <outlet property="newActivityDesc" destination="iGS-2A-mfA" id="rhF-1d-0Te"/>
+                <outlet property="newActivityImage" destination="r5T-FG-786" id="Ckp-Gz-xf0"/>
                 <outlet property="newActivityText" destination="i92-eK-UTO" id="uO5-Tq-VTq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -63,9 +66,51 @@
                         <action selector="onSaveActivityButton:" destination="-1" eventType="touchUpInside" id="2Ot-Bk-BET"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Activity Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXZ-pg-TX7">
+                    <rect key="frame" x="16" y="254" width="151" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j9g-pb-8gy" customClass="DefaultImagesPopover" customModule="TimeBit" customModuleProvider="target">
+                    <rect key="frame" x="16" y="284" width="288" height="160"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="160" id="8yp-6H-BZe"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="itF-tN-ara">
+                    <rect key="frame" x="185" y="252" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.062745098040000002" green="0.30588235289999999" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="more"/>
+                    <connections>
+                        <action selector="onSelectImage:" destination="-1" eventType="touchUpInside" id="CSK-6e-Nao"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5T-FG-786">
+                    <rect key="frame" x="147" y="251" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.062745098040000002" green="0.30588235289999999" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" image="dance"/>
+                    <connections>
+                        <action selector="onSelectImage:" destination="-1" eventType="touchUpInside" id="9P4-bG-oGV"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.031372549020000001" green="0.23137254900000001" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="j9g-pb-8gy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="284" id="A5O-Yk-leW"/>
+                <constraint firstAttribute="trailing" secondItem="j9g-pb-8gy" secondAttribute="trailing" constant="16" id="bYR-ZI-AMr"/>
+                <constraint firstItem="j9g-pb-8gy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="oeR-vz-p2O"/>
+            </constraints>
             <point key="canvasLocation" x="54" y="136"/>
         </view>
     </objects>
+    <resources>
+        <image name="dance" width="128" height="128"/>
+        <image name="more" width="64" height="64"/>
+    </resources>
 </document>

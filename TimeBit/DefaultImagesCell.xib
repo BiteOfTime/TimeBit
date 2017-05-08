@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DefaultImagesPopover" customModule="TimeBit" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="DefaultImagesCell" id="5q3-eU-CHO" customClass="DefaultImagesCell" customModule="TimeBit" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="THx-0l-I0u">
+                        <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eAU-cd-gsz">
+                                <rect key="frame" x="2" y="2" width="28" height="28"/>
+                                <color key="backgroundColor" red="1" green="0.21623370049999999" blue="0.376216948" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="eAU-cd-gsz" secondAttribute="bottom" constant="2" id="0BW-h5-Cwd"/>
+                            <constraint firstAttribute="trailing" secondItem="eAU-cd-gsz" secondAttribute="trailing" constant="2" id="GIz-Uw-4Ka"/>
+                            <constraint firstItem="eAU-cd-gsz" firstAttribute="top" secondItem="THx-0l-I0u" secondAttribute="top" constant="2" id="IDN-xb-iH0"/>
+                            <constraint firstItem="eAU-cd-gsz" firstAttribute="leading" secondItem="THx-0l-I0u" secondAttribute="leading" constant="2" id="xUX-Ma-TBm"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="THx-0l-I0u" secondAttribute="bottom" id="52L-Wa-1AW"/>
+                <constraint firstItem="THx-0l-I0u" firstAttribute="top" secondItem="5q3-eU-CHO" secondAttribute="top" id="bie-Nb-dHM"/>
+                <constraint firstItem="THx-0l-I0u" firstAttribute="leading" secondItem="5q3-eU-CHO" secondAttribute="leading" id="fXb-YJ-wTB"/>
+                <constraint firstAttribute="trailing" secondItem="THx-0l-I0u" secondAttribute="trailing" id="lNK-za-Gtc"/>
+            </constraints>
+            <size key="customSize" width="82" height="80"/>
+            <connections>
+                <outlet property="defaultImage" destination="eAU-cd-gsz" id="um0-iQ-E1y"/>
+            </connections>
+            <point key="canvasLocation" x="-50" y="-23"/>
+        </collectionViewCell>
+    </objects>
+</document>

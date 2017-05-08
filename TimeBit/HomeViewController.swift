@@ -36,7 +36,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         collectionView.allowsSelection = true
         navigationItem.title = "TimeBit"
-        
         //Floating round button to add a new activity
         self.roundButton = UIButton(type: .custom)
         self.roundButton.setTitleColor(UIColor.orange, for: .normal)
@@ -121,7 +120,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func addNewActivityViewController(onSaveActivity newActivity: Activity) {
         activities.append(newActivity)
-        collectionView.reloadData()
+        ParseClient.sharedInstance.getActivities() { (activities: [Activity]?, error: Error?) -> Void in
+            if error != nil {
+                NSLog("Error getting activities from Parse")
+            } else {
+                NSLog("Items from Parse")
+                self.activities = activities!
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     func addLongPressGesture() {
@@ -388,9 +395,23 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let params = ["activityName": activityCell.activityNameLabel!.text!] as [String : Any]
             ParseClient.sharedInstance.deleteActivity(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
                 if Error != nil {
+                    NSLog("Error deleting activity from Parse")
+                } else {
+                    print("Deleted activity from Parse")
+                }
+            })
+            ParseClient.sharedInstance.deleteGoal(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
+                if Error != nil {
                     NSLog("Error deleting goal from Parse")
                 } else {
                     print("Deleted activity goal from Parse")
+                }
+            })
+            ParseClient.sharedInstance.deleteActivityLog(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
+                if Error != nil {
+                    NSLog("Error deleting activity logs from Parse")
+                } else {
+                    print("Deleted activity logs from Parse")
                 }
             })
             self.collectionView.reloadData()
