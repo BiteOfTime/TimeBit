@@ -8,13 +8,15 @@ The following functionality will be implemented:
 
 - [x] App will have predefined set of activities.
 - [x] User can create a new activity 
-- [ ] User can delete an existing activity.
+- [X] User can delete an existing activity.
 - [x] User can start and stop an activity to track time sepnd. 
 - [x] User can set a goal for an activity.
 - [x] User can update an existing goal for an activity.
+- [x] User can delete an existing goal for an activity.
 - [x] User can view the today's status of each activity in the app home screen.
-- [ ] User can view daily, weekly and monthly progress report for each activity.
-- [ ] User get notifications regarding activity goal completion or not meeting a goal.
+- [X] User can view daily, weekly and till date progress report for each activity.
+- [X] User get notifications(daily/weekly) to perform activity goal according to the reminder set.
+- [X] User can delete an already set reminder notification. 
 - [ ] User can share their activity progress through message or tweet. (optional)
 - [ ] App will have day and night theme option on the basis of ambient light. (optional) 
 - [ ] User can end an already running activity by detecting shake event. (optional)
