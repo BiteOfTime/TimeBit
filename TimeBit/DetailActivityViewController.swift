@@ -12,6 +12,14 @@ class DetailActivityViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    var isTimerOn: Int!
+    var currentTimeOnTimer: String!
+    var currentHour: Int!
+    var currentMinute: Int!
+    var currentSec: Int!
+    var trackPassedSecond: Int64 = 0
+    var activityStartTimeFromHomeScreen: Date!
+    
     var detailActivity1Cell: DetailActivity1Cell!
     var detailActivity4Cell: DetailActivity4Cell!
     // Expecting this value from the calling screen.
@@ -227,6 +235,24 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity4Cell", for: indexPath) as! DetailActivity4Cell
             cell.activity_name = activity_name
+            print("value of isTimerOn in home screen is \(isTimerOn)")
+            if isTimerOn != -1 {
+                print("Timer is started at the home screen for activity \(activity_name) and time is \(currentTimeOnTimer)")
+                cell.hourLabel.text = String(currentHour)
+                cell.minuteLabel.text = String(currentMinute)
+                cell.secondLabel.text = String(currentSec)
+                
+                cell.startButton.setTitle("Stop Activity", for: UIControlState())
+                cell.startDate = self.activityStartTimeFromHomeScreen
+                cell.startNewTimer = false
+                //cell.startActivity = !cell.startActivity
+                cell.passedSeconds = Int64(self.currentSec) + 60*Int64(self.currentMinute) + 3600*Int64(self.currentHour)
+                cell.invalidateTimer()
+                cell.startActivityTimer()
+            } else {
+                print("No timer started for this activity")
+            }
+            
             return cell
         }
     }
