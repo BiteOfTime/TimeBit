@@ -1,4 +1,4 @@
-//
+
 //  GoalSettingViewController.swift
 //  TimeBit
 //
@@ -409,19 +409,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         return arrayDate as NSArray
     }
     
-    @IBAction func onDeleteGoalButton(_ sender: Any) {
-        let params = ["activityName": activityName!] as [String : Any]
-        ParseClient.sharedInstance.deleteGoal(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
-            if Error != nil {
-                NSLog("Error deleting goal from Parse")
-            } else {
-                print("Deleted activity goal from Parse")
-            }
-        })
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    
     func setNotification() {
         print("activityName", activityName)
         print("requestIdentifier", requestIdentifier)
@@ -467,12 +454,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    @IBAction func onDeleteNotification(_ sender: Any) {
-        
-        print("Removed all pending notifications")
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: [requestIdentifier])
-    }
     
     @IBAction func onNotifyMe(_ sender: Any) {
         datePickerView.reloadAllComponents()
