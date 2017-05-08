@@ -16,7 +16,21 @@ class ReportViewController: UIViewController {
     var activities: [Activity] = []
     var activityLog: [ActivityLog] = []
     
+    // For the chart
+    var activityForChart: [ActivityLog]!
+    var count: Int64 = 0
+    var arrayDataForChart = [Int64]()
+    var inputDataChart : Array<Int64> = []
+    
     var activitiesLogAll: Dictionary<String, [ActivityLog]> = Dictionary()
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +41,9 @@ class ReportViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200
         
-        tableView.register(UINib(nibName: "ReportCell", bundle: nil), forCellReuseIdentifier: "ReportCell")
+        tableView.register(UINib(nibName: "ActivityReportCell", bundle: nil), forCellReuseIdentifier: "ActivityReportCell")
         
         loadActivityForUser()
-        
         loadActivityLog()
         
         tableView.reloadData()
@@ -180,6 +193,67 @@ class ReportViewController: UIViewController {
         return arrayDate as NSArray
     }
     
+    func getBarChart(data: Array<Int64>) -> PDBarChart {
+        let dataItem: PDBarChartDataItem = PDBarChartDataItem()
+        dataItem.xMax = 7.0
+        dataItem.xInterval = 1.0
+        dataItem.yMax = 100.0
+        dataItem.yInterval = 10.0
+        
+        if data.count == 1 && data[0] == 0 {
+            print("data.count \(data.count)")
+            
+            print("value in array is : \(data)")
+            dataItem.barPointArray = [CGPoint(x: 1.0, y: 0.0), CGPoint(x: 2.0, y: 0.0), CGPoint(x: 3.0, y: 0.0), CGPoint(x: 4.0, y:0.0), CGPoint(x: 5.0, y: 0.0), CGPoint(x: 6.0, y: 0.0), CGPoint(x: 0.0, y: 0.0)]
+            
+        } else {
+            print("else data.count \(data.count)")
+            
+            print("value in array is : \(data)")
+            dataItem.barPointArray = [CGPoint(x: 1.0, y: 0.0), CGPoint(x: 2.0, y: 25.0), CGPoint(x: 3.0, y: 30.0), CGPoint(x: 4.0, y:50.0), CGPoint(x: 5.0, y: 55.0), CGPoint(x: 6.0, y: 60.0), CGPoint(x: 7.0, y: 90.0)]
+            
+        }
+        
+        dataItem.xAxesDegreeTexts = getPastDates(days: 7) as! [String]
+        dataItem.yAxesDegreeTexts = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+        
+        let frameW = self.view.frame.size.width
+        let barChart: PDBarChart = PDBarChart(frame: CGRect(x: 0, y: 100, width: frameW, height: frameW), dataItem: dataItem)
+        
+        return barChart
+    }
+    
+    func dateData(activityname: String) {
+        var arrayData = Array<Int64>()
+        var dates = getPastDates(days: 7)
+        let activityLog = self.activitiesLogAll[activityname]
+        if activityLog == nil {
+            arrayData.append(0)
+        } else {
+            for act in activityLog! {
+                
+                if dates.contains(act.activity_event_date) {
+                    arrayData.append(act.activity_duration!)
+                } else {
+                    arrayData.append(0)
+                }
+            }
+        }
+        let viewCon: UIViewController = UIViewController()
+        viewCon.view.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        if arrayData.count != 0 {
+            var chart: PDChart!
+            let barChart: PDBarChart = self.getBarChart(data: arrayData)
+            chart = barChart
+            viewCon.view.addSubview(barChart)
+            
+            chart.strokeChart()
+            self.navigationController?.pushViewController(viewCon, animated: true)
+        } else {
+            print("getting no values")
+        }
+        
+    }
 }
 
 extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
@@ -194,7 +268,7 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReportCell", for: indexPath) as! ReportCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityReportCell", for: indexPath) as! ActivityReportCell
         cell.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
         let activity = activities[indexPath.row]
         let pfImage = activity.activityImageFile
@@ -210,7 +284,7 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
             })
         }
         cell.activityNameLabel.text = activity.activityName
-        cell.descriptionLabel.text = activity.activityDescription
+        //cell.descriptionLabel.text = activity.activityDescription
         cell.activityImageView.tintColor = .white
         cell.activityNameLabel.text = activity.activityName
         let activityLog = activitiesLogAll[activity.activityName!]
@@ -226,7 +300,14 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        return 180
+        return 150
     }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        print("indexPath clicked is \(activities[indexPath.row].activityName)")
+        
+        self.dateData(activityname: activities[indexPath.row].activityName!)
+    }
+    
     
 }
