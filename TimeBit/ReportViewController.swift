@@ -204,7 +204,11 @@ class ReportViewController: UIViewController {
             print("data.count \(data.count)")
             
             print("value in array is : \(data)")
+            /*
             dataItem.barPointArray = [CGPoint(x: 1.0, y: 0.0), CGPoint(x: 2.0, y: 0.0), CGPoint(x: 3.0, y: 0.0), CGPoint(x: 4.0, y:0.0), CGPoint(x: 5.0, y: 0.0), CGPoint(x: 6.0, y: 0.0), CGPoint(x: 0.0, y: 0.0)]
+            */
+            // Setting some default value for now
+            dataItem.barPointArray = [CGPoint(x: 1.0, y: 10.0), CGPoint(x: 2.0, y: 30.0), CGPoint(x: 3.0, y: 10.0), CGPoint(x: 4.0, y:20.0), CGPoint(x: 5.0, y: 50.0), CGPoint(x: 6.0, y: 40.0), CGPoint(x: 0.0, y: 80.0)]
             
         } else {
             print("else data.count \(data.count)")

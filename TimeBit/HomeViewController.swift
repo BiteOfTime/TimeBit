@@ -144,6 +144,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
             detailActivityViewController.activity_name = activities[(indexPath?.row)!].activityName!
+            print("passing the value of isTimerOn to detailVC \(currentActivityIndex)")
+            detailActivityViewController.isTimerOn = currentActivityIndex
+            detailActivityViewController.currentHour = self.timerView.hours
+            detailActivityViewController.currentMinute = self.timerView.minutes
+            detailActivityViewController.currentSec = self.timerView.seconds
+            detailActivityViewController.trackPassedSecond = self.timerView.passedSeconds
+            detailActivityViewController.activityStartTimeFromHomeScreen = self.startDate ?? Date()
             navigationController?.pushViewController(detailActivityViewController, animated: true)
             
         }
