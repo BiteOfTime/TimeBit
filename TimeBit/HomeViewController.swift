@@ -14,6 +14,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
+    
     var roundButton = UIButton()
     var reusableView : UICollectionReusableView? = nil
     
@@ -51,6 +52,24 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         loadActivities()
         addLongPressGesture()
         addTapGesture()
+        self.becomeFirstResponder()
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    // Enable detection of shake motion
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            if timerView.isRunning {
+                print("Stopping timer on shake detection")
+                let passedSeconds = timerView.onStopTimer()
+                timerView.isRunning = false
+                timerView(onStop: passedSeconds)
+            }
+            print("Shaking")
+        }
     }
     
     func loadActivities () {
