@@ -20,6 +20,7 @@ class ReportViewController: UIViewController {
     var activityForChart: [ActivityLog]!
     var count: Int64 = 0
     var arrayDataForChart = [Int64]()
+    var inputDataChart : Array<Int64> = []
     
     var activitiesLogAll: Dictionary<String, [ActivityLog]> = Dictionary()
     
@@ -43,7 +44,6 @@ class ReportViewController: UIViewController {
         tableView.register(UINib(nibName: "ReportCell", bundle: nil), forCellReuseIdentifier: "ReportCell")
         
         loadActivityForUser()
-        
         loadActivityLog()
         
         tableView.reloadData()
@@ -193,35 +193,6 @@ class ReportViewController: UIViewController {
         return arrayDate as NSArray
     }
     
-    func getDataForChart(data: [String]) -> Array<Int64> {
-        var arrayDate = [Int64]()
-        
-        //for i in data {
-        for i in data {
-            print(i)
-            let params = ["activity_name": "Walk", "activity_event_date": i] as [String : Any]
-            ParseClient.sharedInstance.getTodayCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
-                self.count = 0
-                if error != nil {
-                    NSLog("Error getting activities from Parse")
-                } else {
-                    self.activityForChart = activities!
-                    NSLog("Items from Parse \(self.activityForChart)")
-                    
-                    self.activityForChart.forEach { x in
-                        self.count = self.count + x.activity_duration!
-                    }
-                }
-                arrayDate.append(self.count)
-                print(self.count)
-            }
-        }
-        return arrayDate as [Int64]
-    }
-    
-    
-    
-    
     func getBarChart(data: Array<Int64>) -> PDBarChart {
         let dataItem: PDBarChartDataItem = PDBarChartDataItem()
         dataItem.xMax = 7.0
@@ -229,10 +200,19 @@ class ReportViewController: UIViewController {
         dataItem.yMax = 100.0
         dataItem.yInterval = 10.0
         
-        //var plot = getDataForChart(data: getPastDates(days: 7) as! [String])
-        print("data.count \(data.count)")
-        
-        dataItem.barPointArray = [CGPoint(x: 1.0, y: 95.0), CGPoint(x: 2.0, y: 25.0), CGPoint(x: 3.0, y: 30.0), CGPoint(x: 4.0, y:50.0), CGPoint(x: 5.0, y: 55.0), CGPoint(x: 6.0, y: 60.0), CGPoint(x: 7.0, y: 90.0)]
+        if data.count == 1 && data[0] == 0 {
+            print("data.count \(data.count)")
+            
+            print("value in array is : \(data)")
+            dataItem.barPointArray = [CGPoint(x: 1.0, y: 0.0), CGPoint(x: 2.0, y: 0.0), CGPoint(x: 3.0, y: 0.0), CGPoint(x: 4.0, y:0.0), CGPoint(x: 5.0, y: 0.0), CGPoint(x: 6.0, y: 0.0), CGPoint(x: 0.0, y: 0.0)]
+            
+        } else {
+            print("else data.count \(data.count)")
+            
+            print("value in array is : \(data)")
+            dataItem.barPointArray = [CGPoint(x: 1.0, y: 0.0), CGPoint(x: 2.0, y: 25.0), CGPoint(x: 3.0, y: 30.0), CGPoint(x: 4.0, y:50.0), CGPoint(x: 5.0, y: 55.0), CGPoint(x: 6.0, y: 60.0), CGPoint(x: 7.0, y: 90.0)]
+            
+        }
         
         dataItem.xAxesDegreeTexts = getPastDates(days: 7) as! [String]
         dataItem.yAxesDegreeTexts = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
@@ -240,11 +220,39 @@ class ReportViewController: UIViewController {
         let frameW = self.view.frame.size.width
         let barChart: PDBarChart = PDBarChart(frame: CGRect(x: 0, y: 100, width: frameW, height: frameW), dataItem: dataItem)
         
-        DispatchQueue.main.async(execute: {
-            self.tableView.reloadData()
-        })
-        
         return barChart
+    }
+    
+    func dateData(activityname: String) {
+        var arrayData = Array<Int64>()
+        var dates = getPastDates(days: 7)
+        let activityLog = self.activitiesLogAll[activityname]
+        if activityLog == nil {
+            arrayData.append(0)
+        } else {
+            for act in activityLog! {
+                
+                if dates.contains(act.activity_event_date) {
+                    arrayData.append(act.activity_duration!)
+                } else {
+                    arrayData.append(0)
+                }
+            }
+        }
+        let viewCon: UIViewController = UIViewController()
+        viewCon.view.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        if arrayData.count != 0 {
+            var chart: PDChart!
+            let barChart: PDBarChart = self.getBarChart(data: arrayData)
+            chart = barChart
+            viewCon.view.addSubview(barChart)
+            
+            chart.strokeChart()
+            self.navigationController?.pushViewController(viewCon, animated: true)
+        } else {
+            print("getting no values")
+        }
+        
     }
 }
 
@@ -294,23 +302,11 @@ extension ReportViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         return 180
     }
-    
+
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        print("indexPath clicked is \(indexPath)")
-        let viewCon: UIViewController = UIViewController()
-        viewCon.view.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
-        var inputData = getDataForChart(data: getPastDates(days: 7) as! [String])
+        print("indexPath clicked is \(activities[indexPath.row].activityName)")
         
-        var chart: PDChart!
-        let barChart: PDBarChart = self.getBarChart(data: inputData)
-        chart = barChart
-        viewCon.view.addSubview(barChart)
-        
-        chart.strokeChart()
-        
-        self.navigationController?.pushViewController(viewCon, animated: true)
-        
-        
+        self.dateData(activityname: activities[indexPath.row].activityName!)
     }
     
     
