@@ -35,7 +35,7 @@
                             <rect key="frame" x="0.0" y="240.5" width="375" height="376.5"/>
                             <color key="backgroundColor" red="0.035294117649999998" green="0.1450980392" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lL8-gB-sR1">
-                                <size key="itemSize" width="160" height="100"/>
+                                <size key="itemSize" width="160" height="120"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>

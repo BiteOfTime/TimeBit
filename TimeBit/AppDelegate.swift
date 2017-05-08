@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.tintColor = UIColor.white
         UITabBar.appearance().barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
         UITabBar.appearance().tintColor = UIColor.white
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+            // Enable or disable features based on authorization.
+        }
         
         let tabBarController = UITabBarController()
         let tabViewController1 = UINavigationController(rootViewController: HomeViewController())
@@ -83,6 +89,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    // This method will be called when app received push notifications in foreground
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//        completionHandler(UNNotificationPresentationOptions.alert)
+//    }
+    
+//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+//        
+//        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+//        print(deviceTokenString)
+//        
+//        UNUserNotificationCenter.current().getNotificationSettings(){ (setttings) in
+//            
+//            switch setttings.soundSetting{
+//            case .enabled:
+//                
+//                print("enabled sound setting")
+//                
+//            case .disabled:
+//                
+//                print("setting has been disabled")
+//                
+//            case .notSupported:
+//                print("something vital went wrong here")
+//            }
+//        }
+//
+//        
+//        
+//    }
+//    
+//    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+//        
+//        print("i am not available in simulator \(error)")
+//        
+//    }
+//    
+//    
+//    
+//    func userNotificationCenter(_ center: UNUserNotificationCenter,
+//                                didReceive response: UNNotificationResponse,
+//                                withCompletionHandler completionHandler: @escaping () -> Void) {
+//        
+//    }
 
 
 }

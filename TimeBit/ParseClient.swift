@@ -114,6 +114,25 @@ class ParseClient: NSObject {
 
     }
     
+    func getActivityDetails(activityName: String?, completion: @escaping (_ activity: Activity?, _ error: Error?) -> ()) {
+        let activityQuery = PFQuery(className: "ActivityTest")
+        activityQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        activityQuery.whereKey("activity_name", equalTo: activityName!)
+        
+        activityQuery.getFirstObjectInBackground { (object, error) -> Void in
+            if error == nil {
+                let PFActivity = object
+                let activity = Activity.init(pfobj: PFActivity!)
+                print(object as Any)
+                completion(activity, nil)
+            } else {
+                NSLog("error: \(String(describing: error))")
+                completion(nil, error)
+            }
+        }
+        
+    }
+    
     func saveNewGoal(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject
         let goalEntry = PFObject(className: "GoalTest")
@@ -197,6 +216,39 @@ class ParseClient: NSObject {
         }
     }
     
+    func deleteGoal(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "GoalTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        goalQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
+        
+        goalQuery.getFirstObjectInBackground {(object, error) -> Void in
+            if error != nil {
+                print(error)
+            } else {
+//                if let object = object {
+//                    object["limit"] = params!["limit"] as! String
+//                    object["hours"] = params!["hours"] as! String
+//                    object["mins"] = params!["mins"] as! String
+//                    object["frequency"] = params!["frequency"] as! String
+//                }
+                object!.deleteInBackground()
+            }
+        }
+    }
+    
+    func deleteActivity(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
+        let goalQuery = PFQuery(className: "ActivityTest")
+        goalQuery.whereKey("user_id", equalTo: getCurrentUser()!)
+        goalQuery.whereKey("activity_name", equalTo: params!["activityName"] as! String)
+        
+        goalQuery.getFirstObjectInBackground {(object, error) -> Void in
+            if error != nil {
+                print(error!)
+            } else {
+                object!.deleteInBackground()
+            }
+        }
+    }
     
     func saveActivityLog(params: NSDictionary?, completion: @escaping (_ parseObj: PFObject?, _ error: Error?) -> ()) {
         // Create Parse object PFObject

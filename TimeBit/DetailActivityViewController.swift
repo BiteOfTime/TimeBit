@@ -28,6 +28,8 @@ class DetailActivityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hidesBottomBarWhenPushed = false
+        
         tableView.delegate = self
         tableView.dataSource = self
         
