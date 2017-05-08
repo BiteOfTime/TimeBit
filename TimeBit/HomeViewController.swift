@@ -10,22 +10,25 @@ import UIKit
 import Parse
 import ParseUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate, AddNewActivityViewControllerDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate, AddNewActivityViewControllerDelegate, UICollectionViewDelegateFlowLayout, TimerViewDeleagte {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
     var roundButton = UIButton()
+    var reusableView : UICollectionReusableView? = nil
     
     var activities: [Activity] = []
     var activitiesTodayLog: Dictionary<String, [ActivityLog]> = Dictionary()
     
     var currentActivityIndex: Int = -1
     var startDate: Date?
+    var activityRunning: Dictionary = [String: Any]()
     var selectedCell = [IndexPath]()
     
     var initialIndexPath: IndexPath?
     var cellSnapshot: UIView?
     var longPressActive = false
+    var touchLocation:CGPoint? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,14 +36,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
-        
         collectionView.allowsSelection = true
+        
+        //collectionView.register(UINib(nibName: "ActivityHeader",bundle: nil), forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ActivityHeader")
+        
         navigationItem.title = "TimeBit"
         //Floating round button to add a new activity
         self.roundButton = UIButton(type: .custom)
         self.roundButton.setTitleColor(UIColor.orange, for: .normal)
         self.roundButton.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControlEvents.touchUpInside)
         self.view.addSubview(roundButton)
+        timerView.delegate = self
         
         loadActivities()
         addLongPressGesture()
@@ -157,47 +163,95 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func onLongPressGesture(sender: UILongPressGestureRecognizer) {
-        let locationInView = sender.location(in: collectionView)
-        let indexPath = collectionView.indexPathForItem(at: locationInView)
+        
+        let locationInView = sender.location(in: view)
+        let locationInCollectionView = sender.location(in: collectionView)
+        let collectionViewLocation = collectionView.convert(collectionView.bounds.origin, to: view)
         
         if sender.state == .began {
+            touchLocation = locationInView
+            let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
             if indexPath != nil {
                 initialIndexPath = indexPath
                 let cell = collectionView.cellForItem(at: indexPath!)
                 cellSnapshot = snapshotOfCell(inputView: cell!)
                 cell?.isHidden = true
-                let center = cell?.center
-                cellSnapshot?.center = center!
+                
+                let locationOnScreen = cell!.convert(cell!.bounds.origin, to: view)
+                let cellBounds = cell!.bounds
+                let center = CGPoint(x:(locationOnScreen.x + cellBounds.size.width / 2),
+                                     y : (locationOnScreen.y + cellBounds.size.height / 2))
+                    
+                cellSnapshot?.center = center
                 cellSnapshot?.alpha = 1.0
                 cellSnapshot?.transform = (self.cellSnapshot?.transform.scaledBy(x: 1.05, y: 1.05))!
-                collectionView.addSubview(cellSnapshot!)
+                view.addSubview(cellSnapshot!)
                 longPressActive = true
                 collectionView.reloadData()
             }
         } else if sender.state == .changed {
-            var center = cellSnapshot?.center
-            center?.y = locationInView.y
-            center?.x = locationInView.x
-            cellSnapshot?.center = center!
             
-            if ((indexPath != nil) && (indexPath != initialIndexPath)) {
-                swap(&activities[indexPath!.row], &activities[initialIndexPath!.row])
-                collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
-                initialIndexPath = indexPath
+            let isInsideCollectionView = locationInView.y > collectionViewLocation.y
+            
+            var center = cellSnapshot?.center
+            center?.y = center!.y + (locationInView.y - touchLocation!.y)
+            center?.x = center!.x + (locationInView.x - touchLocation!.x)
+            touchLocation = locationInView
+            cellSnapshot?.center = center!
+            if (isInsideCollectionView) {
+                let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
+                if ((indexPath != nil) && (indexPath != initialIndexPath)) {
+                    swap(&activities[indexPath!.row], &activities[initialIndexPath!.row])
+                    collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
+                    initialIndexPath = indexPath
+                }
             }
         } else if sender.state == .ended {
-            let cell = collectionView.cellForItem(at: initialIndexPath!)
+            touchLocation = nil
+            let cell = collectionView.cellForItem(at: initialIndexPath!) as! ActivityCell
+            let isInsideCollectionView = locationInView.y > collectionViewLocation.y
+            //print("location in view", locationInView)
+            //print("collection view location", collectionViewLocation)
             
-            UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                self.cellSnapshot?.center = (cell?.center)!
-            }, completion: { (finished) -> Void in
-                if finished {
-                    self.initialIndexPath = nil
-                    self.cellSnapshot?.removeFromSuperview()
-                    self.cellSnapshot = nil
-                    self.collectionView.reloadData()
-                }
-            })
+            if (isInsideCollectionView) {
+                //let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
+                
+                let locationOnScreen = cell.convert(cell.bounds.origin, to: view)
+                let cellBounds = cell.bounds
+                let center = CGPoint(x:(locationOnScreen.x + cellBounds.size.width / 2),
+                                     y : (locationOnScreen.y + cellBounds.size.height / 2))
+                
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                    self.cellSnapshot?.center = center
+                }, completion: { (finished) -> Void in
+                    if finished {
+                        self.initialIndexPath = nil
+                        self.cellSnapshot?.removeFromSuperview()
+                        self.cellSnapshot = nil
+                        self.collectionView.reloadData()
+                    }
+                })
+            }
+
+            else {
+                longPressActive = false
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                    self.cellSnapshot?.transform = (self.cellSnapshot?.transform.scaledBy(x: 0.4, y: 0.4))!
+                    self.cellSnapshot?.alpha = 0
+                }, completion: { (finished) -> Void in
+                    if finished {
+                        let cellIndex = self.initialIndexPath?.row
+                        self.initialIndexPath = nil
+                        self.cellSnapshot?.removeFromSuperview()
+                        self.cellSnapshot = nil
+                        self.startTimer(activityName: cell.activityNameLabel.text!, cellIndex: cellIndex!)
+                        
+                        self.collectionView.reloadData()
+                    }
+                })
+                
+            }
+        
         }
     }
     
@@ -242,7 +296,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //orange
             activityCell.activityImage.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
         }
-            
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -254,7 +308,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if currentActivityIndex != indexPath.row {
             changeColorOfCell(activityCell: cell, index: indexPath.row)
         }
-
+        
         cell.activityImage.isSelected = indexPath.row == currentActivityIndex
         
         //Loading PFFile to PFImageView
@@ -302,9 +356,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/2, height: 120);
     }
     
@@ -318,7 +372,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.contentView.backgroundColor = .blue
     }
-
+    
     func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
         if(activityLog == nil || activityLog?.count == 0) {
             return "0"
@@ -342,47 +396,95 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             return seconds > 0  ? "\(minutes)min \(seconds)sec today" : "\(minutes)min today"
         }
         
+        
         return "\(seconds)sec today"
         
     }
     
-    func activityCell(onStartStop activityCell: ActivityCell) {
-        let clickActivityIndex = collectionView.indexPath(for: activityCell)!.row
+    
+    func startTimer(activityName: String, cellIndex: Int) {
         if currentActivityIndex == -1 {
-            activityCell.activityImage.isSelected = true
-            currentActivityIndex = (collectionView.indexPath(for: activityCell)?.row)!
-            //print("Timer started")
+            //activityCell.activityImage.isSelected = true
+            currentActivityIndex = cellIndex
+            print("Timer started")
             startDate = Date()
+            activityRunning["activity_name"] = activityName
+            activityRunning["activity_start_time"] = startDate
+            timerView.activityNameLabel.text = activityName
+            timerView.stopLabel.isHidden = false
             timerView.onStartTimer()
-        } else if clickActivityIndex == currentActivityIndex {
-            activityCell.activityImage.isSelected = false
+        }
+    }
+    
+    func timerView(onStop passedSeconds: Int64) {
+        if currentActivityIndex == currentActivityIndex {
+            //activityCell.activityImage.isSelected = false
             currentActivityIndex = -1
             //print("Timer Stopped")
-            let passedSeconds = timerView.onStopTimer()
-            
+            timerView.stopLabel.isHidden = true
             let currentDate = Utils.formatDate(dateString: String(describing: Date()))
-            
-            if (!(activityCell.activityNameLabel.text?.isEmpty)!) {
-                let params = ["activity_name": activityCell.activityNameLabel.text!, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary
+            let activityName = activityRunning["activity_name"] as! String
+            if (!activityName.isEmpty) {
+                let params = ["activity_name": activityName, "activity_start_time":activityRunning["activity_start_time"]!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary
                 
                 //Showing locally
-                var activityLogs = self.activitiesTodayLog[activityCell.activityNameLabel.text!] ?? []
+                var activityLogs = self.activitiesTodayLog[activityName] ?? []
                 activityLogs.append(ActivityLog(dictionary: params))
-                self.activitiesTodayLog[activityCell.activityNameLabel.text!] = activityLogs
+                self.activitiesTodayLog[activityName] = activityLogs
                 self.collectionView.reloadData()
                 
                 ParseClient.sharedInstance.saveActivityLog(params: params as NSDictionary?) { (PFObject, Error) -> () in
                     if Error != nil {
                         NSLog("Error saving to the log for the activity")
                     } else {
-                        NSLog("Saved the activity for", activityCell.activityNameLabel.text!)
+                        NSLog("Saved the activity for", activityName)
                     }
                 }
             }
             
             startDate = nil
         }
+
     }
+    
+//    func activityCell(onStartStop activityCell: ActivityCell) {
+//        let clickActivityIndex = collectionView.indexPath(for: activityCell)!.row
+//        if currentActivityIndex == -1 {
+//            activityCell.activityImage.isSelected = true
+//            currentActivityIndex = (collectionView.indexPath(for: activityCell)?.row)!
+//            //print("Timer started")
+//            startDate = Date()
+//            timerView.timerRunning = true
+//            timerView.onStartTimer()
+//        } else if currentActivityIndex == currentActivityIndex {
+//            activityCell.activityImage.isSelected = false
+//            currentActivityIndex = -1
+//            //print("Timer Stopped")
+//            let passedSeconds = timerView.onStopTimer()
+//            
+//            let currentDate = Utils.formatDate(dateString: String(describing: Date()))
+//            
+//            if (!(activityCell.activityNameLabel.text?.isEmpty)!) {
+//                let params = ["activity_name": activityCell.activityNameLabel.text!, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary
+//                
+//                //Showing locally
+//                var activityLogs = self.activitiesTodayLog[activityCell.activityNameLabel.text!] ?? []
+//                activityLogs.append(ActivityLog(dictionary: params))
+//                self.activitiesTodayLog[activityCell.activityNameLabel.text!] = activityLogs
+//                self.collectionView.reloadData()
+//                
+//                ParseClient.sharedInstance.saveActivityLog(params: params as NSDictionary?) { (PFObject, Error) -> () in
+//                    if Error != nil {
+//                        NSLog("Error saving to the log for the activity")
+//                    } else {
+//                        NSLog("Saved the activity for", activityCell.activityNameLabel.text!)
+//                    }
+//                }
+//            }
+//            
+//            startDate = nil
+//        }
+//    }
     
     func activityCell(onDeleteActivity activityCell: ActivityCell) {
         let alert = UIAlertController(title: "TimeBit",

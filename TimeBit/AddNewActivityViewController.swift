@@ -19,7 +19,7 @@ class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelega
     @IBOutlet weak var newActivityText: UITextField!
     @IBOutlet weak var newActivityDesc: UITextField!
     @IBOutlet weak var defaultImagesView: DefaultImagesPopover!
-    
+    @IBOutlet weak var selectButton: UIButton!
     var activity: Activity!
     var existingActivities: [Activity]!
     var newActivityNotExists = true
@@ -32,8 +32,16 @@ class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelega
         defaultImagesView.isHidden = true
         hidesBottomBarWhenPushed = false
         self.navigationItem.title = "Add New Activity"
+        
+        selectButton.backgroundColor = UIColor(red: 16/255, green: 78/255, blue: 114/255, alpha: 1.0)
+        selectButton.tintColor = .white
+        selectButton.setImage(#imageLiteral(resourceName: "more"), for: .normal)
+        selectButton.setImage(#imageLiteral(resourceName: "less"), for: .selected)
+        
         newActivityImage.isUserInteractionEnabled = false
-        addTapGesture()
+        defaultImagesView.delegate = self
+
+        //addTapGesture()
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +51,7 @@ class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelega
     
     func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGesture(sender:)))
-        addNewActivityView.addGestureRecognizer(tapGesture)
+        selectButton.addGestureRecognizer(tapGesture)
     }
     
     func onTapGesture(sender: UITapGestureRecognizer) {
@@ -57,24 +65,27 @@ class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelega
     }
 
     func defaultImagesPopover(onSelect defaultImage: UIImage) {
-        newActivityImage.imageView?.image = defaultImage
+        newActivityImage.setImage(defaultImage, for: .normal)
+        newActivityImage.setImage(defaultImage, for: .selected)
+        selectButton.isSelected = false
     }
     
     @IBAction func onSelectImage(_ sender: UIButton) {
         if defaultImagesView.isHidden {
+            selectButton.isSelected = true
             self.defaultImagesView.isHidden = false
             self.defaultImagesView.alpha = 0.0
             UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
                 self.defaultImagesView.alpha = 1.0
             }, completion: nil)
         } else {
+            selectButton.isSelected = false
             UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
                 self.defaultImagesView.alpha = 0.0
             }, completion: { finished in
                 self.defaultImagesView.isHidden = true
             })
         }
-        defaultImagesView.delegate = self
         
     }
     

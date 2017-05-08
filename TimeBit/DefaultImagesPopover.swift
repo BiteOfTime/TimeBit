@@ -16,7 +16,7 @@ class DefaultImagesPopover: UIView, UICollectionViewDelegate, UICollectionViewDa
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     weak var delegate: DefaultImagesPopoverDelegate?
-
+    var defaultImages: [UIImage]?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -36,11 +36,12 @@ class DefaultImagesPopover: UIView, UICollectionViewDelegate, UICollectionViewDa
         addSubview(contentView)
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.darkGray.cgColor
-
         
         collectionView.register(UINib(nibName: "DefaultImagesCell", bundle: nil), forCellWithReuseIdentifier: "DefaultImagesCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.allowsSelection = true
+        defaultImages = [#imageLiteral(resourceName: "baseball"), #imageLiteral(resourceName: "bike"), #imageLiteral(resourceName: "bus"), #imageLiteral(resourceName: "car"), #imageLiteral(resourceName: "cart"), #imageLiteral(resourceName: "cricket"), #imageLiteral(resourceName: "flight"), #imageLiteral(resourceName: "football"), #imageLiteral(resourceName: "gaming"), #imageLiteral(resourceName: "garden"), #imageLiteral(resourceName: "hockey"), #imageLiteral(resourceName: "paint"), #imageLiteral(resourceName: "phone"), #imageLiteral(resourceName: "sail"), #imageLiteral(resourceName: "soccer"), #imageLiteral(resourceName: "swimming"), #imageLiteral(resourceName: "tools"), #imageLiteral(resourceName: "train")]
     }
     
     
@@ -70,17 +71,18 @@ class DefaultImagesPopover: UIView, UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return (defaultImages?.count)!
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultImagesCell", for: indexPath) as! DefaultImagesCell
         
-        cell.defaultImage.setImage(#imageLiteral(resourceName: "dance"), for: .normal)
-        cell.defaultImage.setImage(#imageLiteral(resourceName: "dance"), for: .selected)
+        let defaultImage = defaultImages?[indexPath.row]
+        cell.defaultImage.setImage(defaultImage, for: .normal)
+        cell.defaultImage.setImage(defaultImage, for: .selected)
         cell.defaultImage.isUserInteractionEnabled = false
         changeColorOfCell(defaultImagesCell: cell, index: indexPath.row)
-        //print("deque")
+        
         return cell
     }
 

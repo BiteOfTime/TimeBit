@@ -16,6 +16,7 @@
                 <outlet property="newActivityDesc" destination="iGS-2A-mfA" id="rhF-1d-0Te"/>
                 <outlet property="newActivityImage" destination="r5T-FG-786" id="Ckp-Gz-xf0"/>
                 <outlet property="newActivityText" destination="i92-eK-UTO" id="uO5-Tq-VTq"/>
+                <outlet property="selectButton" destination="itF-tN-ara" id="6oA-Yy-w22"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -84,7 +85,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.062745098040000002" green="0.30588235289999999" blue="0.44705882349999998" alpha="1" colorSpace="calibratedRGB"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <state key="normal" image="more"/>
+                    <state key="normal" image="less"/>
                     <connections>
                         <action selector="onSelectImage:" destination="-1" eventType="touchUpInside" id="CSK-6e-Nao"/>
                     </connections>
@@ -111,6 +112,6 @@
     </objects>
     <resources>
         <image name="dance" width="128" height="128"/>
-        <image name="more" width="64" height="64"/>
+        <image name="less" width="64" height="64"/>
     </resources>
 </document>

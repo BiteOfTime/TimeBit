@@ -8,10 +8,19 @@
 
 import UIKit
 
+@objc protocol TimerViewDeleagte {
+    func timerView(onStop passedSeconds: Int64)
+}
+
 class TimerView: UIView{
 
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var activityNameLabel: UILabel!
+    @IBOutlet weak var stopLabel: UILabel!
+    
+    weak var delegate: TimerViewDeleagte?
+    var isRunning = false
     
     var timer = Timer()
     var hours: Int = 0
@@ -19,7 +28,7 @@ class TimerView: UIView{
     var seconds: Int = 0
     var passedSeconds: Int64 = 0
     var stopTimerString: String = ""
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initSubViews()
@@ -37,9 +46,26 @@ class TimerView: UIView{
         addSubview(contentView)
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.darkGray.cgColor
+        stopLabel.isHidden = true
+        addTapGesture()
     }
     
+    func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGesture(sender:)))
+        contentView.addGestureRecognizer(tapGesture)
+    }
+    
+    func onTapGesture(sender: UITapGestureRecognizer) {
+        if isRunning {
+            passedSeconds = onStopTimer()
+            isRunning = false
+            delegate?.timerView(onStop: passedSeconds)
+        }
+    }
+    
+    
     func onStartTimer() {
+        isRunning = true
         passedSeconds = 0
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(TimerView.updateTimer), userInfo: nil, repeats: true)
     }

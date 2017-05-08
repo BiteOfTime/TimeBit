@@ -41,9 +41,6 @@
                                     <constraint firstAttribute="height" constant="36" id="gld-fx-dIE"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="onActivityImage:" destination="rSj-uJ-24E" eventType="touchUpInside" id="2OC-yK-79I"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQj-Aq-XO0">
                                 <rect key="frame" x="140" y="0.0" width="20" height="20"/>
