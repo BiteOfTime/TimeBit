@@ -135,7 +135,6 @@
                 <outlet property="hourLabel" destination="QzH-Cg-th6" id="SF8-8a-Yx1"/>
                 <outlet property="minuteLabel" destination="FFG-E6-0FA" id="63B-61-u4z"/>
                 <outlet property="secondLabel" destination="5e9-bA-YyR" id="S83-0Z-ZKh"/>
-                <outlet property="startActivityLabel" destination="Sts-nT-M0w" id="rPT-p7-HjN"/>
                 <outlet property="startButton" destination="s9j-wC-4Ba" id="2Mm-TN-gNe"/>
                 <outlet property="timerLabel" destination="Sts-nT-M0w" id="uay-91-bJh"/>
             </connections>
