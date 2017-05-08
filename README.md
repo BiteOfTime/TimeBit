@@ -29,7 +29,7 @@ App Design:
 
 Here's a walkthrough:
 
-![Animated Screenshot](/TimeBitDemoSprint1.gif?raw=true "Animated Screenshot")
+![Animated Screenshot](/TimeBitDemoSprint2.gif?raw=true "Animated Screenshot")
 
 
 Copyright [2017] [Krishna Alex, Namrata Mehta and Anisha Jain]. All rights reserved.
