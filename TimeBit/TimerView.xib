@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TimerView" customModule="TimeBit" customModuleProvider="target">
             <connections>
                 <outlet property="activityNameLabel" destination="FX8-9p-n1A" id="kFI-h4-ePG"/>
+                <outlet property="circleTimerView" destination="kLM-LT-lJT" id="2IN-Xi-gT8"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="eH5-cq-hC3"/>
                 <outlet property="stopLabel" destination="xLA-zc-t7y" id="yap-lj-Lk0"/>
                 <outlet property="timerLabel" destination="NX7-6P-kxU" id="98F-Cs-hir"/>
@@ -22,40 +23,64 @@
             <rect key="frame" x="0.0" y="0.0" width="367" height="160"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NX7-6P-kxU">
-                    <rect key="frame" x="110" y="56" width="147" height="49.5"/>
-                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="36"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start an Actitivity " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FX8-9p-n1A">
-                    <rect key="frame" x="114" y="20" width="140.5" height="28"/>
-                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start an Activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FX8-9p-n1A">
+                    <rect key="frame" x="134" y="10" width="100" height="22"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to Stop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xLA-zc-t7y">
-                    <rect key="frame" x="156" y="110" width="55" height="12"/>
-                    <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="10"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kLM-LT-lJT">
+                    <rect key="frame" x="129" y="38" width="110" height="110"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NX7-6P-kxU">
+                            <rect key="frame" x="9" y="40" width="92" height="30.5"/>
+                            <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xLA-zc-t7y">
+                            <rect key="frame" x="44" y="20" width="22.5" height="12"/>
+                            <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="10"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="14j-LV-NiC">
+                            <rect key="frame" x="39.5" y="72.5" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="iZl-tR-Vem"/>
+                                <constraint firstAttribute="width" constant="30" id="tC3-El-bM3"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.031372549020000001" green="0.23137254900000001" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="NX7-6P-kxU" firstAttribute="centerX" secondItem="kLM-LT-lJT" secondAttribute="centerX" id="7Tc-Ft-ggf"/>
+                        <constraint firstAttribute="width" constant="110" id="CCt-zH-Ul1"/>
+                        <constraint firstItem="14j-LV-NiC" firstAttribute="centerX" secondItem="NX7-6P-kxU" secondAttribute="centerX" id="EJd-2H-9oi"/>
+                        <constraint firstItem="xLA-zc-t7y" firstAttribute="top" relation="greaterThanOrEqual" secondItem="kLM-LT-lJT" secondAttribute="top" constant="8" id="G2K-24-vII"/>
+                        <constraint firstAttribute="height" constant="110" id="PbS-xM-S9B"/>
+                        <constraint firstItem="NX7-6P-kxU" firstAttribute="top" secondItem="xLA-zc-t7y" secondAttribute="bottom" constant="8" id="Zp0-qR-XRE"/>
+                        <constraint firstItem="xLA-zc-t7y" firstAttribute="centerX" secondItem="kLM-LT-lJT" secondAttribute="centerX" id="f88-cb-obp"/>
+                        <constraint firstItem="14j-LV-NiC" firstAttribute="top" secondItem="NX7-6P-kxU" secondAttribute="bottom" constant="2" id="laZ-ph-Ptf"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="14j-LV-NiC" secondAttribute="bottom" constant="4" id="zAx-TE-25Z"/>
+                        <constraint firstItem="NX7-6P-kxU" firstAttribute="centerY" secondItem="kLM-LT-lJT" secondAttribute="centerY" id="zBa-b0-8S9"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.035294117649999998" green="0.1450980392" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="FX8-9p-n1A" secondAttribute="trailing" constant="152" id="2b5-0C-Abm"/>
-                <constraint firstItem="FX8-9p-n1A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="AmE-Fz-enh"/>
-                <constraint firstItem="NX7-6P-kxU" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MQl-XO-byV"/>
-                <constraint firstItem="NX7-6P-kxU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QaP-dv-IYo"/>
-                <constraint firstItem="FX8-9p-n1A" firstAttribute="leading" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="153" id="R3P-7O-mLZ"/>
-                <constraint firstItem="NX7-6P-kxU" firstAttribute="top" secondItem="FX8-9p-n1A" secondAttribute="bottom" constant="8" id="TZD-qo-M4e"/>
-                <constraint firstItem="xLA-zc-t7y" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dAD-g0-Bsz"/>
-                <constraint firstItem="FX8-9p-n1A" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="eaB-oG-6yQ"/>
-                <constraint firstItem="xLA-zc-t7y" firstAttribute="top" secondItem="NX7-6P-kxU" secondAttribute="bottom" constant="4" id="n5W-PW-U8f"/>
+                <constraint firstItem="FX8-9p-n1A" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="0Tg-y7-E5K"/>
+                <constraint firstItem="kLM-LT-lJT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2Vs-Ir-m39"/>
+                <constraint firstAttribute="bottom" secondItem="kLM-LT-lJT" secondAttribute="bottom" constant="12" id="hIB-5y-c2o"/>
+                <constraint firstItem="kLM-LT-lJT" firstAttribute="top" relation="lessThanOrEqual" secondItem="FX8-9p-n1A" secondAttribute="bottom" constant="6" id="l4R-rt-Zy5"/>
+                <constraint firstItem="FX8-9p-n1A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="okW-di-aRZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="43.5" y="-166"/>
+            <point key="canvasLocation" x="43.5" y="-174"/>
         </view>
     </objects>
+    <resources>
+        <image name="clock" width="64" height="64"/>
+    </resources>
 </document>

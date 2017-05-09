@@ -39,6 +39,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         collectionView.allowsSelection = true
         
+        collectionView.layer.borderWidth = 1
+        collectionView.layer.borderColor = UIColor.darkGray.cgColor
+    
         //collectionView.register(UINib(nibName: "ActivityHeader",bundle: nil), forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ActivityHeader")
         
         navigationItem.title = "TimeBit"
@@ -436,8 +439,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             startDate = Date()
             activityRunning["activity_name"] = activityName
             activityRunning["activity_start_time"] = startDate
-            timerView.activityNameLabel.text = activityName
-            timerView.stopLabel.isHidden = false
+            timerView.activityNameLabel.text = activityName.capitalized
+            //timerView.stopLabel.isHidden = false
             timerView.onStartTimer()
         }
     }
@@ -447,7 +450,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //activityCell.activityImage.isSelected = false
             currentActivityIndex = -1
             //print("Timer Stopped")
-            timerView.stopLabel.isHidden = true
+            //timerView.stopLabel.isHidden = true
+            timerView.activityNameLabel.text = "Start an Activity"
             let currentDate = Utils.formatDate(dateString: String(describing: Date()))
             let activityName = activityRunning["activity_name"] as! String
             if (!activityName.isEmpty) {

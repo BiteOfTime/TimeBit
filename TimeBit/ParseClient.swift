@@ -77,7 +77,7 @@ class ParseClient: NSObject {
         
         // Add relevant fields to the object
         activityEntry["user_id"] = getCurrentUser()
-        activityEntry["activity_name"] = newActivity?.activityName!
+        activityEntry["activity_name"] = newActivity?.activityName!.capitalized
         activityEntry["activity_desc"] = newActivity?.activityDescription!
         activityEntry["activity_image"] = PFFile(name: "\(newActivity!.activityName!).png", data: imageData!)
         do {

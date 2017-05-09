@@ -14,6 +14,7 @@ import UIKit
 
 class TimerView: UIView{
 
+    @IBOutlet weak var circleTimerView: UIView!
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var activityNameLabel: UILabel!
@@ -46,7 +47,15 @@ class TimerView: UIView{
         addSubview(contentView)
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.darkGray.cgColor
-        stopLabel.isHidden = true
+        
+        //stopLabel.isHidden = true
+        
+        circleTimerView.layer.cornerRadius = 0.5 * circleTimerView.bounds.size.width
+        circleTimerView.layer.borderWidth = 3
+        circleTimerView.layer.borderColor = UIColor(red: 255/255, green: 115/255, blue: 110/255, alpha: 1.0).cgColor
+        circleTimerView.layer.shadowOpacity = 1
+        circleTimerView.layer.shadowOffset = CGSize.zero
+        circleTimerView.layer.shadowRadius = 2
         addTapGesture()
     }
     
