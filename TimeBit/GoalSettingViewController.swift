@@ -27,6 +27,9 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var goalView: UIView!
     @IBOutlet weak var taskView: UIView!
     @IBOutlet weak var pickerHeaderLabel: UILabel!
+    @IBOutlet weak var setGoalButton: UIButton!
+    @IBOutlet weak var setReminderButton: UIButton!
+    
     
     var PickerData: [[String]] = [[String]]()
     var DatePickerData: [[String]] = [[String]]()
@@ -63,12 +66,22 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.tabBarController?.navigationItem.title = "Goals"
         self.navigationItem.title = "Goal Setting"
         
+        //let saveButton = UIBarButtonItem()
+//        saveButton.title = "Save"
+//        saveButton.action = #selector(GoalSettingViewController.onSaveBarButton)
+        let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(onSaveBarButton))
+
+        self.navigationItem.rightBarButtonItem =  saveButton
+        pickerHeaderLabel.isHidden = true
+        
         activityNameLabel.text = self.activityName
         self.goalCompletionPercentageLabel.text = "0%"
         self.goalView.layer.borderWidth = 1
-        self.goalView.layer.borderColor = UIColor.darkGray.cgColor
-        self.taskView.layer.borderWidth = 1
-        self.taskView.layer.borderColor = UIColor.darkGray.cgColor
+        self.goalView.layer.borderColor = UIColor(displayP3Red: 0.18, green: 0.23, blue: 0.30, alpha: 1.0).cgColor
+              self.taskView.layer.borderWidth = 1
+        self.taskView.layer.borderColor = UIColor(displayP3Red: 0.18, green: 0.23, blue: 0.30, alpha: 1.0).cgColor
+        setGoalButton.backgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
+        setReminderButton.backgroundColor = UIColor.clear
         
         //Check if goal exist, then update or else add a new goal.
         getCurrentGoal()
@@ -83,64 +96,12 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
             self.datePickerView.dataSource = self
             
             self.loadPicker()
-//            // Input data into the PickerArray:
-//            self.PickerData = [["Atleast", "Atmax", "Exactly"],
-//                      ["0hr", "1hr", "2hr", "3hr", "4hr", "5hr", "6hr", "7hr", "8hr", "9hr", "10hr", "11hr", "12hr", "13hr", "14hr", "15hr", "16hr", "17hr", "18hr", "19hr", "20hr", "21hr", "22hr", "23hr", "24hr"],
-//                      ["00min", "05min", "10min", "15min", "20min", "25min", "30min", "35min", "40min", "45min", "50min", "55min"],
-//                      ["Daily", "Weekly"]]
-//            self.DatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-//                      ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
-//                      ["AM", "PM"],
-//                      ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]]
-//            self.DailyDatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-//                          ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
-//                          ["AM", "PM"]]
-//        
-//            self.goalpickerView.selectRow(1, inComponent: 0, animated: true)
-//            self.goalpickerView.selectRow(2, inComponent: 1, animated: true)
-//            self.goalpickerView.selectRow(2, inComponent: 2, animated: true)
-//            self.goalpickerView.selectRow(0, inComponent: 3, animated: true)
-//            self.limit = self.PickerData[0][self.goalpickerView.selectedRow(inComponent: 0)]
-//            let hoursString = self.PickerData[1][self.goalpickerView.selectedRow(inComponent: 1)]
-//            self.hours = String(hoursString.characters.dropLast(2))
-//            let minsString = self.PickerData[2][self.goalpickerView.selectedRow(inComponent: 2)]
-//            self.mins = String(minsString.characters.dropLast(3))
-//            self.frequency = self.PickerData[3][self.goalpickerView.selectedRow(inComponent: 3)]
-//            
-//            self.datePickerView.selectRow(1, inComponent: 0, animated: true)
-//            self.datePickerView.selectRow(2, inComponent: 1, animated: true)
-//            self.datePickerView.selectRow(2, inComponent: 2, animated: true)
-//            print("goalFrequency in main", self.goalFrequency)
-//            if self.goalFrequency == "Weekly" {
-//                self.datePickerView.selectRow(0, inComponent: 3, animated: true)
-//                self.notificationHour = self.DatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
-//                self.notificationMin = self.DatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
-//                self.notificationAMPM = self.DatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
-//                self.notificationWeekday = self.DatePickerData[3][self.datePickerView.selectedRow(inComponent: 3)]
-//            } else {
-//                self.notificationHour = self.DailyDatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
-//                self.notificationMin = self.DailyDatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
-//                self.notificationAMPM = self.DailyDatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
-//            }
-//            
-//            self.datePickerView.reloadAllComponents()
-        
             self.currentGoalLabel.text = "No goal set"
             self.requestIdentifier = self.activityName
         
         })
         
         setProgressView()
-//        //Add a circular progress view to track goal completion percentage
-//        progressview = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-//        progressview.clockwise = true
-//        progressview.centerFillColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
-//        progressview.trackBackgroundColor = self.progrssViewContainer.backgroundColor!
-//        progressview.backgroundColor = self.progrssViewContainer.backgroundColor
-//        progressview.trackFillColor = UIColor(displayP3Red: 0.12, green: 0.67, blue: 1.0, alpha: 1.0)
-//        progressview.trackWidth = 5
-//        self.progrssViewContainer.addSubview(progressview)
-//        self.progressview.addSubview(goalCompletionPercentageLabel)
         
     }
 
@@ -155,13 +116,13 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
             if error != nil {
                 NSLog("No current goals from Parse")
                 self.goalSetting = "Save"
-                self.saveGoalButton.setTitle("Save", for: .normal)
-                self.notifyButton.isEnabled = false
+                //self.saveGoalButton.setTitle("Save", for: .normal)
+                //self.notifyButton.isEnabled = false
             } else {
                 if let goalForActivity = goal {
                     self.goalSetting = "Update"
-                    self.notifyButton.isEnabled = true
-                    self.saveGoalButton.setTitle("Update", for: .normal)
+                    //self.notifyButton.isEnabled = true
+                    //self.saveGoalButton.setTitle("Update", for: .normal)
                     self.goal = goalForActivity
                     self.goalFrequency = goalForActivity.frequency!
                     self.goalLimit = goalForActivity.limit!
@@ -268,23 +229,27 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         print("params")
         print(params)
         self.notifyButton.isEnabled = true
-        if self.goalSetting == "Save" {
-            ParseClient.sharedInstance.saveNewGoal(params: params as NSDictionary?) { (PFObject, Error) -> () in
-                if Error != nil {
-                    NSLog("Error saving to Parse")
-                } else {
-                    NSLog("Saved activity goal to Parse")
-                    //self.goalFrequency = self.frequency!
+        if self.goalpickerView.isHidden == false {
+            if self.goalSetting == "Save"{
+                ParseClient.sharedInstance.saveNewGoal(params: params as NSDictionary?) { (PFObject, Error) -> () in
+                    if Error != nil {
+                        NSLog("Error saving to Parse")
+                    } else {
+                        NSLog("Saved activity goal to Parse")
+                        //self.goalFrequency = self.frequency!
+                    }
                 }
+            } else {
+                ParseClient.sharedInstance.updateGoal(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
+                    if Error != nil {
+                        NSLog("Error updating goal to Parse")
+                    } else {
+                        print("Updated activity goal to Parse")
+                    }
+                })
             }
         } else {
-            ParseClient.sharedInstance.updateGoal(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
-                if Error != nil {
-                    NSLog("Error updating goal to Parse")
-                } else {
-                    print("Updated activity goal to Parse")
-                }
-            })
+            setNotification()
         }
         self.goalFrequency = frequency!
         self.goalLimit = limit!
@@ -294,6 +259,43 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         let minsString = "\(mins!)" + "min "
         let currentGoal = limit! + " " + hrsString + minsString + frequency!
         self.currentGoalLabel.text = currentGoal
+    }
+    
+    func onSaveBarButton() {
+        let params = ["activityName": activityName!, "limit": limit!, "hours": hours!, "mins": mins, "frequency": frequency!] as [String : Any]
+        print("params")
+        print(params)
+        if self.goalpickerView.isHidden == false {
+            if self.goalSetting == "Save"{
+                ParseClient.sharedInstance.saveNewGoal(params: params as NSDictionary?) { (PFObject, Error) -> () in
+                    if Error != nil {
+                        NSLog("Error saving to Parse")
+                    } else {
+                        NSLog("Saved activity goal to Parse")
+                        //self.goalFrequency = self.frequency!
+                    }
+                }
+            } else {
+                ParseClient.sharedInstance.updateGoal(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
+                    if Error != nil {
+                        NSLog("Error updating goal to Parse")
+                    } else {
+                        print("Updated activity goal to Parse")
+                    }
+                })
+            }
+        } else {
+            setNotification()
+        }
+        self.goalFrequency = frequency!
+        self.goalLimit = limit!
+        self.goalHrs = Int(hours)!
+        self.goalMins = Int(mins)!
+        let hrsString = "\(hours!)" + "hr "
+        let minsString = "\(mins!)" + "min "
+        let currentGoal = limit! + " " + hrsString + minsString + frequency!
+        self.currentGoalLabel.text = currentGoal
+
     }
     
     
@@ -566,6 +568,34 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         self.progrssViewContainer.addSubview(progressview)
         self.progressview.addSubview(goalCompletionPercentageLabel)
     }
+    
+    @IBAction func onSetReminderButton(_ sender: Any) {
+        datePickerView.reloadAllComponents()
+        animateMyViews(viewToHide: goalpickerView, viewToShow: datePickerView)
+        pickerHeaderLabel.text = "Remind me at"
+        setReminderButton.backgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
+        //setGoalButton.backgroundColor = UIColor(red: 0.02, green: 0.09, blue: 0.17, alpha: 1.0)
+        //setGoalButton.backgroundColor = UIColor(red: 0.03, green: 0.18, blue: 0.33, alpha: 1.0)
+        //saveGoalButton.isEnabled = !saveGoalButton.isEnabled
+        setGoalButton.backgroundColor = UIColor.clear
+        setGoalButton.layer.borderWidth = 1.0
+        //setGoalButton.layer.borderColor = UIColor.darkGray.cgColor
+        //setGoalButton.layer.cornerRadius = 3
+    }
+    
+    @IBAction func onSetGoalButton(_ sender: Any) {
+        goalpickerView.reloadAllComponents()
+        animateMyViews(viewToHide: datePickerView, viewToShow: goalpickerView)
+        pickerHeaderLabel.text = "I want to spend"
+        setGoalButton.backgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
+        //setReminderButton.backgroundColor = UIColor(red: 0.03, green: 0.18, blue: 0.33, alpha: 1.0)
+        setReminderButton.backgroundColor = UIColor.clear
+        setReminderButton.layer.borderWidth = 1.0
+        //setReminderButton.layer.borderColor = UIColor.darkGray.cgColor
+        //setReminderButton.layer.cornerRadius = 3
+    }
+    
+    
     
     
 
