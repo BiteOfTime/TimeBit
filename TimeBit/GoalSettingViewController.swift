@@ -24,6 +24,9 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var datePickerView: UIPickerView!
     var progressview: CircleProgressView!
     @IBOutlet weak var notifyButton: UIButton!
+    @IBOutlet weak var goalView: UIView!
+    @IBOutlet weak var taskView: UIView!
+    @IBOutlet weak var pickerHeaderLabel: UILabel!
     
     var PickerData: [[String]] = [[String]]()
     var DatePickerData: [[String]] = [[String]]()
@@ -62,6 +65,10 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         activityNameLabel.text = self.activityName
         self.goalCompletionPercentageLabel.text = "0%"
+        self.goalView.layer.borderWidth = 1
+        self.goalView.layer.borderColor = UIColor.darkGray.cgColor
+        self.taskView.layer.borderWidth = 1
+        self.taskView.layer.borderColor = UIColor.darkGray.cgColor
         
         //Check if goal exist, then update or else add a new goal.
         getCurrentGoal()
@@ -75,62 +82,65 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
             self.datePickerView.delegate = self
             self.datePickerView.dataSource = self
             
-            // Input data into the PickerArray:
-            self.PickerData = [["Atleast", "Atmax", "Exactly"],
-                      ["0hr", "1hr", "2hr", "3hr", "4hr", "5hr", "6hr", "7hr", "8hr", "9hr", "10hr", "11hr", "12hr", "13hr", "14hr", "15hr", "16hr", "17hr", "18hr", "19hr", "20hr", "21hr", "22hr", "23hr", "24hr"],
-                      ["00min", "05min", "10min", "15min", "20min", "25min", "30min", "35min", "40min", "45min", "50min", "55min"],
-                      ["Daily", "Weekly"]]
-            self.DatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-                      ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
-                      ["AM", "PM"],
-                      ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]]
-            self.DailyDatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-                          ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
-                          ["AM", "PM"]]
-        
-            self.goalpickerView.selectRow(1, inComponent: 0, animated: true)
-            self.goalpickerView.selectRow(2, inComponent: 1, animated: true)
-            self.goalpickerView.selectRow(2, inComponent: 2, animated: true)
-            self.goalpickerView.selectRow(0, inComponent: 3, animated: true)
-            self.limit = self.PickerData[0][self.goalpickerView.selectedRow(inComponent: 0)]
-            let hoursString = self.PickerData[1][self.goalpickerView.selectedRow(inComponent: 1)]
-            self.hours = String(hoursString.characters.dropLast(2))
-            let minsString = self.PickerData[2][self.goalpickerView.selectedRow(inComponent: 2)]
-            self.mins = String(minsString.characters.dropLast(3))
-            self.frequency = self.PickerData[3][self.goalpickerView.selectedRow(inComponent: 3)]
-            
-            self.datePickerView.selectRow(1, inComponent: 0, animated: true)
-            self.datePickerView.selectRow(2, inComponent: 1, animated: true)
-            self.datePickerView.selectRow(2, inComponent: 2, animated: true)
-            print("goalFrequency in main", self.goalFrequency)
-            if self.goalFrequency == "Weekly" {
-                self.datePickerView.selectRow(0, inComponent: 3, animated: true)
-                self.notificationHour = self.DatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
-                self.notificationMin = self.DatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
-                self.notificationAMPM = self.DatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
-                self.notificationWeekday = self.DatePickerData[3][self.datePickerView.selectedRow(inComponent: 3)]
-            } else {
-                self.notificationHour = self.DailyDatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
-                self.notificationMin = self.DailyDatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
-                self.notificationAMPM = self.DailyDatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
-            }
-            
-            self.datePickerView.reloadAllComponents()
+            self.loadPicker()
+//            // Input data into the PickerArray:
+//            self.PickerData = [["Atleast", "Atmax", "Exactly"],
+//                      ["0hr", "1hr", "2hr", "3hr", "4hr", "5hr", "6hr", "7hr", "8hr", "9hr", "10hr", "11hr", "12hr", "13hr", "14hr", "15hr", "16hr", "17hr", "18hr", "19hr", "20hr", "21hr", "22hr", "23hr", "24hr"],
+//                      ["00min", "05min", "10min", "15min", "20min", "25min", "30min", "35min", "40min", "45min", "50min", "55min"],
+//                      ["Daily", "Weekly"]]
+//            self.DatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+//                      ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
+//                      ["AM", "PM"],
+//                      ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]]
+//            self.DailyDatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+//                          ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
+//                          ["AM", "PM"]]
+//        
+//            self.goalpickerView.selectRow(1, inComponent: 0, animated: true)
+//            self.goalpickerView.selectRow(2, inComponent: 1, animated: true)
+//            self.goalpickerView.selectRow(2, inComponent: 2, animated: true)
+//            self.goalpickerView.selectRow(0, inComponent: 3, animated: true)
+//            self.limit = self.PickerData[0][self.goalpickerView.selectedRow(inComponent: 0)]
+//            let hoursString = self.PickerData[1][self.goalpickerView.selectedRow(inComponent: 1)]
+//            self.hours = String(hoursString.characters.dropLast(2))
+//            let minsString = self.PickerData[2][self.goalpickerView.selectedRow(inComponent: 2)]
+//            self.mins = String(minsString.characters.dropLast(3))
+//            self.frequency = self.PickerData[3][self.goalpickerView.selectedRow(inComponent: 3)]
+//            
+//            self.datePickerView.selectRow(1, inComponent: 0, animated: true)
+//            self.datePickerView.selectRow(2, inComponent: 1, animated: true)
+//            self.datePickerView.selectRow(2, inComponent: 2, animated: true)
+//            print("goalFrequency in main", self.goalFrequency)
+//            if self.goalFrequency == "Weekly" {
+//                self.datePickerView.selectRow(0, inComponent: 3, animated: true)
+//                self.notificationHour = self.DatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
+//                self.notificationMin = self.DatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
+//                self.notificationAMPM = self.DatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
+//                self.notificationWeekday = self.DatePickerData[3][self.datePickerView.selectedRow(inComponent: 3)]
+//            } else {
+//                self.notificationHour = self.DailyDatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
+//                self.notificationMin = self.DailyDatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
+//                self.notificationAMPM = self.DailyDatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
+//            }
+//            
+//            self.datePickerView.reloadAllComponents()
         
             self.currentGoalLabel.text = "No goal set"
             self.requestIdentifier = self.activityName
         
         })
         
-        //Add a circular progress view to track goal completion percentage
-        progressview = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 85, height: 85))
-        progressview.clockwise = true
-        progressview.centerFillColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
-        progressview.trackBackgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
-        progressview.backgroundColor = UIColor(displayP3Red: 0.04, green: 0.17, blue: 0.27, alpha: 1.0)
-        progressview.trackBorderColor = .blue
-        self.progrssViewContainer.addSubview(progressview)
-        self.progressview.addSubview(goalCompletionPercentageLabel)
+        setProgressView()
+//        //Add a circular progress view to track goal completion percentage
+//        progressview = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+//        progressview.clockwise = true
+//        progressview.centerFillColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
+//        progressview.trackBackgroundColor = self.progrssViewContainer.backgroundColor!
+//        progressview.backgroundColor = self.progrssViewContainer.backgroundColor
+//        progressview.trackFillColor = UIColor(displayP3Red: 0.12, green: 0.67, blue: 1.0, alpha: 1.0)
+//        progressview.trackWidth = 5
+//        self.progrssViewContainer.addSubview(progressview)
+//        self.progressview.addSubview(goalCompletionPercentageLabel)
         
     }
 
@@ -323,7 +333,8 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 }
                 let percentageCompletion = Double(self.countDurationToday) / Double(goalInSec) * 100
                 let completionPercentage = Double(percentageCompletion).roundTo(places: 1)
-                self.goalCompletionPercentageLabel.text = "\(completionPercentage)%"
+                //self.goalCompletionPercentageLabel.text = "\(completionPercentage)%"
+                self.goalCompletionPercentageLabel.text = "\(String(format: "%.0f", completionPercentage))%"
 
                 let completion = completionPercentage / 100
                 self.progressview.setProgress(completion, animated: true)
@@ -357,7 +368,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 let completionPercentage = Double(percentageCompletion).roundTo(places: 1)
                 print(String(format: "%.2f", percentageCompletion))
                 
-                self.goalCompletionPercentageLabel.text = "\(completionPercentage)%"
+                self.goalCompletionPercentageLabel.text = "\(String(format: "%.0f", completionPercentage))%"
                 let completion = completionPercentage / 100
                 self.progressview.setProgress(completion, animated: true)
             }
@@ -467,9 +478,11 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         datePickerView.reloadAllComponents()
         if datePickerView.isHidden {
             animateMyViews(viewToHide: goalpickerView, viewToShow: datePickerView)
+            pickerHeaderLabel.text = "Remind me at"
         }
         else{
             animateMyViews(viewToHide: datePickerView, viewToShow: goalpickerView)
+            pickerHeaderLabel.text = "I want to spend"
             setNotification()
         }
         
@@ -494,6 +507,64 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 viewToShow.transform = CGAffineTransform.identity
             })
         }
+    }
+    
+    func loadPicker() {
+        // Input data into the PickerArray:
+        self.PickerData = [["Atleast", "Atmax", "Exactly"],
+        ["0hr", "1hr", "2hr", "3hr", "4hr", "5hr", "6hr", "7hr", "8hr", "9hr", "10hr", "11hr", "12hr", "13hr", "14hr", "15hr", "16hr", "17hr", "18hr", "19hr", "20hr", "21hr", "22hr", "23hr", "24hr"],
+        ["00min", "05min", "10min", "15min", "20min", "25min", "30min", "35min", "40min", "45min", "50min", "55min"],
+        ["Daily", "Weekly"]]
+        self.DatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
+        ["AM", "PM"],
+        ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]]
+        self.DailyDatePickerData = [["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        ["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
+        ["AM", "PM"]]
+        
+        self.goalpickerView.selectRow(1, inComponent: 0, animated: true)
+        self.goalpickerView.selectRow(2, inComponent: 1, animated: true)
+        self.goalpickerView.selectRow(2, inComponent: 2, animated: true)
+        self.goalpickerView.selectRow(0, inComponent: 3, animated: true)
+        self.limit = self.PickerData[0][self.goalpickerView.selectedRow(inComponent: 0)]
+        let hoursString = self.PickerData[1][self.goalpickerView.selectedRow(inComponent: 1)]
+        self.hours = String(hoursString.characters.dropLast(2))
+        let minsString = self.PickerData[2][self.goalpickerView.selectedRow(inComponent: 2)]
+        self.mins = String(minsString.characters.dropLast(3))
+        self.frequency = self.PickerData[3][self.goalpickerView.selectedRow(inComponent: 3)]
+        
+        self.datePickerView.selectRow(1, inComponent: 0, animated: true)
+        self.datePickerView.selectRow(2, inComponent: 1, animated: true)
+        self.datePickerView.selectRow(2, inComponent: 2, animated: true)
+        print("goalFrequency in main", self.goalFrequency)
+        if self.goalFrequency == "Weekly" {
+        self.datePickerView.selectRow(0, inComponent: 3, animated: true)
+        self.notificationHour = self.DatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
+        self.notificationMin = self.DatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
+        self.notificationAMPM = self.DatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
+        self.notificationWeekday = self.DatePickerData[3][self.datePickerView.selectedRow(inComponent: 3)]
+        } else {
+        self.notificationHour = self.DailyDatePickerData[0][self.datePickerView.selectedRow(inComponent: 0)]
+        self.notificationMin = self.DailyDatePickerData[1][self.datePickerView.selectedRow(inComponent: 1)]
+        self.notificationAMPM = self.DailyDatePickerData[2][self.datePickerView.selectedRow(inComponent: 2)]
+        }
+        
+        self.datePickerView.reloadAllComponents()
+
+    }
+    
+    func setProgressView() {
+        //Add a circular progress view to track goal completion percentage
+        progressview = CircleProgressView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        progressview.clockwise = true
+        progressview.centerFillColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
+        progressview.trackBackgroundColor = self.progrssViewContainer.backgroundColor!
+        progressview.backgroundColor = self.progrssViewContainer.backgroundColor
+        progressview.trackFillColor = UIColor(displayP3Red: 0.12, green: 0.67, blue: 1.0, alpha: 1.0)
+        progressview.trackWidth = 5
+        self.progrssViewContainer.addSubview(progressview)
+        self.progressview.addSubview(goalCompletionPercentageLabel)
     }
     
     
