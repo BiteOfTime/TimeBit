@@ -29,16 +29,11 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.register(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "NotificationTableViewCell")
-        
-//        getPendingNotifications()
-        tableView.reloadData()
-        
+        tableView.register(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "NotificationTableViewCell")        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getPendingNotifications()
-        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,23 +45,26 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
         //Schedule the notification
         self.pendingNotificationArray.removeAll()
         let center = UNUserNotificationCenter.current()
-        center.getPendingNotificationRequests { (notifications) in
+        center.getPendingNotificationRequests(completionHandler: { (notifications) in
         print("Count: \(notifications.count)")
-        for item in notifications {
-            self.pendingNotifications["identifier"] = item.identifier
-            self.pendingNotifications["goal"] = item.content.body
-            //let triggerString = item.trigger?.value(forKeyPath: "dateComponents") as! String
-            var dateCmp = item.trigger?.value(forKeyPath: "dateComponents") as! DateComponents
-            print("dateComponents", dateCmp)
-            self.pendingNotifications["triggerHour"] = String(dateCmp.hour!)
-            self.pendingNotifications["triggerMin"] = String(dateCmp.minute!)
-            self.pendingNotifications["triggerWeekday"] = "\(dateCmp.weekday ?? 0)"
-                
-            self.pendingNotificationArray.append(self.pendingNotifications)
-            print(self.pendingNotifications)
-            self.tableView.reloadData()
+            for item in notifications {
+                self.pendingNotifications["identifier"] = item.identifier
+                self.pendingNotifications["goal"] = item.content.body
+                //let triggerString = item.trigger?.value(forKeyPath: "dateComponents") as! String
+                var dateCmp = item.trigger?.value(forKeyPath: "dateComponents") as! DateComponents
+                print("dateComponents", dateCmp)
+                self.pendingNotifications["triggerHour"] = String(dateCmp.hour!)
+                self.pendingNotifications["triggerMin"] = String(dateCmp.minute!)
+                self.pendingNotifications["triggerWeekday"] = "\(dateCmp.weekday ?? 0)"
+                    
+                self.pendingNotificationArray.append(self.pendingNotifications)
+                print(self.pendingNotifications)
             }
-        }
+            DispatchQueue.main.async(execute: {
+                self.tableView.reloadData()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            })
+        })
     }
     
     
