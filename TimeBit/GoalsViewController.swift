@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 import ParseUI
+import UserNotifications
+import UserNotificationsUI
 
 class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -160,6 +162,11 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.goals.remove(at: indexPath.row)
             self.goalTableView.deleteRows(at: [indexPath], with: .fade)
             self.goalTableView.reloadData()
+            
+            //Delete the correspnding notification
+            print("Removing all pending notifications for the activity")
+            let center = UNUserNotificationCenter.current()
+            center.removePendingNotificationRequests(withIdentifiers: [activityName!])
         }
     }
     
