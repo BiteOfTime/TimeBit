@@ -424,8 +424,16 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         // Deliver the notification at the specified time.
         var dateComponents = DateComponents()
-        dateComponents.hour = Int(notificationHour)
+        if(notificationAMPM == "PM" && notificationHour != "12") {
+            dateComponents.hour = Int(notificationHour)! + 12
+        } else if(notificationAMPM == "AM" && notificationHour == "12") {
+            dateComponents.hour = 0
+        } else {
+            dateComponents.hour = Int(notificationHour)
+        }
+        
         dateComponents.minute = Int(notificationMin)
+
         if goalFrequency == "Weekly" {
             dateComponents.weekday = weekdayDictionary[notificationWeekday]
         }
@@ -434,7 +442,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         print(dateComponents.minute)
         print(dateComponents.weekday)
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
        // let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 5.0, repeats: false)
         let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
         
@@ -443,15 +451,15 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         center.delegate = self
         center.add(request)
         
-        center.getPendingNotificationRequests { (notifications) in
-            print("Count: \(notifications.count)")
-            for item in notifications {
-                print(item.content)
-                print(item.content.body)
-                print(item.content.title)
-                print(item.content.subtitle)
-            }
-        }
+//        center.getPendingNotificationRequests { (notifications) in
+//            print("Count: \(notifications.count)")
+//            for item in notifications {
+//                print(item.content)
+//                print(item.content.body)
+//                print(item.content.title)
+//                print(item.content.subtitle)
+//            }
+//        }
     }
     
     

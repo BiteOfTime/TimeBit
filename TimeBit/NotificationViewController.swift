@@ -16,7 +16,7 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
     var pendingNotifications = [String: String]()
     var pendingNotificationArray =  [[String: String]]()
     
-    let weekdayDictionary = ["1" : "Sun", "2" : "Mon", "3" : "Tue", "4" : "Wed", "5" : "Thu", "6" : "Fri", "7" : "Sat"]
+    let weekdayDictionary = ["1" : "Sunday", "2" : "Monday", "3" : "Tueday", "4" : "Wednesday", "5" : "Thuday", "6" : "Friday", "7" : "Saturday"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,9 +58,9 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
             //let triggerString = item.trigger?.value(forKeyPath: "dateComponents") as! String
             var dateCmp = item.trigger?.value(forKeyPath: "dateComponents") as! DateComponents
             print("dateComponents", dateCmp)
-            self.pendingNotifications["triggerHour"] = "\(dateCmp.hour)"
-            self.pendingNotifications["triggerMin"] = "\(dateCmp.minute)"
-            self.pendingNotifications["triggerWeekday"] = "\(dateCmp.weekday)" ?? "0"
+            self.pendingNotifications["triggerHour"] = String(dateCmp.hour!)
+            self.pendingNotifications["triggerMin"] = String(dateCmp.minute!)
+            self.pendingNotifications["triggerWeekday"] = "\(dateCmp.weekday ?? 0)"
                 
             self.pendingNotificationArray.append(self.pendingNotifications)
             print(self.pendingNotifications)
@@ -76,10 +76,10 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("arrayCount" , self.pendingNotificationArray.count)
-        if pendingNotificationArray != nil {
+        //if pendingNotificationArray != nil {
             return self.pendingNotificationArray.count
-        }
-        return 1
+        //}
+        //return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,19 +94,23 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
             cell.activityLabel.text = pendingNotfcn["identifier"]
             cell.goalLabel.text = pendingNotfcn["goal"]
             //Int(pfobj["hours"]! as? String ?? "") ?? 0
-            let triggerHr = pendingNotfcn["triggerHour"]
-            let triggerMin = pendingNotfcn["triggerMin"]
+            let triggerHr = pendingNotfcn["triggerHour"]!
+            let triggerMin = pendingNotfcn["triggerMin"]!
             print("triggerHr", triggerHr)
             print("triggerMin", triggerMin)
             let triggerText: String!
-            let weekday: String = pendingNotfcn["triggerWeekday"]!
-            if (pendingNotfcn["triggerWeekday"]) == "nil" {
+            let weekday: String!
+            weekday = pendingNotfcn["triggerWeekday"]!
+            print(weekday)
+            if (pendingNotfcn["triggerWeekday"]) == "0" {
                 triggerText = "Daily"
             } else {
-                triggerText = "Weekly on day \(weekday)"
+                let dayOfWeek = weekdayDictionary[weekday]!
+                print(dayOfWeek)
+                triggerText = "Weekly on \(dayOfWeek)"
             }
-            let hrString = triggerHr! + "hr "
-            let minString = triggerMin! + "min "
+            let hrString = String(format: "%02d", Int(triggerHr)!) + ":"
+            let minString = String(format: "%02d", Int(triggerMin)!)
             let triggerString = "Notify \(triggerText!)" + " at " + hrString + minString
             print(triggerString)
             cell.triggerLabel.text = triggerString
