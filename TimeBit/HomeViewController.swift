@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 import ParseUI
+import UserNotifications
+import UserNotificationsUI
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate, AddNewActivityViewControllerDelegate, UICollectionViewDelegateFlowLayout, TimerViewDeleagte {
     
@@ -546,6 +548,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     print("Deleted activity logs from Parse")
                 }
             })
+            //Delete the correspnding notification
+            print("Removing all pending notifications for the activity")
+            let center = UNUserNotificationCenter.current()
+            let notificationIdentifier = activityCell.activityNameLabel!.text!
+            center.removePendingNotificationRequests(withIdentifiers: [notificationIdentifier])
             self.collectionView.reloadData()
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
