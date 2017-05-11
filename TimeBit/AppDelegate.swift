@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.tintColor = UIColor.white
-        UITabBar.appearance().barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        UITabBar.appearance().barTintColor = UIColor(red: 0.02, green: 0.09, blue: 0.17, alpha: 1.0)
         UITabBar.appearance().tintColor = UIColor.white
         
         let center = UNUserNotificationCenter.current()
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.viewControllers = controllers
         
         let navigationBarAppearace = UINavigationBar.appearance()
-        navigationBarAppearace.barTintColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        navigationBarAppearace.barTintColor = UIColor(red: 0.02, green: 0.09, blue: 0.17, alpha: 1.0)
         navigationBarAppearace.tintColor = UIColor.white
         navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
 
