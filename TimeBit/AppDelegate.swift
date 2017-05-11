@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabBarController = UITabBarController()
         let tabViewController1 = UINavigationController(rootViewController: HomeViewController())
-        let tabViewController2 = UINavigationController(rootViewController: ReportViewController())
+        let tabViewController2 = UINavigationController(rootViewController: ReportGraphViewController())
         let tabViewController3 = UINavigationController(rootViewController: GoalsViewController())
         let tabViewController4 = UINavigationController(rootViewController: NotificationViewController())
         
