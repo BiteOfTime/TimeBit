@@ -7,7 +7,8 @@ target 'TimeBit' do
 	pod 'Parse'
 	pod 'MBProgressHUD'
 	pod 'ParseUI'
-	pod 'CircleProgressView', '~> 1.0'	
+	pod 'CircleProgressView', '~> 1.0'
+	pod 'Charts'	
 end
 
   # Pods for TimeBit
