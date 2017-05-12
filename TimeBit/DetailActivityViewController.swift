@@ -287,7 +287,8 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             print("Set/Update a goal")
             let gvc = GoalSettingViewController(nibName: "GoalSettingViewController", bundle: nil)
             gvc.activityName = activity_name
-            navigationController?.pushViewController(gvc, animated: true);
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationController?.pushViewController(gvc, animated: true)
         } else if indexPath.section == 2 {
             print("Share with friends")
         }

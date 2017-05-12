@@ -53,8 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationBarAppearace = UINavigationBar.appearance()
         navigationBarAppearace.isTranslucent = false
         navigationBarAppearace.barTintColor = UIColor(red: 4/255, green: 23/255, blue: 44/255, alpha: 1.0)
+        navigationBarAppearace.tintColor = .white
         navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
-        
+
         tabViewController1.tabBarItem = UITabBarItem(
             title: "",
             image: UIImage(named: "Home"),

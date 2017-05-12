@@ -194,7 +194,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             detailActivityViewController.trackPassedSecond = self.timerView.passedSeconds
             detailActivityViewController.activityStartTimeFromHomeScreen = self.startDate ?? Date()
             detailActivityViewController.delegate = self
-
+            
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
             navigationController?.pushViewController(detailActivityViewController, animated: true)
             
         }
@@ -618,6 +619,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBAction func ButtonClick(_ sender: UIButton){
         let addNewActivityViewController = AddNewActivityViewController(nibName: "AddNewActivityViewController", bundle: nil)
+         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.pushViewController(addNewActivityViewController, animated: true)
         
         addNewActivityViewController.delegate = self

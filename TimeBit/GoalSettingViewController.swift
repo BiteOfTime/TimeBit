@@ -62,17 +62,12 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //set Navigation bar title and color
-        self.tabBarController?.navigationItem.title = "Goals"
+        //set Navigation bar title
         self.navigationItem.title = "Goal Setting"
         
-        //let saveButton = UIBarButtonItem()
-//        saveButton.title = "Save"
-//        saveButton.action = #selector(GoalSettingViewController.onSaveBarButton)
         let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(onSaveBarButton))
 
         self.navigationItem.rightBarButtonItem =  saveButton
-        //pickerHeaderLabel.isHidden = true
         
         activityNameLabel.text = self.activityName
         self.goalCompletionPercentageLabel.text = "0%"
@@ -116,13 +111,9 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
             if error != nil {
                 NSLog("No current goals from Parse")
                 self.goalSetting = "Save"
-                //self.saveGoalButton.setTitle("Save", for: .normal)
-                //self.notifyButton.isEnabled = false
-            } else {
+                } else {
                 if let goalForActivity = goal {
                     self.goalSetting = "Update"
-                    //self.notifyButton.isEnabled = true
-                    //self.saveGoalButton.setTitle("Update", for: .normal)
                     self.goal = goalForActivity
                     self.goalFrequency = goalForActivity.frequency!
                     self.goalLimit = goalForActivity.limit!
@@ -464,15 +455,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         center.delegate = self
         center.add(request)
         
-//        center.getPendingNotificationRequests { (notifications) in
-//            print("Count: \(notifications.count)")
-//            for item in notifications {
-//                print(item.content)
-//                print(item.content.body)
-//                print(item.content.title)
-//                print(item.content.subtitle)
-//            }
-//        }
     }
     
     
