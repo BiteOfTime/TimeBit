@@ -48,7 +48,8 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         self.graphView.pinchZoomEnabled = false
         self.graphView.drawBarShadowEnabled = false
         self.graphView.drawBordersEnabled = false
-        self.graphView.chartDescription?.text = self.activity_name
+        self.graphView.chartDescription?.text = ""
+        //self.graphView.chartDescription?.text = self.activity_name
         
         let xAxis:XAxis = self.graphView.xAxis
         xAxis.drawAxisLineEnabled = false
@@ -138,6 +139,10 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
             } else {
                 NSLog("getActivities from Parse")
                 self.activities = activities!
+                
+                if self.activities.count != 0 {
+                    self.activity_name = self.activities[0].activityName!
+                }
                 
                 ParseClient.sharedInstance.getActivityLog() { (activities: [ActivityLog]?, error: Error?) -> Void in
                     if error != nil {
@@ -344,7 +349,7 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        return 100
+        return 120
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
