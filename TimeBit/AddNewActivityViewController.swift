@@ -32,6 +32,10 @@ class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelega
         defaultImagesView.isHidden = true
         hidesBottomBarWhenPushed = false
         self.navigationItem.title = "Add New Activity"
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
+        navigationController?.navigationBar.layer.shadowRadius = 3
+        navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        navigationController?.navigationBar.layer.shadowOpacity = 0.8
         
         selectButton.backgroundColor = UIColor(red: 16/255, green: 78/255, blue: 114/255, alpha: 1.0)
         selectButton.tintColor = .white

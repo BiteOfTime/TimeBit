@@ -31,6 +31,10 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         print("Inside GoalsViewController")
         self.navigationItem.title = "Goals"
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
+        navigationController?.navigationBar.layer.shadowRadius = 3
+        navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        navigationController?.navigationBar.layer.shadowOpacity = 0.8
         
         goalTableView.estimatedRowHeight = 60
         goalTableView.rowHeight = UITableViewAutomaticDimension

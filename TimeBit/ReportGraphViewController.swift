@@ -35,6 +35,10 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         super.viewDidLoad()
         
         self.navigationItem.title = "Activity Report"
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
+        navigationController?.navigationBar.layer.shadowRadius = 3
+        navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        navigationController?.navigationBar.layer.shadowOpacity = 0.8
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200

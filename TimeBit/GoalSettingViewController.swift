@@ -68,7 +68,10 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(onSaveBarButton))
 
         self.navigationItem.rightBarButtonItem =  saveButton
-        
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
+        navigationController?.navigationBar.layer.shadowRadius = 3
+        navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        navigationController?.navigationBar.layer.shadowOpacity = 0.8
         activityNameLabel.text = self.activityName
         self.goalCompletionPercentageLabel.text = "0%"
         self.goalView.layer.borderWidth = 1

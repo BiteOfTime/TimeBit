@@ -52,6 +52,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //collectionView.register(UINib(nibName: "ActivityHeader",bundle: nil), forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ActivityHeader")
         
         navigationItem.title = "TimeBit"
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
+        navigationController?.navigationBar.layer.shadowRadius = 3
+        navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        navigationController?.navigationBar.layer.shadowOpacity = 0.8
+        
         //Floating round button to add a new activity
         self.roundButton = UIButton(type: .custom)
         self.roundButton.setTitleColor(UIColor.orange, for: .normal)
