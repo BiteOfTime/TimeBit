@@ -10,6 +10,8 @@ import UIKit
 
 @objc protocol DetailActivity4CellDelegate {
     @objc optional func detailActivity4Cell(detailActivity4Cell:DetailActivity4Cell, didChangeValue value: Bool)
+    @objc optional func detailActivity4Cell(stopActivityDetails: Dictionary<String, Any>)
+    @objc optional func detailActivity4Cell(startActivityName: String)
 }
 
 class DetailActivity4Cell: UITableViewCell {
@@ -37,7 +39,7 @@ class DetailActivity4Cell: UITableViewCell {
     var seconds: Int = 0
     var trackPassedSecond: Int64 = 0
     var startNewTimer: Bool = true
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -57,6 +59,7 @@ class DetailActivity4Cell: UITableViewCell {
             passedSeconds = 0
             invalidateTimer()
             startActivityTimer()
+            delegate?.detailActivity4Cell?(startActivityName: activity_name)
         } else {
             startButton.setTitle("Start Activity", for: UIControlState())
             invalidateTimer()
@@ -81,6 +84,7 @@ class DetailActivity4Cell: UITableViewCell {
                         NSLog("Saved the activity for \(self.activity_name)")
                     }
                 }
+                delegate?.detailActivity4Cell?(stopActivityDetails: params)
             }
             
             startDate = nil

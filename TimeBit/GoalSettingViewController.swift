@@ -72,7 +72,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(onSaveBarButton))
 
         self.navigationItem.rightBarButtonItem =  saveButton
-        pickerHeaderLabel.isHidden = true
+        //pickerHeaderLabel.isHidden = true
         
         activityNameLabel.text = self.activityName
         self.goalCompletionPercentageLabel.text = "0%"

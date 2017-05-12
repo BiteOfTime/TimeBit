@@ -18,9 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.tintColor = UIColor.white
-        UITabBar.appearance().barTintColor = UIColor(red: 0.02, green: 0.09, blue: 0.17, alpha: 1.0)
-        UITabBar.appearance().tintColor = UIColor.white
+        self.window!.tintColor = UIColor.black
+        UIApplication.shared.statusBarStyle = .lightContent
         
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
@@ -28,6 +27,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let tabBarController = UITabBarController()
+        tabBarController.tabBar.isTranslucent = false
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.barTintColor = UIColor(red: 4/255, green: 23/255, blue: 44/255, alpha: 1.0)
+        tabBarAppearance.tintColor = UIColor.white
+        
+        UITabBar.appearance().backgroundImage = UIImage.colorForNavBar(color: UIColor(red: 4/255, green: 23/255, blue: 44/255, alpha: 1.0))
+        UITabBar.appearance().shadowImage = UIImage.colorForNavBar(color: UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0))
+   
+//        tabBarAppearance.layer.masksToBounds = false
+//        tabBarAppearance.layer.shadowColor = UIColor.white.cgColor
+//            //UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+//        tabBarAppearance.layer.shadowOpacity = 1.0
+//        tabBarAppearance.layer.shadowOffset = CGSize(width: 10.0, height: 10.0)
+//        tabBarAppearance.layer.shadowRadius = 20
+        
         let tabViewController1 = UINavigationController(rootViewController: HomeViewController())
         let tabViewController2 = UINavigationController(rootViewController: ReportGraphViewController())
         let tabViewController3 = UINavigationController(rootViewController: GoalsViewController())
@@ -37,10 +51,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.viewControllers = controllers
         
         let navigationBarAppearace = UINavigationBar.appearance()
-        navigationBarAppearace.barTintColor = UIColor(red: 0.02, green: 0.09, blue: 0.17, alpha: 1.0)
-        navigationBarAppearace.tintColor = UIColor.white
+        navigationBarAppearace.isTranslucent = false
+        navigationBarAppearace.barTintColor = UIColor(red: 4/255, green: 23/255, blue: 44/255, alpha: 1.0)
         navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
-
+        
         tabViewController1.tabBarItem = UITabBarItem(
             title: "Home",
             image: UIImage(named: "Home"),
@@ -136,4 +150,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
+extension UIImage {
+    class func colorForNavBar(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+        //    Or if you need a thinner border :
+        //    let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 0.5)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        
+        context!.setFillColor(color.cgColor)
+        context!.fill(rect)
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
+    }
+}

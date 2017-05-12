@@ -55,7 +55,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.078431372549019607" green="0.19215686274509802" blue="0.30196078431372547" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.016555594280362129" green="0.088341794908046722" blue="0.1713746190071106" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xgo-C3-hGM" secondAttribute="bottom" constant="8" id="0wx-Zc-XQw"/>

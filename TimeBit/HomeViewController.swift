@@ -12,7 +12,7 @@ import ParseUI
 import UserNotifications
 import UserNotificationsUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate, AddNewActivityViewControllerDelegate, UICollectionViewDelegateFlowLayout, TimerViewDeleagte {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, ActivityCellDelegate, AddNewActivityViewControllerDelegate, UICollectionViewDelegateFlowLayout, TimerViewDeleagte, DetailActivityViewControllerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
@@ -41,9 +41,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         collectionView.allowsSelection = true
         
-        collectionView.layer.borderWidth = 1
-        collectionView.layer.borderColor = UIColor.darkGray.cgColor
-    
+        collectionView.layer.borderWidth = 0.4
+        collectionView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
+//        collectionView.layer.shadowOpacity = 1.0
+//        collectionView.layer.shadowOffset = CGSize(width: 10.0, height: 10.0)
+//        collectionView.layer.shadowRadius = 10
+//        collectionView.layer.shadowColor = UIColor.white.cgColor
+            //UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+        
         //collectionView.register(UINib(nibName: "ActivityHeader",bundle: nil), forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ActivityHeader")
         
         navigationItem.title = "TimeBit"
@@ -188,6 +193,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             detailActivityViewController.currentSec = self.timerView.seconds
             detailActivityViewController.trackPassedSecond = self.timerView.passedSeconds
             detailActivityViewController.activityStartTimeFromHomeScreen = self.startDate ?? Date()
+            detailActivityViewController.delegate = self
+
             navigationController?.pushViewController(detailActivityViewController, animated: true)
             
         }
@@ -334,8 +341,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         cell.delegate = self
         
-        cell.layer.borderColor = UIColor.darkGray.cgColor
-        cell.layer.borderWidth = 0.5
+        cell.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
+        cell.layer.borderWidth = 0.4
         if currentActivityIndex != indexPath.row {
             changeColorOfCell(activityCell: cell, index: indexPath.row)
         }
@@ -395,7 +402,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
+
         detailActivityViewController.activity_name = activities[indexPath.row].activityName!
+        print("passing the value of isTimerOn to detailVC \(currentActivityIndex)")
+
+        detailActivityViewController.currentHour = self.timerView.hours
+        detailActivityViewController.currentMinute = self.timerView.minutes
+        detailActivityViewController.currentSec = self.timerView.seconds
+        detailActivityViewController.trackPassedSecond = self.timerView.passedSeconds
+        detailActivityViewController.activityStartTimeFromHomeScreen = self.startDate ?? Date()
+        detailActivityViewController.delegate = self
+        
+        navigationController?.pushViewController(detailActivityViewController, animated: true)
         navigationController?.pushViewController(detailActivityViewController, animated: true)
     }
     
@@ -431,7 +449,31 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return "\(seconds)sec today"
         
     }
+    func detailActivityViewController(stopActivityDetails: Dictionary<String, Any>) {
+        currentActivityIndex = -1
+        timerView.activityNameLabel.text = "Start an Activity"
+        
+        timerView.isRunning = false
+        timerView.timer.invalidate()
+        timerView.resetTimer()
+        
+        let activityName = stopActivityDetails["activity_name"] as! String
+        var activityLogs = self.activitiesTodayLog[activityName] ?? []
+        activityLogs.append(ActivityLog(dictionary: stopActivityDetails))
+        self.activitiesTodayLog[activityName] = activityLogs
+        self.collectionView.reloadData()
+    }
     
+    func detailActivityViewController(startActivityName: String) {
+        currentActivityIndex = 0
+        print("Timer started")
+        startDate = Date()
+        activityRunning["activity_name"] = startActivityName
+        activityRunning["activity_start_time"] = startDate
+        timerView.activityNameLabel.text = startActivityName.capitalized
+        //timerView.stopLabel.isHidden = false
+        timerView.onStartTimer()
+    }
     
     func startTimer(activityName: String, cellIndex: Int) {
         if currentActivityIndex == -1 {
@@ -569,9 +611,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         roundButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             roundButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            roundButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -53),
-            roundButton.widthAnchor.constraint(equalToConstant: 30),
-            roundButton.heightAnchor.constraint(equalToConstant:30)])
+            roundButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -3),
+            roundButton.widthAnchor.constraint(equalToConstant: 40),
+            roundButton.heightAnchor.constraint(equalToConstant:40)])
     }
     
     @IBAction func ButtonClick(_ sender: UIButton){

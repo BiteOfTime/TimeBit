@@ -19,6 +19,7 @@ class TimerView: UIView{
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var activityNameLabel: UILabel!
     @IBOutlet weak var stopLabel: UILabel!
+    @IBOutlet weak var clockImageView: UIImageView!
     
     weak var delegate: TimerViewDeleagte?
     var isRunning = false
@@ -45,17 +46,34 @@ class TimerView: UIView{
         nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.darkGray.cgColor
-        
+        contentView.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+        contentView.layer.shadowOpacity = 1.0
+        contentView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        contentView.layer.shadowRadius = 20
         //stopLabel.isHidden = true
         
         circleTimerView.layer.cornerRadius = 0.5 * circleTimerView.bounds.size.width
         circleTimerView.layer.borderWidth = 3
-        circleTimerView.layer.borderColor = UIColor(red: 255/255, green: 115/255, blue: 110/255, alpha: 1.0).cgColor
-        circleTimerView.layer.shadowOpacity = 1
-        circleTimerView.layer.shadowOffset = CGSize.zero
-        circleTimerView.layer.shadowRadius = 2
+        circleTimerView.layer.borderColor = UIColor(red: 242/255, green: 108/255, blue: 79/255, alpha: 1.0).cgColor
+        circleTimerView.layer.shadowOpacity = 1.0
+        circleTimerView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        circleTimerView.layer.shadowRadius = 10
+        circleTimerView.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+        
+//        let imageView = UIImageView(image: clockImageView.image?.addImagePadding(x: 10, y: 10))
+//        imageView.backgroundColor = UIColor.gray
+//        //clockImageView.addSubview(imageView)
+//        clockImageView = imageView
+        
+        //var gradientLayerView: UIView = UIView(frame: CGRectMake(0, 0, view.bounds.width, 50))
+//        let gradient: CAGradientLayer = CAGradientLayer()
+//        gradient.frame = contentView.bounds
+//        gradient.colors = [UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0).cgColor, UIColor.clear.cgColor]
+//        gradient.startPoint = CGPoint(x: 1, y: 0)
+//        gradient.endPoint = CGPoint(x: 0, y: 0)
+//        contentView.layer.insertSublayer(gradient, at: 0)
+//        superview?.layer.insertSublayer(contentView.layer, at: 0)
+        
         addTapGesture()
     }
     
@@ -117,3 +135,4 @@ class TimerView: UIView{
         timerLabel.text = "00:00:00"
     }
 }
+

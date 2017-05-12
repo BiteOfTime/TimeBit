@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,14 +22,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOf-t4-lYx" customClass="BarChartView" customModule="Charts">
-                    <rect key="frame" x="0.0" y="60" width="375" height="180"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                     <color key="backgroundColor" red="0.035294117647058823" green="0.14509803921568626" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="180" id="tL5-wA-YrT"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pXP-Ws-pQh">
-                    <rect key="frame" x="0.0" y="242" width="375" height="377"/>
+                    <rect key="frame" x="0.0" y="182" width="375" height="485"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
@@ -40,8 +40,8 @@
                 <constraint firstAttribute="trailing" secondItem="pXP-Ws-pQh" secondAttribute="trailing" id="GhX-NB-ZHJ"/>
                 <constraint firstItem="TOf-t4-lYx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ITl-uP-SYB"/>
                 <constraint firstItem="pXP-Ws-pQh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QLv-Je-Re5"/>
-                <constraint firstItem="TOf-t4-lYx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="gbD-9J-lsM"/>
-                <constraint firstAttribute="bottom" secondItem="pXP-Ws-pQh" secondAttribute="bottom" constant="48" id="tON-6U-6n1"/>
+                <constraint firstItem="TOf-t4-lYx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gbD-9J-lsM"/>
+                <constraint firstAttribute="bottom" secondItem="pXP-Ws-pQh" secondAttribute="bottom" id="tON-6U-6n1"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="96.5"/>
         </view>

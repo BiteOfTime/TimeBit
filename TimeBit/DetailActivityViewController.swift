@@ -7,8 +7,12 @@
 //
 
 import UIKit
+@objc protocol DetailActivityViewControllerDelegate {
+    @objc optional func detailActivityViewController(stopActivityDetails: Dictionary<String, Any>)
+    @objc optional func detailActivityViewController(startActivityName: String)
+}
 
-class DetailActivityViewController: UIViewController {
+class DetailActivityViewController: UIViewController, DetailActivity4CellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -21,7 +25,9 @@ class DetailActivityViewController: UIViewController {
     var activityStartTimeFromHomeScreen: Date!
     
     var detailActivity1Cell: DetailActivity1Cell!
-    var detailActivity4Cell: DetailActivity4Cell!
+    //var detailActivity4Cell: DetailActivity4Cell!
+    var delegate: DetailActivityViewControllerDelegate?
+    
     // Expecting this value from the calling screen.
     var activity_name: String!
     //var activity_name: String = "Sport"
@@ -58,6 +64,14 @@ class DetailActivityViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func detailActivity4Cell(stopActivityDetails: Dictionary<String, Any>) {
+        delegate?.detailActivityViewController?(stopActivityDetails: stopActivityDetails)
+    }
+    
+    func detailActivity4Cell(startActivityName: String) {
+        delegate?.detailActivityViewController?(startActivityName: startActivityName)
     }
     
     func todayCount(){
@@ -234,6 +248,7 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity4Cell", for: indexPath) as! DetailActivity4Cell
+            cell.delegate = self
             cell.activity_name = activity_name
             print("value of isTimerOn in home screen is \(isTimerOn)")
             if isTimerOn != -1 {

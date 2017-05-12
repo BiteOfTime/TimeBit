@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="activityNameLabel" destination="FX8-9p-n1A" id="kFI-h4-ePG"/>
                 <outlet property="circleTimerView" destination="kLM-LT-lJT" id="2IN-Xi-gT8"/>
+                <outlet property="clockImageView" destination="14j-LV-NiC" id="akL-ec-Y02"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="eH5-cq-hC3"/>
                 <outlet property="stopLabel" destination="xLA-zc-t7y" id="yap-lj-Lk0"/>
                 <outlet property="timerLabel" destination="NX7-6P-kxU" id="98F-Cs-hir"/>
@@ -52,7 +53,7 @@
                             </constraints>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" red="0.031372549020000001" green="0.23137254900000001" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.078431372549019607" green="0.12156862745098039" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="NX7-6P-kxU" firstAttribute="centerX" secondItem="kLM-LT-lJT" secondAttribute="centerX" id="7Tc-Ft-ggf"/>
                         <constraint firstAttribute="width" constant="110" id="CCt-zH-Ul1"/>
@@ -67,7 +68,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.035294117649999998" green="0.1450980392" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.015686274509803921" green="0.090196078431372548" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="FX8-9p-n1A" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="0Tg-y7-E5K"/>
                 <constraint firstItem="kLM-LT-lJT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2Vs-Ir-m39"/>
