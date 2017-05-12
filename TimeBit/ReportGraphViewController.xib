@@ -23,7 +23,7 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOf-t4-lYx" customClass="BarChartView" customModule="Charts">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                    <color key="backgroundColor" red="0.035294117647058823" green="0.14509803921568626" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.031372549020000001" green="0.08235294118" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="180" id="tL5-wA-YrT"/>
                     </constraints>

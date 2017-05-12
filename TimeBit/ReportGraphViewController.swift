@@ -108,6 +108,8 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         let chartDataSet = BarChartDataSet(values: dataEntries, label: activity_name)
         let chartData = BarChartData(dataSet: chartDataSet)
         chartDataSet.barBorderWidth = 0.1
+        chartDataSet.barShadowColor = UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)
+        chartDataSet.colors = [UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)]
         
         graphView.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
         graphView.xAxis.granularity = 1
