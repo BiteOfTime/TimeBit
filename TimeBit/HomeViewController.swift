@@ -41,21 +41,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.register(UINib(nibName: "ActivityCell", bundle: nil), forCellWithReuseIdentifier: "ActivityCell")
         collectionView.allowsSelection = true
         
-        collectionView.layer.borderWidth = 0.4
-        collectionView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
-//        collectionView.layer.shadowOpacity = 1.0
-//        collectionView.layer.shadowOffset = CGSize(width: 10.0, height: 10.0)
-//        collectionView.layer.shadowRadius = 10
-//        collectionView.layer.shadowColor = UIColor.white.cgColor
-            //UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+//        collectionView.layer.borderWidth = 0.4
+//        collectionView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
         
-        //collectionView.register(UINib(nibName: "ActivityHeader",bundle: nil), forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: "ActivityHeader")
-        
-        navigationItem.title = "TimeBit"
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
         navigationController?.navigationBar.layer.shadowRadius = 3
         navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         navigationController?.navigationBar.layer.shadowOpacity = 0.8
+        navigationItem.title = "Home"
         
         //Floating round button to add a new activity
         self.roundButton = UIButton(type: .custom)
@@ -188,11 +181,22 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         } else {
             let locationInView = sender.location(in: collectionView)
             let indexPath = collectionView.indexPathForItem(at: locationInView)
-            
+            let tapOnActivity = activities[(indexPath?.row)!].activityName!
             let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
-            detailActivityViewController.activity_name = activities[(indexPath?.row)!].activityName!
+            detailActivityViewController.activity_name = tapOnActivity
             print("passing the value of isTimerOn to detailVC \(currentActivityIndex)")
-            detailActivityViewController.isTimerOn = currentActivityIndex
+            if !self.activityRunning.isEmpty {
+                let activityRunning = self.activityRunning["activity_name"] as! String
+                if (activityRunning == tapOnActivity && currentActivityIndex != -1) {
+                    detailActivityViewController.isTimerOn = 0
+                } else {
+                    detailActivityViewController.isTimerOn = -1
+                }
+            } else {
+                detailActivityViewController.isTimerOn = currentActivityIndex
+            }
+            
+            detailActivityViewController.anyActivityRunning = self.timerView.isRunning
             detailActivityViewController.currentHour = self.timerView.hours
             detailActivityViewController.currentMinute = self.timerView.minutes
             detailActivityViewController.currentSec = self.timerView.seconds
@@ -245,9 +249,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if (isInsideCollectionView) {
                 let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
                 if ((indexPath != nil) && (indexPath != initialIndexPath)) {
-                    swap(&activities[indexPath!.row], &activities[initialIndexPath!.row])
-                    collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
-                    initialIndexPath = indexPath
+                    //swap(&activities[indexPath!.row], &activities[initialIndexPath!.row])
+                    //collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
+                    //initialIndexPath = indexPath
                 }
             }
         } else if sender.state == .ended {
@@ -323,21 +327,27 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         switch mod {
         case 0:
             // blue
+            activityCell.activityImageView.backgroundColor = UIColor(red: 255/255, green: 55/255, blue: 96/255, alpha: 1.0)
             activityCell.activityImage.backgroundColor = UIColor(red: 255/255, green: 55/255, blue: 96/255, alpha: 1.0)
         case 1:
             // red
+            activityCell.activityImageView.backgroundColor = UIColor(red: 10/255, green: 204/255, blue: 247/255, alpha: 1.0)
             activityCell.activityImage.backgroundColor = UIColor(red: 10/255, green: 204/255, blue: 247/255, alpha: 1.0)
         case 2:
             // yellow
+            activityCell.activityImageView.backgroundColor = UIColor(red: 255/255, green: 223/255, blue: 0/255, alpha: 1.0)
             activityCell.activityImage.backgroundColor = UIColor(red: 255/255, green: 223/255, blue: 0/255, alpha: 1.0)
         case 3:
             // green
+            activityCell.activityImageView.backgroundColor = UIColor(red: 66/255, green: 188/255, blue: 88/255, alpha: 1.0)
             activityCell.activityImage.backgroundColor = UIColor(red: 66/255, green: 188/255, blue: 88/255, alpha: 1.0)
         case 4:
             //purple
+            activityCell.activityImageView.backgroundColor = UIColor(red: 196/255, green: 44/255, blue: 196/255, alpha: 1.0)
             activityCell.activityImage.backgroundColor = UIColor(red: 196/255, green: 44/255, blue: 196/255, alpha: 1.0)
         default:
             //orange
+            activityCell.activityImageView.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
             activityCell.activityImage.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
         }
         
@@ -346,14 +356,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         cell.delegate = self
-        
+
         cell.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
         cell.layer.borderWidth = 0.4
-        if currentActivityIndex != indexPath.row {
-            changeColorOfCell(activityCell: cell, index: indexPath.row)
-        }
-        
-        cell.activityImage.isSelected = indexPath.row == currentActivityIndex
+//        if currentActivityIndex != indexPath.row {
+//            changeColorOfCell(activityCell: cell, index: indexPath.row)
+//        }
+        changeColorOfCell(activityCell: cell, index: indexPath.row)
+        //cell.activityImage.isSelected = indexPath.row == currentActivityIndex
         
         //Loading PFFile to PFImageView
         let activity = activities[indexPath.row]
@@ -362,8 +372,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             imageFile.getDataInBackground(block: { (data, error) in
                 if error == nil {
                     let image = UIImage(data: data!)
-                    cell.activityImage.setImage(image, for: UIControlState.normal)
-                    cell.activityImage.setImage(image, for: UIControlState.selected)
+                    cell.activityImage.image = image
+                    cell.activityImage.image = cell.activityImage.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                    cell.activityImage.tintColor = .white
                 } else {
                     print(error!.localizedDescription)
                 }
@@ -403,24 +414,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/2, height: 120);
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailActivityViewController = DetailActivityViewController(nibName: "DetailActivityViewController", bundle: nil)
-
-        detailActivityViewController.activity_name = activities[indexPath.row].activityName!
-        print("passing the value of isTimerOn to detailVC \(currentActivityIndex)")
-
-        detailActivityViewController.currentHour = self.timerView.hours
-        detailActivityViewController.currentMinute = self.timerView.minutes
-        detailActivityViewController.currentSec = self.timerView.seconds
-        detailActivityViewController.trackPassedSecond = self.timerView.passedSeconds
-        detailActivityViewController.activityStartTimeFromHomeScreen = self.startDate ?? Date()
-        detailActivityViewController.delegate = self
-        
-        navigationController?.pushViewController(detailActivityViewController, animated: true)
-        navigationController?.pushViewController(detailActivityViewController, animated: true)
+        return CGSize(width: collectionView.frame.width/2, height: 130);
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {

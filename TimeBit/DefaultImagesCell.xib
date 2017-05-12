@@ -23,7 +23,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eAU-cd-gsz">
                                 <rect key="frame" x="2" y="2" width="28" height="28"/>
-                                <color key="backgroundColor" red="1" green="0.21623370049999999" blue="0.376216948" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0041672061200000001" green="0.17649835350000001" blue="0.33844840529999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </button>
                         </subviews>

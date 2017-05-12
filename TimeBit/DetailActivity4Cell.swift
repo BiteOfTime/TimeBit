@@ -27,6 +27,7 @@ class DetailActivity4Cell: UITableViewCell {
     
     var startActivity: Bool = false
     var isActivityRunning: Bool = false
+    var anyActivityRunning: Bool = false
     var isActivityPaused: Bool = false
     var passedSeconds: Int64 = 0
     var startDate: Date?

@@ -60,11 +60,6 @@ class TimerView: UIView{
         circleTimerView.layer.shadowRadius = 10
         circleTimerView.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
         
-//        let imageView = UIImageView(image: clockImageView.image?.addImagePadding(x: 10, y: 10))
-//        imageView.backgroundColor = UIColor.gray
-//        //clockImageView.addSubview(imageView)
-//        clockImageView = imageView
-        
         //var gradientLayerView: UIView = UIView(frame: CGRectMake(0, 0, view.bounds.width, 50))
 //        let gradient: CAGradientLayer = CAGradientLayer()
 //        gradient.frame = contentView.bounds

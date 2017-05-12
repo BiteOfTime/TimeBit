@@ -17,20 +17,20 @@ import ParseUI
 class ActivityCell: UICollectionViewCell {
     
     @IBOutlet weak var activityCellView: UIView!
-    @IBOutlet weak var activityImage: UIButton!
+    //@IBOutlet weak var activityImage: UIButton!
     @IBOutlet weak var activityNameLabel: UILabel!
     @IBOutlet weak var timeSpentLabel: UILabel!
     @IBOutlet weak var deleteActivityButton: UIButton!
+    @IBOutlet weak var activityImageView: UIView!
+    @IBOutlet weak var activityImage: UIImageView!
     
     weak var delegate: ActivityCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        activityImage.layer.cornerRadius = 0.5 * activityImage.bounds.size.width
-        activityImage.clipsToBounds = true
+        activityImageView.layer.cornerRadius = 0.5 * activityImageView.bounds.size.width
         deleteActivityButton.isHidden = true
-        activityImage.contentEdgeInsets = UIEdgeInsetsMake(6,6,6,6)
     }
     
 //    @IBAction func onActivityImage(_ sender: Any) {
