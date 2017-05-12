@@ -56,21 +56,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
         
         tabViewController1.tabBarItem = UITabBarItem(
-            title: "Home",
+            title: "",
             image: UIImage(named: "Home"),
             tag: 1)
+        tabViewController1.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         tabViewController2.tabBarItem = UITabBarItem(
-            title: "Report",
+            title: "",
             image:UIImage(named: "Report") ,
             tag:2)
+        tabViewController2.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         tabViewController3.tabBarItem = UITabBarItem(
-            title: "Goals",
+            title: "",
             image:UIImage(named: "Goals") ,
-            tag:2)
+            tag:3)
+        tabViewController3.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         tabViewController4.tabBarItem = UITabBarItem(
-            title: "Notification",
+            title: "",
             image:UIImage(named: "Notifications") ,
-            tag:2)
+            tag:4)
+        tabViewController4.tabBarItem.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         if let window = window {
@@ -104,52 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    // This method will be called when app received push notifications in foreground
-//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-//        completionHandler(UNNotificationPresentationOptions.alert)
-//    }
-    
-//    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-//        
-//        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-//        print(deviceTokenString)
-//        
-//        UNUserNotificationCenter.current().getNotificationSettings(){ (setttings) in
-//            
-//            switch setttings.soundSetting{
-//            case .enabled:
-//                
-//                print("enabled sound setting")
-//                
-//            case .disabled:
-//                
-//                print("setting has been disabled")
-//                
-//            case .notSupported:
-//                print("something vital went wrong here")
-//            }
-//        }
-//
-//        
-//        
-//    }
-//    
-//    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-//        
-//        print("i am not available in simulator \(error)")
-//        
-//    }
-//    
-//    
-//    
-//    func userNotificationCenter(_ center: UNUserNotificationCenter,
-//                                didReceive response: UNNotificationResponse,
-//                                withCompletionHandler completionHandler: @escaping () -> Void) {
-//        
-//    }
-
-
 }
+
 extension UIImage {
     class func colorForNavBar(color: UIColor) -> UIImage {
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
