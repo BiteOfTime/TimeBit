@@ -176,11 +176,11 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         let hours = duration / 3600
         
         if hours > 0 {
-            displayStr = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
+            displayStr = minutes > 0 ? "\(hours)hr \(minutes)min" : "\(hours)hr"
         } else if minutes > 0 {
-            displayStr = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
+            displayStr = seconds > 0  ? "\(minutes)min \(seconds)sec" : "\(minutes)min"
         } else {
-            displayStr = "\(seconds) sec"
+            displayStr = "\(seconds)sec"
         }
         
         return displayStr
