@@ -54,11 +54,21 @@
                                 <constraint firstAttribute="height" constant="2" id="pud-3A-yfI"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cng-qA-wZh">
+                            <rect key="frame" x="0.0" y="210" width="375" height="0.5"/>
+                            <color key="backgroundColor" red="0.21176470588235294" green="0.27058823529411763" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="YKu-lm-bTp"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.016555594280362129" green="0.088341794908046722" blue="0.1713746190071106" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Cng-qA-wZh" secondAttribute="trailing" id="0hk-2k-xjG"/>
                         <constraint firstAttribute="trailing" secondItem="wSo-Ep-3vm" secondAttribute="trailing" constant="10" id="8jq-2S-8Fp"/>
+                        <constraint firstItem="Cng-qA-wZh" firstAttribute="leading" secondItem="ghs-wG-9ty" secondAttribute="leading" id="Anp-MM-7at"/>
                         <constraint firstItem="wSo-Ep-3vm" firstAttribute="top" secondItem="ghs-wG-9ty" secondAttribute="top" constant="10" id="ESq-GJ-R1c"/>
+                        <constraint firstItem="IuE-KY-Qaf" firstAttribute="top" secondItem="Cng-qA-wZh" secondAttribute="bottom" id="LZh-xN-agJ"/>
                         <constraint firstAttribute="bottom" secondItem="IuE-KY-Qaf" secondAttribute="bottom" constant="2" id="NMB-kY-woj"/>
                         <constraint firstAttribute="trailing" secondItem="IuE-KY-Qaf" secondAttribute="trailing" id="Tez-Gx-Pa0"/>
                         <constraint firstItem="gGz-bb-uAx" firstAttribute="top" secondItem="wSo-Ep-3vm" secondAttribute="bottom" constant="8" id="dZa-x5-dG9"/>
