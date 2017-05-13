@@ -55,14 +55,16 @@ class DetailActivity4Cell: UITableViewCell {
         print("Button is clicked before \(startActivity)")
         startActivity = !startActivity
         if(startActivity && startNewTimer) {
-            startButton.setTitle("Stop Activity", for: UIControlState())
+            startButton.setTitle("STOP", for: UIControlState())
+            startButton.layer.cornerRadius = 16.0
             startDate = Date()
             passedSeconds = 0
             invalidateTimer()
             startActivityTimer()
             delegate?.detailActivity4Cell?(startActivityName: activity_name)
         } else {
-            startButton.setTitle("Start Activity", for: UIControlState())
+            startButton.setTitle("START", for: UIControlState())
+            startButton.layer.cornerRadius = 16.0
             invalidateTimer()
             isActivityRunning = false
             minuteLabel.text = "00"
@@ -116,9 +118,23 @@ class DetailActivity4Cell: UITableViewCell {
         let minutes = (passedSeconds / 60) % 60
         let hours = passedSeconds / 3600
         
-        secondLabel.text = String(second)
-        minuteLabel.text = String(minutes)
-        hourLabel.text = String(hours)
+        if second <= 9 {
+            secondLabel.text = "0" + String(second)
+        } else {
+            secondLabel.text = String(second)
+        }
+        
+        if minutes <= 9 {
+            minuteLabel.text = "0" + String(minutes)
+        } else {
+            minuteLabel.text = String(minutes)
+        }
+        
+        if hours <= 9 {
+            hourLabel.text = "0" + String(hours)
+        } else {
+            hourLabel.text = String(hours)
+        }
     }
     
     
