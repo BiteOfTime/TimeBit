@@ -12,38 +12,65 @@ import UIKit
     func addNewActivityViewController(onSaveActivity newActivity: Activity )
 }
 
-class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelegate {
+class AddNewActivityViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var gradientView: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var newActivityImage: UIButton!
     @IBOutlet var addNewActivityView: UIView!
+    @IBOutlet weak var newActivityDesc: UITextView!
     @IBOutlet weak var newActivityText: UITextField!
-    @IBOutlet weak var newActivityDesc: UITextField!
-    @IBOutlet weak var defaultImagesView: DefaultImagesPopover!
     @IBOutlet weak var selectButton: UIButton!
     var activity: Activity!
     var existingActivities: [Activity]!
     var newActivityNotExists = true
-
+    var defaultImages: [UIImage]?
+    
     weak var delegate: AddNewActivityViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        newActivityText.delegate = self
+        newActivityText.becomeFirstResponder()
 
-        defaultImagesView.isHidden = true
+        collectionView.register(UINib(nibName: "DefaultImagesCell", bundle: nil), forCellWithReuseIdentifier: "DefaultImagesCell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.allowsSelection = true
+        collectionView.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+        collectionView.layer.shadowOpacity = 1.0
+        collectionView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        collectionView.layer.shadowRadius = 20
+        collectionView.layer.cornerRadius = 4
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = gradientView.bounds
+        gradient.colors = [UIColor(red: 3/255, green: 21/255, blue:45/255, alpha: 1.0).cgColor, UIColor(red: 8/255, green: 28/255, blue: 55/255, alpha: 1.0).cgColor]
+
+        gradient.startPoint = CGPoint(x: 0, y: 1)
+        gradient.endPoint = CGPoint(x: 0, y: 0)
+        gradientView.layer.insertSublayer(gradient, at: 0)
+        //view.layer.insertSublayer(gradientView.layer, at: 0)
+        
+        defaultImages = [#imageLiteral(resourceName: "baseball"), #imageLiteral(resourceName: "bike"), #imageLiteral(resourceName: "bus"), #imageLiteral(resourceName: "car"), #imageLiteral(resourceName: "cart"), #imageLiteral(resourceName: "cricket"), #imageLiteral(resourceName: "flight"), #imageLiteral(resourceName: "football"), #imageLiteral(resourceName: "gaming"), #imageLiteral(resourceName: "garden"), #imageLiteral(resourceName: "hockey"), #imageLiteral(resourceName: "paint"), #imageLiteral(resourceName: "phone"), #imageLiteral(resourceName: "sail"), #imageLiteral(resourceName: "soccer"), #imageLiteral(resourceName: "swimming"), #imageLiteral(resourceName: "tools"), #imageLiteral(resourceName: "train")]
+        
+        newActivityDesc.layer.cornerRadius = 4
+    
         hidesBottomBarWhenPushed = false
-        self.navigationItem.title = "Add New Activity"
+        self.navigationItem.title = "Add Activity"
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
         navigationController?.navigationBar.layer.shadowRadius = 3
         navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         navigationController?.navigationBar.layer.shadowOpacity = 0.8
         
-        selectButton.backgroundColor = UIColor(red: 16/255, green: 78/255, blue: 114/255, alpha: 1.0)
         selectButton.tintColor = .white
         selectButton.setImage(#imageLiteral(resourceName: "more"), for: .normal)
         selectButton.setImage(#imageLiteral(resourceName: "less"), for: .selected)
         
         newActivityImage.isUserInteractionEnabled = false
-        defaultImagesView.delegate = self
+        let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(onSaveActivityButton))
+        
+        self.navigationItem.rightBarButtonItem =  saveButton
 
         //addTapGesture()
     }
@@ -53,48 +80,56 @@ class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelega
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Called when the user click on the view (outside the UITextField).
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGesture(sender:)))
         selectButton.addGestureRecognizer(tapGesture)
     }
     
     func onTapGesture(sender: UITapGestureRecognizer) {
-        if !defaultImagesView.isHidden {
+        if !collectionView.isHidden {
             UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.defaultImagesView.alpha = 0.0
+                self.collectionView.alpha = 0.0
             }, completion: { finished in
-                self.defaultImagesView.isHidden = true
+                self.collectionView.isHidden = true
             })
         }
     }
-
-    func defaultImagesPopover(onSelect defaultImage: UIImage) {
-        newActivityImage.setImage(defaultImage, for: .normal)
-        newActivityImage.setImage(defaultImage, for: .selected)
-        selectButton.isSelected = false
-    }
     
     @IBAction func onSelectImage(_ sender: UIButton) {
-        if defaultImagesView.isHidden {
+        if collectionView.isHidden {
             selectButton.isSelected = true
-            self.defaultImagesView.isHidden = false
-            self.defaultImagesView.alpha = 0.0
+            self.collectionView.isHidden = false
+            self.collectionView.alpha = 0.0
             UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.defaultImagesView.alpha = 1.0
+                self.collectionView.alpha = 1.0
             }, completion: nil)
         } else {
             selectButton.isSelected = false
             UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.defaultImagesView.alpha = 0.0
+                self.collectionView.alpha = 0.0
             }, completion: { finished in
-                self.defaultImagesView.isHidden = true
+                self.collectionView.isHidden = true
             })
         }
         
     }
     
-    @IBAction func onSaveActivityButton(_ sender: Any) {
-        
+    func onSaveActivityButton() {
         let newActivityName = self.newActivityText.text
         let newActivityDesc = self.newActivityDesc.text
         let newActivityImage = self.newActivityImage.imageView?.image
@@ -153,5 +188,62 @@ class AddNewActivityViewController: UIViewController, DefaultImagesPopoverDelega
             present(alert, animated: true, completion: nil)
         }
     }
+    
+    func changeColorOfCell(defaultImagesCell: DefaultImagesCell, index: Int) {
+        let mod = index % 6
+        switch mod {
+        case 0:
+            // blue
+            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 255/255, green: 55/255, blue: 96/255, alpha: 1.0)
+        case 1:
+            // red
+            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 10/255, green: 204/255, blue: 247/255, alpha: 1.0)
+        case 2:
+            // yellow
+            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 255/255, green: 223/255, blue: 0/255, alpha: 1.0)
+        case 3:
+            // green
+            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 66/255, green: 188/255, blue: 88/255, alpha: 1.0)
+        case 4:
+            //purple
+            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 196/255, green: 44/255, blue: 196/255, alpha: 1.0)
+        default:
+            //orange
+            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return (defaultImages?.count)!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultImagesCell", for: indexPath) as! DefaultImagesCell
+        
+        let defaultImage = defaultImages?[indexPath.row]
+        cell.defaultImage.setImage(defaultImage, for: .normal)
+        cell.defaultImage.setImage(defaultImage, for: .selected)
+        cell.defaultImage.isUserInteractionEnabled = false
+        changeColorOfCell(defaultImagesCell: cell, index: indexPath.row)
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 32, height: 32);
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let defaultImageCell = collectionView.cellForItem(at: indexPath) as! DefaultImagesCell
+        let defaultImage =  defaultImageCell.defaultImage.imageView?.image
+        //delegate?.defaultImagesPopover(onSelect: defaultImage!)
+        newActivityImage.setImage(defaultImage, for: .normal)
+        newActivityImage.setImage(defaultImage, for: .selected)
+        selectButton.isSelected = false
+        collectionView.isHidden = true
+    }
+
 }
 

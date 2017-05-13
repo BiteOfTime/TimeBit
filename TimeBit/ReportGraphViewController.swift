@@ -52,7 +52,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         self.graphView.pinchZoomEnabled = false
         self.graphView.drawBarShadowEnabled = false
         self.graphView.drawBordersEnabled = false
-        self.graphView.chartDescription?.text = self.activity_name
+        self.graphView.chartDescription?.text = ""
         
         let xAxis:XAxis = self.graphView.xAxis
         xAxis.drawAxisLineEnabled = false
@@ -111,6 +111,10 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         let chartDataSet = BarChartDataSet(values: dataEntries, label: activity_name)
         let chartData = BarChartData(dataSet: chartDataSet)
         chartDataSet.barBorderWidth = 0.1
+        chartDataSet.barShadowColor = UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)
+        chartDataSet.colors = [UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)]
+        
+        chartDataSet.highlightColor = NSUIColor.white
         
         graphView.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
         graphView.xAxis.granularity = 1
@@ -142,6 +146,10 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
             } else {
                 NSLog("getActivities from Parse")
                 self.activities = activities!
+                
+                if self.activities.count != 0 {
+                    self.activity_name = self.activities[0].activityName!
+                }
                 
                 ParseClient.sharedInstance.getActivityLog() { (activities: [ActivityLog]?, error: Error?) -> Void in
                     if error != nil {
@@ -326,6 +334,8 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
                     let image = UIImage(data: data!)
                     cell.activityImageView.image = image
                     cell.activityImageView?.backgroundColor = colorArray[randomIndex]
+                    // TODO added recently
+                    cell.activityImageView?.layer.cornerRadius = 0.5 * (cell.activityImageView?.bounds.size.width)!
                     
                 } else {
                     print(error!.localizedDescription)
@@ -348,7 +358,7 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        return 100
+        return 120
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

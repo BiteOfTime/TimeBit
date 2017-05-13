@@ -16,5 +16,6 @@ class DefaultImagesCell: UICollectionViewCell {
         super.awakeFromNib()
 
         defaultImage.layer.cornerRadius = 0.2 * defaultImage.bounds.size.width
+        defaultImage.contentEdgeInsets = UIEdgeInsetsMake(2,2,2,2)
     }
 }

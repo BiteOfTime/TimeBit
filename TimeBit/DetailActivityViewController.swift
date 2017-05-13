@@ -17,6 +17,7 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
     @IBOutlet weak var tableView: UITableView!
     
     var isTimerOn: Int!
+    var anyActivityRunning: Bool!
     var currentTimeOnTimer: String!
     var currentHour: Int!
     var currentMinute: Int!
@@ -61,6 +62,13 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         todayCount()
         getWeeklyCountForActivity()
         tillDateCount()
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 200
+        
+        tableView.layer.borderWidth = 0.4
+        //tableView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
+        tableView.layer.borderColor = UIColor(red:0.18, green:0.23, blue:0.29, alpha:1.0).cgColor
         
         tableView.reloadData()
     }
@@ -118,7 +126,6 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
     
     func tillDateCount() {
         tillDate_Count = "0 sec"
-        var currentDate = formatDate(dateString: String(describing: Date()))
         
         let params = ["activity_name": activity_name] as [String : Any]
         
@@ -177,11 +184,11 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         let hours = duration / 3600
         
         if hours > 0 {
-            displayStr = minutes > 0 ? "\(hours) hr \(minutes) min" : "\(hours) hr"
+            displayStr = minutes > 0 ? "\(hours)hr \(minutes)min" : "\(hours)hr"
         } else if minutes > 0 {
-            displayStr = seconds > 0  ? "\(minutes) min \(seconds) sec" : "\(minutes) min"
+            displayStr = seconds > 0  ? "\(minutes)min \(seconds)sec" : "\(minutes)min"
         } else {
-            displayStr = "\(seconds) sec"
+            displayStr = "\(seconds)sec"
         }
         
         return displayStr
@@ -228,50 +235,92 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity1Cell", for: indexPath) as! DetailActivity1Cell
-            cell.todayView?.layer.borderColor = UIColor.white.cgColor
+            
+            cell.todayView?.layer.cornerRadius = 0.5 * (cell.todayView?.bounds.size.width)!
             cell.todayView?.layer.borderWidth = 3
+            cell.todayView?.layer.borderColor = UIColor(red:0.23, green:0.52, blue:0.96, alpha:1.0).cgColor
+            cell.todayView?.layer.shadowOpacity = 1.0
+            cell.todayView?.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+            cell.todayView?.layer.shadowRadius = 10
+            cell.todayView?.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
             
-            cell.weeklyView?.layer.borderColor = UIColor.white.cgColor
+            cell.weeklyView?.layer.cornerRadius = 0.5 * (cell.weeklyView?.bounds.size.width)!
             cell.weeklyView?.layer.borderWidth = 3
+            cell.weeklyView?.layer.borderColor = UIColor(red: 242/255, green: 108/255, blue: 79/255, alpha: 1.0).cgColor
+            cell.weeklyView?.layer.shadowOpacity = 1.0
+            cell.weeklyView?.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+            cell.weeklyView?.layer.shadowRadius = 10
+            cell.weeklyView?.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
             
-            cell.tillDateView?.layer.borderColor = UIColor.white.cgColor
+            cell.tillDateView?.layer.cornerRadius = 0.5 * (cell.tillDateView?.bounds.size.width)!
             cell.tillDateView?.layer.borderWidth = 3
+            cell.tillDateView?.layer.borderColor = UIColor(red:0.51, green:0.94, blue:0.71, alpha:1.0).cgColor
+            cell.tillDateView?.layer.shadowOpacity = 1.0
+            cell.tillDateView?.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+            cell.tillDateView?.layer.shadowRadius = 10
+            cell.tillDateView?.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
             
             cell.dailyCount?.text = today_Count
             cell.weeklyCount?.text = weekly_count
             cell.sinceCreationCount?.text = tillDate_Count
             
+            cell.selectionStyle = .none
+            
             return cell
         }
         if indexPath.section == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity2Cell", for: indexPath) as! DetailActivity2Cell
+            
+            cell.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+            cell.layer.shadowOpacity = 1.0
+            cell.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+            
+            cell.selectionStyle = .none
+            
             return cell
         }
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity3Cell", for: indexPath) as! DetailActivity3Cell
+            
+            cell.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+            cell.layer.shadowOpacity = 1.0
+            cell.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+            
+            cell.selectionStyle = .none
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailActivity4Cell", for: indexPath) as! DetailActivity4Cell
+            cell.selectionStyle = .none
+            cell.startButton.layer.cornerRadius = 16.0
             cell.delegate = self
-            cell.activity_name = activity_name
-            print("value of isTimerOn in home screen is \(isTimerOn)")
-            if isTimerOn != -1 {
-                print("Timer is started at the home screen for activity \(activity_name) and time is \(currentTimeOnTimer)")
-                cell.hourLabel.text = String(currentHour)
-                cell.minuteLabel.text = String(currentMinute)
-                cell.secondLabel.text = String(currentSec)
+            if anyActivityRunning && isTimerOn == -1 {
+                cell.startButton.isEnabled = false
                 
-                cell.startButton.setTitle("Stop Activity", for: UIControlState())
-                cell.startDate = self.activityStartTimeFromHomeScreen
-                cell.startNewTimer = false
-                //cell.startActivity = !cell.startActivity
-                cell.passedSeconds = Int64(self.currentSec) + 60*Int64(self.currentMinute) + 3600*Int64(self.currentHour)
-                cell.invalidateTimer()
-                cell.startActivityTimer()
             } else {
-                print("No timer started for this activity")
+                cell.startButton.isEnabled = true
+                cell.activity_name = activity_name
+                print("value of isTimerOn in home screen is \(isTimerOn)")
+                if isTimerOn != -1 {
+                    print("Timer is started at the home screen for activity \(activity_name) and time is \(currentTimeOnTimer)")
+                    cell.hourLabel.text = String(currentHour)
+                    cell.minuteLabel.text = String(currentMinute)
+                    cell.secondLabel.text = String(currentSec)
+                    
+                    cell.startButton.setTitle("Stop Activity", for: UIControlState())
+                    cell.startDate = self.activityStartTimeFromHomeScreen
+                    cell.startNewTimer = false
+                    //cell.startActivity = !cell.startActivity
+                    cell.passedSeconds = Int64(self.currentSec) + 60*Int64(self.currentMinute) + 3600*Int64(self.currentHour)
+                    cell.invalidateTimer()
+                    cell.startActivityTimer()
+                } else {
+                    print("No timer started for this activity")
+                }
+
             }
             
+                
             return cell
         }
     }
@@ -297,21 +346,21 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             print("Share with friends")
         }
         
-        tableView.reloadData()
+        //tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
         if indexPath.section == 0 {
-            return 180
+            return 150
         }
         else if indexPath.section == 1 {
-            return 60
+            return 50
         }
         else if indexPath.section == 2 {
-            return 60
+            return 50
         }
         else if indexPath.section == 3 {
-            return 250
+            return 320
         }
         return 10
     }
