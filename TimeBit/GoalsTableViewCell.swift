@@ -13,11 +13,13 @@ class GoalsTableViewCell: UITableViewCell {
     @IBOutlet weak var activityNameLabel: UILabel!
     @IBOutlet weak var goalLabel: UILabel!
     @IBOutlet weak var activityImage: UIImageView!
+    @IBOutlet weak var imageUIView: UIView!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        activityImage.layer.cornerRadius = 3
-//        activityImage.clipsToBounds = true
+        imageUIView?.layer.cornerRadius = 0.5 * imageUIView.bounds.size.width
+        activityImage?.tintColor = .white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

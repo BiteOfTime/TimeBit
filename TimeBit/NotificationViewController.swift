@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
 import UserNotifications
 import UserNotificationsUI
 
 class NotificationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
+    var activity: Activity!
     var pendingNotifications = [String: String]()
     var pendingNotificationArray =  [[String: String]]()
     
@@ -32,6 +35,7 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
         
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         tableView.register(UINib(nibName: "NotificationTableViewCell", bundle: nil), forCellReuseIdentifier: "NotificationTableViewCell")        
     }
@@ -88,12 +92,15 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
         //tableView.rowHeight = 90
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as! NotificationTableViewCell
+        cell.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
+        cell.layer.borderWidth = 0.5
+        
         if pendingNotificationArray != nil {
             var pendingNotfcn = [String: String]()
             pendingNotfcn = self.pendingNotificationArray[indexPath.row]
             print(pendingNotfcn["identifier"])
-            
-            cell.activityLabel.text = pendingNotfcn["identifier"]
+            let activityName = pendingNotfcn["identifier"]
+            cell.activityLabel.text = activityName
             cell.goalLabel.text = pendingNotfcn["goal"]
             //Int(pfobj["hours"]! as? String ?? "") ?? 0
             let triggerHr = pendingNotfcn["triggerHour"]!
@@ -116,6 +123,31 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
             let triggerString = "Notify \(triggerText!)" + " at " + hrString + minString
             print(triggerString)
             cell.triggerLabel.text = triggerString
+            ParseClient.sharedInstance.getActivityDetails(activityName: activityName) { (activity: Activity?, error: Error?) -> Void in
+                if error != nil {
+                    NSLog("No current activity from Parse")
+                } else {
+                    self.activity = activity!
+                    print("User activity")
+                    print(self.activity)
+                    let pfImage = activity?.activityImageFile
+                    if let imageFile : PFFile = pfImage{
+                        imageFile.getDataInBackground(block: { (data, error) in
+                            if error == nil {
+                                let image = UIImage(data: data!)
+                                cell.activityImage.image = image
+                                cell.activityImage.image = cell.activityImage.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                                cell.activityImage.tintColor = .white
+                                cell.activityImage.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                                cell.imageUIView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                            } else {
+                                print(error!.localizedDescription)
+                            }
+                        })
+                    }
+                    
+                }
+            }
         }
         return cell
     }

@@ -22,7 +22,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var goalCompletionPercentageLabel: UILabel!
     @IBOutlet weak var progrssViewContainer: UIView!
     @IBOutlet weak var datePickerView: UIPickerView!
-    var progressview: CircleProgressView!
     @IBOutlet weak var notifyButton: UIButton!
     @IBOutlet weak var goalView: UIView!
     @IBOutlet weak var taskView: UIView!
@@ -30,7 +29,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     @IBOutlet weak var setGoalButton: UIButton!
     @IBOutlet weak var setReminderButton: UIButton!
     
-    
+    var progressview: CircleProgressView!
     var PickerData: [[String]] = [[String]]()
     var DatePickerData: [[String]] = [[String]]()
     var DailyDatePickerData: [[String]] = [[String]]()
@@ -217,44 +216,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
 
     }
     
-    
-    @IBAction func onSaveUpdateButton(_ sender: Any) {
-        let params = ["activityName": activityName!, "limit": limit!, "hours": hours!, "mins": mins, "frequency": frequency!] as [String : Any]
-        print("params")
-        print(params)
-        self.notifyButton.isEnabled = true
-        if self.goalpickerView.isHidden == false {
-            if self.goalSetting == "Save"{
-                ParseClient.sharedInstance.saveNewGoal(params: params as NSDictionary?) { (PFObject, Error) -> () in
-                    if Error != nil {
-                        NSLog("Error saving to Parse")
-                    } else {
-                        NSLog("Saved activity goal to Parse")
-                        //self.goalFrequency = self.frequency!
-                    }
-                }
-            } else {
-                ParseClient.sharedInstance.updateGoal(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
-                    if Error != nil {
-                        NSLog("Error updating goal to Parse")
-                    } else {
-                        print("Updated activity goal to Parse")
-                    }
-                })
-            }
-        } else {
-            setNotification()
-        }
-        self.goalFrequency = frequency!
-        self.goalLimit = limit!
-        self.goalHrs = Int(hours)!
-        self.goalMins = Int(mins)!
-        let hrsString = "\(hours!)" + "hr "
-        let minsString = "\(mins!)" + "min "
-        let currentGoal = limit! + " " + hrsString + minsString + frequency!
-        self.currentGoalLabel.text = currentGoal
-    }
-    
     func onSaveBarButton() {
         let params = ["activityName": activityName!, "limit": limit!, "hours": hours!, "mins": mins, "frequency": frequency!] as [String : Any]
         print("params")
@@ -289,7 +250,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         let minsString = "\(mins!)" + "min "
         let currentGoal = limit! + " " + hrsString + minsString + frequency!
         self.currentGoalLabel.text = currentGoal
-
+        self.goalPercentageCompletion(goalFrequency: frequency!, goalHours: Int(hours)!, goalMins: Int(mins)!)
     }
     
     
@@ -548,8 +509,8 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         progressview.centerFillColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
         progressview.trackBackgroundColor = self.progrssViewContainer.backgroundColor!
         progressview.backgroundColor = self.progrssViewContainer.backgroundColor
-        progressview.trackFillColor = UIColor(displayP3Red: 0.12, green: 0.67, blue: 1.0, alpha: 1.0)
-        progressview.trackWidth = 5
+        progressview.trackFillColor = UIColor(displayP3Red: 0.10, green: 0.52, blue: 0.95, alpha: 1.0)
+        progressview.trackWidth = 6
         self.progrssViewContainer.addSubview(progressview)
         self.progressview.addSubview(goalCompletionPercentageLabel)
     }

@@ -13,10 +13,13 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var activityLabel: UILabel!
     @IBOutlet weak var triggerLabel: UILabel!
     @IBOutlet weak var goalLabel: UILabel!
+    @IBOutlet weak var activityImage: UIImageView!
+    @IBOutlet weak var imageUIView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        imageUIView?.layer.cornerRadius = 0.5 * imageUIView.bounds.size.width
+        activityImage?.tintColor = .white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

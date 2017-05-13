@@ -16,7 +16,7 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var goalTableView: UITableView!
     
-    var goals: [Goal]!
+    var goals: [Goal] = []
     var goalsDictArray: [NSDictionary]!
     var goalsDict: NSDictionary!
     var limit: String!
@@ -36,16 +36,14 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
         navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         navigationController?.navigationBar.layer.shadowOpacity = 0.8
         
-        goalTableView.estimatedRowHeight = 60
-        goalTableView.rowHeight = UITableViewAutomaticDimension
+//        goalTableView.rowHeight = UITableViewAutomaticDimension
+//        goalTableView.estimatedRowHeight = 100
 
         goalTableView.dataSource = self
         goalTableView.delegate = self
+        goalTableView.tableFooterView = UIView(frame: CGRect.zero)
         
         goalTableView.register(UINib(nibName: "GoalsTableViewCell", bundle: nil), forCellReuseIdentifier: "GoalsTableViewCell")
-        
-        getGoals()
-        
         
     }
     
@@ -54,15 +52,20 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func getGoals() {
+        print("inside getGoals")
         ParseClient.sharedInstance.getGoals { (goals: [Goal]?, error: Error?)  -> Void in
             if error != nil {
                 NSLog("No current goals from Parse")
             } else {
                 self.goals = goals!
+                print("User goals count")
+                print(self.goals.count)
                 print("User goals")
                 print(self.goals)
+                self.goalTableView.reloadData()
             }
             DispatchQueue.main.async(execute: {
+                print("inside dispatch")
                 self.goalTableView.reloadData()
             })
         }
@@ -78,70 +81,54 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ goalTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if goals != nil {
-            return self.goals!.count
-        }
-            return 1
+        print("inside numberOfRowsInSection")
+        print(self.goals.count)
+        return self.goals.count
     }
     
     func tableView(_ goalTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        goalTableView.rowHeight = 70
+        goalTableView.rowHeight = 75
         
         let cell = goalTableView.dequeueReusableCell(withIdentifier: "GoalsTableViewCell") as! GoalsTableViewCell
-        if goals != nil {
-        var goal:Goal
-        goal = self.goals[indexPath.row]
-        print(goal.activityName)
-        cell.activityNameLabel?.text = goal.activityName
-        let hrsString = "\(goal.hours!)" + "hr "
-        let minsString = "\(goal.mins!)" + "min "
-        let currentGoal = goal.limit! + " " + hrsString + minsString + goal.frequency!
-        cell.goalLabel.text = currentGoal
-        cell.activityImage?.tintColor = .white
-        let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
-        let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
-        cell.activityImage?.backgroundColor = colorArray[randomIndex]
-            
-        ParseClient.sharedInstance.getActivityDetails(activityName: goal.activityName) { (activity: Activity?, error: Error?) -> Void in
-            if error != nil {
-                NSLog("No current activity from Parse")
-            } else {
-                self.activity = activity!
-                print("User activity")
-                print(self.activity)
-//                let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
-//                let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
-                let pfImage = activity?.activityImageFile
-                if let imageFile : PFFile = pfImage{
-                    imageFile.getDataInBackground(block: { (data, error) in
-                        if error == nil {
-                            let image = UIImage(data: data!)
-                            cell.activityImage?.image = image
-                            cell.activityImage?.backgroundColor = colorArray[randomIndex]
-                        } else {
-                            print(error!.localizedDescription)
-                        }
-                    })
-                }
+        cell.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
+        cell.layer.borderWidth = 0.5
 
+        if goals != nil {
+            var goal:Goal
+            goal = self.goals[indexPath.row]
+            print(goal.activityName)
+            cell.activityNameLabel?.text = goal.activityName
+            let hrsString = "\(goal.hours!)" + "hr "
+            let minsString = "\(goal.mins!)" + "min "
+            let currentGoal = goal.limit! + " " + hrsString + minsString + goal.frequency!
+            cell.goalLabel.text = currentGoal
+            cell.activityImage?.tintColor = .white
+            
+            ParseClient.sharedInstance.getActivityDetails(activityName: goal.activityName) { (activity: Activity?, error: Error?) -> Void in
+                if error != nil {
+                    NSLog("No current activity from Parse")
+                } else {
+                    self.activity = activity!
+                    print("User activity")
+                    print(self.activity)
+                    let pfImage = activity?.activityImageFile
+                    if let imageFile : PFFile = pfImage{
+                        imageFile.getDataInBackground(block: { (data, error) in
+                            if error == nil {
+                                let image = UIImage(data: data!)
+                                cell.activityImage.image = image
+                                cell.activityImage.image = cell.activityImage.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                                cell.activityImage.tintColor = .white
+                                cell.activityImage.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                                cell.imageUIView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                            } else {
+                                print(error!.localizedDescription)
+                            }
+                        })
+                    }
+
+                }
             }
-        }
-        
-//        let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
-//        let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
-//        let pfImage = activity?.activityImageFile
-//        if let imageFile : PFFile = pfImage{
-//            imageFile.getDataInBackground(block: { (data, error) in
-//                if error == nil {
-//                    let image = UIImage(data: data!)
-//                    cell.activityImage?.image = image
-//                    cell.activityImage?.backgroundColor = colorArray[randomIndex]
-//                } else {
-//                    print(error!.localizedDescription)
-//                }
-//            })
-//        }
-        //cell.activityImage.image = try! UIImage(data: (imageFile.getData()))
         }
         return cell
 
@@ -173,6 +160,10 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
             center.removePendingNotificationRequests(withIdentifiers: [activityName!])
         }
     }
+    
+//    func tableView(_ goalTableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+//        return 90
+//    }
     
 
     /*
