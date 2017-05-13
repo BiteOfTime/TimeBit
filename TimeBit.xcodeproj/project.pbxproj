@@ -61,10 +61,8 @@
 		A5764ED13E954BFBB12497EF /* Pods_TimeBitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78EB96CA347EF1C14436DA37 /* Pods_TimeBitTests.framework */; };
 		F89BB1751EB5F1C70096EC17 /* TimerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89BB1741EB5F1C70096EC17 /* TimerView.xib */; };
 		F89BB1791EB69EC90096EC17 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BB1781EB69EC90096EC17 /* Utils.swift */; };
-		F89BB1811EBF86E40096EC17 /* DefaultImagesPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89BB1801EBF86E40096EC17 /* DefaultImagesPopover.xib */; };
 		F89BB1831EBF885B0096EC17 /* DefaultImagesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F89BB1821EBF885B0096EC17 /* DefaultImagesCell.xib */; };
 		F89BB1871EBF88FA0096EC17 /* DefaultImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BB1861EBF88FA0096EC17 /* DefaultImagesCell.swift */; };
-		F89BB1891EBF89980096EC17 /* DefaultImagesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BB1881EBF89980096EC17 /* DefaultImagesPopover.swift */; };
 		F8A2C6A61EB5A62E005CC925 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */; };
 		F8D7310A1EB3C5290080039E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731091EB3C5290080039E /* HomeViewController.swift */; };
 		F8D731121EB3C9120080039E /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D731111EB3C9120080039E /* TimerView.swift */; };
@@ -156,10 +154,8 @@
 		C9B5FD66C06BBA440B24E233 /* Pods-TimeBitUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeBitUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TimeBitUITests/Pods-TimeBitUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F89BB1741EB5F1C70096EC17 /* TimerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimerView.xib; sourceTree = "<group>"; };
 		F89BB1781EB69EC90096EC17 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		F89BB1801EBF86E40096EC17 /* DefaultImagesPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefaultImagesPopover.xib; sourceTree = "<group>"; };
 		F89BB1821EBF885B0096EC17 /* DefaultImagesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DefaultImagesCell.xib; sourceTree = "<group>"; };
 		F89BB1861EBF88FA0096EC17 /* DefaultImagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultImagesCell.swift; sourceTree = "<group>"; };
-		F89BB1881EBF89980096EC17 /* DefaultImagesPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultImagesPopover.swift; sourceTree = "<group>"; };
 		F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		F8D731091EB3C5290080039E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F8D731111EB3C9120080039E /* TimerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
@@ -331,10 +327,8 @@
 				9303B9081EB578110086F0FB /* DetailActivity4Cell.xib */,
 				934CAD481EB8C47600A039B5 /* ReportCell.swift */,
 				934CAD491EB8C47600A039B5 /* ReportCell.xib */,
-				F89BB1801EBF86E40096EC17 /* DefaultImagesPopover.xib */,
 				F89BB1821EBF885B0096EC17 /* DefaultImagesCell.xib */,
 				F89BB1861EBF88FA0096EC17 /* DefaultImagesCell.swift */,
-				F89BB1881EBF89980096EC17 /* DefaultImagesPopover.swift */,
 				931F08F51EBEB0CF00452F54 /* PDChart.swift */,
 				931F08FD1EBFF0B100452F54 /* ActivityReportCell.swift */,
 				931F08FE1EBFF0B100452F54 /* ActivityReportCell.xib */,
@@ -490,7 +484,6 @@
 				6B4952011EAE5F9B006645D5 /* Assets.xcassets in Resources */,
 				6B36C8181EBF847500ACC7D0 /* GoalsTableViewCell.xib in Resources */,
 				9303B90A1EB578110086F0FB /* DetailActivity4Cell.xib in Resources */,
-				F89BB1811EBF86E40096EC17 /* DefaultImagesPopover.xib in Resources */,
 				9303B9161EB5BA8D0086F0FB /* DetailActivityViewController.xib in Resources */,
 				6B36C81C1EC0437F00ACC7D0 /* NotificationTableViewCell.xib in Resources */,
 				9303B8FE1EB5771A0086F0FB /* DetailActivity1Cell.xib in Resources */,
@@ -695,7 +688,6 @@
 				9303B8FD1EB5771A0086F0FB /* DetailActivity1Cell.swift in Sources */,
 				9303B90E1EB59A180086F0FB /* ActivityLog.swift in Sources */,
 				F8D731141EB3D6E70080039E /* ActivityCell.swift in Sources */,
-				F89BB1891EBF89980096EC17 /* DefaultImagesPopover.swift in Sources */,
 				F8D7310A1EB3C5290080039E /* HomeViewController.swift in Sources */,
 				F8D731121EB3C9120080039E /* TimerView.swift in Sources */,
 				6B49523E1EB543A7006645D5 /* ReportViewController.swift in Sources */,
