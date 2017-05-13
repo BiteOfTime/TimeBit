@@ -49,7 +49,6 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         self.graphView.drawBarShadowEnabled = false
         self.graphView.drawBordersEnabled = false
         self.graphView.chartDescription?.text = ""
-        //self.graphView.chartDescription?.text = self.activity_name
         
         let xAxis:XAxis = self.graphView.xAxis
         xAxis.drawAxisLineEnabled = false
@@ -110,6 +109,8 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         chartDataSet.barBorderWidth = 0.1
         chartDataSet.barShadowColor = UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)
         chartDataSet.colors = [UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)]
+        
+        chartDataSet.highlightColor = NSUIColor.white
         
         graphView.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
         graphView.xAxis.granularity = 1
@@ -329,6 +330,8 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
                     let image = UIImage(data: data!)
                     cell.activityImageView.image = image
                     cell.activityImageView?.backgroundColor = colorArray[randomIndex]
+                    // TODO added recently
+                    cell.activityImageView?.layer.cornerRadius = 0.5 * (cell.activityImageView?.bounds.size.width)!
                     
                 } else {
                     print(error!.localizedDescription)

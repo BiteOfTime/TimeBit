@@ -21,15 +21,28 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOf-t4-lYx" customClass="BarChartView" customModule="Charts">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6X6-yk-u83">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                    <color key="backgroundColor" red="0.031372549020000001" green="0.08235294118" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOf-t4-lYx" customClass="BarChartView" customModule="Charts">
+                            <rect key="frame" x="10" y="10" width="355" height="160"/>
+                            <color key="backgroundColor" red="0.039215686274509803" green="0.086274509803921567" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Raj-Nc-JpF"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.025369457900524139" green="0.072463259100914001" blue="0.14522320032119751" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="180" id="tL5-wA-YrT"/>
+                        <constraint firstAttribute="bottom" secondItem="TOf-t4-lYx" secondAttribute="bottom" constant="10" id="MRf-ym-zfu"/>
+                        <constraint firstAttribute="height" constant="180" id="Np6-zH-wYM"/>
+                        <constraint firstItem="TOf-t4-lYx" firstAttribute="leading" secondItem="6X6-yk-u83" secondAttribute="leading" constant="10" id="T5e-lD-JJn"/>
+                        <constraint firstItem="TOf-t4-lYx" firstAttribute="top" secondItem="6X6-yk-u83" secondAttribute="top" constant="10" id="XAc-L3-d5a"/>
+                        <constraint firstAttribute="trailing" secondItem="TOf-t4-lYx" secondAttribute="trailing" constant="10" id="iNw-7t-qEf"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pXP-Ws-pQh">
-                    <rect key="frame" x="0.0" y="182" width="375" height="485"/>
+                    <rect key="frame" x="0.0" y="180" width="375" height="487"/>
                     <color key="backgroundColor" red="0.031372549019607843" green="0.082352941176470587" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <color key="separatorColor" red="0.1764705882352941" green="0.22745098039215686" blue="0.29411764705882354" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <color key="sectionIndexBackgroundColor" red="0.031372549020000001" green="0.08235294118" blue="0.1647058824" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -37,12 +50,12 @@
             </subviews>
             <color key="backgroundColor" red="0.035294117647058823" green="0.14509803921568626" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="TOf-t4-lYx" secondAttribute="trailing" id="ASq-vw-0fF"/>
-                <constraint firstItem="pXP-Ws-pQh" firstAttribute="top" secondItem="TOf-t4-lYx" secondAttribute="bottom" constant="2" id="DAG-ye-ThS"/>
+                <constraint firstItem="6X6-yk-u83" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7iO-qZ-aAw"/>
                 <constraint firstAttribute="trailing" secondItem="pXP-Ws-pQh" secondAttribute="trailing" id="GhX-NB-ZHJ"/>
-                <constraint firstItem="TOf-t4-lYx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ITl-uP-SYB"/>
                 <constraint firstItem="pXP-Ws-pQh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QLv-Je-Re5"/>
-                <constraint firstItem="TOf-t4-lYx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gbD-9J-lsM"/>
+                <constraint firstItem="pXP-Ws-pQh" firstAttribute="top" secondItem="6X6-yk-u83" secondAttribute="bottom" id="Yx6-OY-8ut"/>
+                <constraint firstAttribute="trailing" secondItem="6X6-yk-u83" secondAttribute="trailing" id="mnm-ah-aRD"/>
+                <constraint firstItem="6X6-yk-u83" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qWC-NU-RoV"/>
                 <constraint firstAttribute="bottom" secondItem="pXP-Ws-pQh" secondAttribute="bottom" id="tON-6U-6n1"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="96.5"/>

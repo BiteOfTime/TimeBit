@@ -59,7 +59,8 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         tillDateCount()
         
         tableView.layer.borderWidth = 0.4
-        tableView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
+        //tableView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
+        tableView.layer.borderColor = UIColor(red:0.18, green:0.23, blue:0.29, alpha:1.0).cgColor
         
         tableView.reloadData()
     }
