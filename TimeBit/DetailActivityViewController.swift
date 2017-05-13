@@ -58,6 +58,9 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         getWeeklyCountForActivity()
         tillDateCount()
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 200
+        
         tableView.layer.borderWidth = 0.4
         //tableView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
         tableView.layer.borderColor = UIColor(red:0.18, green:0.23, blue:0.29, alpha:1.0).cgColor
@@ -118,7 +121,6 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
     
     func tillDateCount() {
         tillDate_Count = "0 sec"
-        var currentDate = formatDate(dateString: String(describing: Date()))
         
         let params = ["activity_name": activity_name] as [String : Any]
         
@@ -338,13 +340,13 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             return 150
         }
         else if indexPath.section == 1 {
-            return 45
+            return 50
         }
         else if indexPath.section == 2 {
-            return 45
+            return 50
         }
         else if indexPath.section == 3 {
-            return 280
+            return 320
         }
         return 10
     }
