@@ -68,11 +68,11 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s9j-wC-4Ba">
-                        <rect key="frame" x="100.5" y="137" width="160" height="37"/>
+                        <rect key="frame" x="95.5" y="137" width="170" height="37"/>
                         <color key="backgroundColor" red="0.047058823529411764" green="0.12156862745098039" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="37" id="H0M-XC-soO"/>
-                            <constraint firstAttribute="width" constant="160" id="uaG-RS-leD"/>
+                            <constraint firstAttribute="width" constant="170" id="uaG-RS-leD"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                         <state key="normal" title="START">
@@ -124,10 +124,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Txy-zj-J0Q">
-                        <rect key="frame" x="85.5" y="47.5" width="190" height="2"/>
+                        <rect key="frame" x="93" y="47.5" width="175" height="2"/>
                         <color key="backgroundColor" red="0.043674045138888888" green="0.67656792534722221" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="190" id="QsG-3a-rO5"/>
+                            <constraint firstAttribute="width" constant="175" id="QsG-3a-rO5"/>
                             <constraint firstAttribute="height" constant="2" id="W4Z-he-gTh"/>
                         </constraints>
                     </view>
