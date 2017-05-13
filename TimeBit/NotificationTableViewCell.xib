@@ -20,13 +20,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ActivityTitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tb8-Py-U3D">
-                        <rect key="frame" x="74" y="19" width="76.5" height="19.5"/>
+                        <rect key="frame" x="78" y="19" width="76.5" height="19.5"/>
                         <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPL-L0-fes">
-                        <rect key="frame" x="72" y="40.5" width="26.5" height="16.5"/>
+                        <rect key="frame" x="76" y="40.5" width="26.5" height="16.5"/>
                         <attributedString key="attributedText">
                             <fragment content="Goal">
                                 <attributes>
@@ -39,12 +39,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYg-h5-M28">
-                        <rect key="frame" x="72" y="62" width="39" height="16.5"/>
+                        <rect key="frame" x="76" y="62" width="40" height="17"/>
                         <attributedString key="attributedText">
                             <fragment content="Trigger">
                                 <attributes>
                                     <color key="NSColor" red="0.87390942258883242" green="0.87390942258883242" blue="0.87390942258883242" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <font key="NSFont" size="12" name="AvenirNext-DemiBoldItalic"/>
+                                    <font key="NSFont" size="12" name="AvenirNext-DemiBold"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
@@ -52,7 +52,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3UQ-29-wku">
-                        <rect key="frame" x="14" y="20" width="42" height="44"/>
+                        <rect key="frame" x="19" y="20" width="42" height="44"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wwg-rn-FZ2">
                                 <rect key="frame" x="8" y="8" width="26" height="28"/>
@@ -72,17 +72,17 @@
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gYg-h5-M28" secondAttribute="trailing" constant="13" id="8jI-ZS-hqa"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sPL-L0-fes" secondAttribute="trailing" constant="23" id="9WX-Pw-soR"/>
                     <constraint firstItem="gYg-h5-M28" firstAttribute="top" secondItem="sPL-L0-fes" secondAttribute="bottom" constant="5" id="Bby-kE-oW6"/>
-                    <constraint firstItem="sPL-L0-fes" firstAttribute="leading" secondItem="3UQ-29-wku" secondAttribute="trailing" constant="16" id="DcM-em-WT3"/>
-                    <constraint firstItem="sPL-L0-fes" firstAttribute="leading" secondItem="3UQ-29-wku" secondAttribute="trailing" constant="16" id="EWY-Ss-qHk"/>
-                    <constraint firstItem="3UQ-29-wku" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="LsO-Au-1wV"/>
-                    <constraint firstItem="tb8-Py-U3D" firstAttribute="leading" secondItem="3UQ-29-wku" secondAttribute="trailing" constant="18" id="N36-w2-Bof"/>
+                    <constraint firstItem="sPL-L0-fes" firstAttribute="leading" secondItem="3UQ-29-wku" secondAttribute="trailing" constant="15" id="DcM-em-WT3"/>
+                    <constraint firstItem="sPL-L0-fes" firstAttribute="leading" secondItem="3UQ-29-wku" secondAttribute="trailing" constant="15" id="EWY-Ss-qHk"/>
+                    <constraint firstItem="3UQ-29-wku" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="19" id="LsO-Au-1wV"/>
+                    <constraint firstItem="tb8-Py-U3D" firstAttribute="leading" secondItem="3UQ-29-wku" secondAttribute="trailing" constant="17" id="N36-w2-Bof"/>
                     <constraint firstItem="sPL-L0-fes" firstAttribute="top" secondItem="tb8-Py-U3D" secondAttribute="bottom" constant="2" id="V4y-KI-nh8"/>
                     <constraint firstAttribute="bottom" secondItem="3UQ-29-wku" secondAttribute="bottom" constant="33.5" id="WGN-1U-zAC"/>
                     <constraint firstItem="tb8-Py-U3D" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="11" id="ZBY-tJ-u4H"/>
                     <constraint firstItem="sPL-L0-fes" firstAttribute="top" secondItem="tb8-Py-U3D" secondAttribute="bottom" constant="2" id="f9m-yX-Sau"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="tb8-Py-U3D" secondAttribute="trailing" constant="15" id="gWS-ar-zM7"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gYg-h5-M28" secondAttribute="bottom" constant="6" id="hEt-lR-HL8"/>
-                    <constraint firstItem="gYg-h5-M28" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="72" id="mag-74-rMt"/>
+                    <constraint firstItem="gYg-h5-M28" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="76" id="mag-74-rMt"/>
                     <constraint firstItem="3UQ-29-wku" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="qEF-cm-STi"/>
                     <constraint firstItem="gYg-h5-M28" firstAttribute="top" secondItem="sPL-L0-fes" secondAttribute="bottom" constant="5" id="scx-YE-QyU"/>
                 </constraints>

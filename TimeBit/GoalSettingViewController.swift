@@ -73,10 +73,10 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         navigationController?.navigationBar.layer.shadowOpacity = 0.8
         activityNameLabel.text = self.activityName
         self.goalCompletionPercentageLabel.text = "0%"
-        self.goalView.layer.borderWidth = 1
-        self.goalView.layer.borderColor = UIColor(displayP3Red: 0.18, green: 0.23, blue: 0.30, alpha: 1.0).cgColor
-              self.taskView.layer.borderWidth = 1
-        self.taskView.layer.borderColor = UIColor(displayP3Red: 0.18, green: 0.23, blue: 0.30, alpha: 1.0).cgColor
+        self.goalView.layer.borderWidth = CustomUIFunctions.getlineWidth()
+        self.goalView.layer.borderColor = CustomUIFunctions.getlineColor()
+        self.taskView.layer.borderWidth = CustomUIFunctions.getlineWidth()
+        self.taskView.layer.borderColor = CustomUIFunctions.getlineColor()
         setGoalButton.backgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
         setReminderButton.backgroundColor = UIColor.clear
         

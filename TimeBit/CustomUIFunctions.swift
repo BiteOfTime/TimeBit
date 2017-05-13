@@ -10,8 +10,20 @@ import Foundation
 
 
 import UIKit
-
+    
 final class CustomUIFunctions {
+    
+    private static let lineColor = UIColor(displayP3Red: 0.18, green: 0.23, blue: 0.30, alpha: 1.0).cgColor
+    private static let lineWidth: CGFloat = 0.5
+    
+    class func getlineColor() -> CGColor {
+        return CustomUIFunctions.lineColor
+    }
+    
+    class func getlineWidth() -> CGFloat {
+        return CustomUIFunctions.lineWidth
+    }
+
     
     class func imageBackgroundColor(index: Int) -> UIColor {
         let mod = index % 6

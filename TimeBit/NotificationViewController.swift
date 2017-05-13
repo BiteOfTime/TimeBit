@@ -92,8 +92,8 @@ class NotificationViewController: UIViewController, UITableViewDataSource, UITab
         //tableView.rowHeight = 90
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell") as! NotificationTableViewCell
-        cell.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
-        cell.layer.borderWidth = 0.5
+        cell.layer.borderColor = CustomUIFunctions.getlineColor()
+        cell.layer.borderWidth = CustomUIFunctions.getlineWidth()
         
         if pendingNotificationArray != nil {
             var pendingNotfcn = [String: String]()

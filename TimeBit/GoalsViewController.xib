@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xM8-5G-58w">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="-11" y="0.0" width="397" height="667"/>
                     <color key="backgroundColor" red="0.017188262194395065" green="0.076633192598819733" blue="0.15550833940505981" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="sectionIndexBackgroundColor" red="0.016959890723228455" green="0.080443866550922394" blue="0.16347214579582214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
@@ -29,7 +29,7 @@
             <color key="backgroundColor" red="0.017188262194395065" green="0.076633192598819733" blue="0.15550833940505981" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="xM8-5G-58w" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2DA-Kg-le6"/>
-                <constraint firstItem="xM8-5G-58w" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dSM-CF-SSc"/>
+                <constraint firstItem="xM8-5G-58w" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-11" id="dSM-CF-SSc"/>
                 <constraint firstItem="xM8-5G-58w" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="foW-Rs-PBe"/>
                 <constraint firstItem="xM8-5G-58w" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ta3-ws-9TG"/>
             </constraints>

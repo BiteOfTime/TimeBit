@@ -90,8 +90,8 @@ class GoalsViewController: UIViewController, UITableViewDataSource, UITableViewD
         goalTableView.rowHeight = 75
         
         let cell = goalTableView.dequeueReusableCell(withIdentifier: "GoalsTableViewCell") as! GoalsTableViewCell
-        cell.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
-        cell.layer.borderWidth = 0.5
+        cell.layer.borderColor = CustomUIFunctions.getlineColor()
+        cell.layer.borderWidth = CustomUIFunctions.getlineWidth()
 
         if goals != nil {
             var goal:Goal
