@@ -5,13 +5,13 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12120"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportViewController" customModule="TimeBit" customModuleProvider="target">
             <connections>
-                <outlet property="tableView" destination="41M-ER-ShJ" id="Exo-gN-A1L"/>
+                <outlet property="graphView" destination="buK-L1-3x3" id="acT-AP-jzl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,21 +20,18 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="41M-ER-ShJ">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" selectionStyle="default" indentationWidth="10" rowHeight="205" translatesAutoresizingMaskIntoConstraints="NO" id="clh-Xm-xXA">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="clh-Xm-xXA" id="lUM-Ka-Hy6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="204.5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </tableViewCellContentView>
-                </tableViewCell>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buK-L1-3x3" customClass="BarChartView" customModule="Charts">
+                    <rect key="frame" x="30" y="30" width="315" height="607"/>
+                    <color key="backgroundColor" red="0.031372549019607843" green="0.082352941176470587" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.023529411764705882" green="0.070588235294117646" blue="0.14509803921568626" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="buK-L1-3x3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="AAH-qS-SyA"/>
+                <constraint firstAttribute="trailing" secondItem="buK-L1-3x3" secondAttribute="trailing" constant="30" id="go6-jc-4Yw"/>
+                <constraint firstItem="buK-L1-3x3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="l6h-lV-HV3"/>
+                <constraint firstAttribute="bottom" secondItem="buK-L1-3x3" secondAttribute="bottom" constant="30" id="mv2-o0-q5j"/>
+            </constraints>
             <point key="canvasLocation" x="33.5" y="106.5"/>
         </view>
     </objects>

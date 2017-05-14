@@ -216,6 +216,11 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             navigationController?.pushViewController(gvc, animated: true)
         } else if indexPath.section == 2 {
             print("Share with friends")
+            let gvc = ReportViewController(nibName: "ReportViewController", bundle: nil)
+            gvc.activity_name = activity_name
+            gvc.activityLog = activityToday
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationController?.pushViewController(gvc, animated: true)
         }
     }
     
