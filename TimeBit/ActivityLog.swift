@@ -48,7 +48,7 @@ class ActivityLog: NSObject {
     
     class func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
         if(activityLog == nil || activityLog?.count == 0) {
-            return "0 sec"
+            return "0 Second"
         }
         let currentDate = Utils.formatDate(dateString: String(describing: Date()))
         var totalTimeSpentToday: Int64 = 0
@@ -63,7 +63,7 @@ class ActivityLog: NSObject {
     
     class func getTimeSpentPastSevenDay(activityLog: [ActivityLog]?) -> String {
         if(activityLog == nil || activityLog?.count == 0) {
-            return "0 sec"
+            return "0 Second"
         }
         var totalTimeSpentSevenDay: Int64 = 0
         for log in activityLog! {
@@ -84,7 +84,7 @@ class ActivityLog: NSObject {
     
     class func getTimeSpentTillNow(activityLog: [ActivityLog]?) -> String {
         if(activityLog == nil || activityLog?.count == 0) {
-            return "0 sec"
+            return "0 Second"
         }
         var totalTimeSpentTillNow: Int64 = 0
         
@@ -103,14 +103,14 @@ class ActivityLog: NSObject {
         let hours = duration / 3600
         
         if hours > 0 {
-            return minutes > 0 ? "\(hours)hr \(minutes%60)min" : "\(hours)hr"
+            return minutes > 0 ? "\((Double(hours) + (Double(minutes)) / 60.0).roundto(places: 1)) Hours" : "\(hours) Hours"
         }
         
         if minutes > 0 {
-            return seconds > 0  ? "\(minutes)min \(seconds)sec" : "\(minutes)min"
+            return seconds > 0 ? "\((Double(minutes) + (Double(seconds)) / 60.0).roundto(places: 1)) Minutes" : "\(minutes) Minutes"
         }
         
-        return "\(seconds)sec"
+        return "\(seconds) Seconds"
     }
     
     class func getPastDates(days: Int) -> NSArray {
@@ -144,3 +144,13 @@ class ActivityLog: NSObject {
     }
 
 }
+
+extension Double {
+    /// Rounds the double to decimal places value
+    func roundto(places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
+
+

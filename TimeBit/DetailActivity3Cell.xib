@@ -19,31 +19,32 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONN-ez-P3X">
-                        <rect key="frame" x="6" y="11" width="135.5" height="22"/>
+                        <rect key="frame" x="16" y="12.5" width="44" height="19.5"/>
                         <attributedString key="attributedText">
-                            <fragment content="Share with friends">
+                            <fragment content="Report">
                                 <attributes>
                                     <color key="NSColor" red="0.98735992759130775" green="0.9937654612581166" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <font key="NSFont" size="16" name="Avenir-Heavy"/>
+                                    <font key="NSFont" size="14" name="AvenirNext-DemiBold"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="pFt-vw-DhU">
-                        <rect key="frame" x="290" y="11.5" width="20" height="20"/>
+                        <rect key="frame" x="290" y="11.5" width="16" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="EZt-ND-iJ5"/>
-                            <constraint firstAttribute="width" constant="20" id="ofE-BC-1wN"/>
+                            <constraint firstAttribute="height" constant="16" id="EZt-ND-iJ5"/>
+                            <constraint firstAttribute="width" constant="16" id="ofE-BC-1wN"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.027450980392156862" green="0.074509803921568626" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
-                    <constraint firstItem="pFt-vw-DhU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="5Ky-x1-qmW"/>
+                    <constraint firstItem="pFt-vw-DhU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="-2.25" id="5Ky-x1-qmW"/>
                     <constraint firstItem="ONN-ez-P3X" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ceb-TZ-2Zg"/>
-                    <constraint firstAttribute="trailing" secondItem="pFt-vw-DhU" secondAttribute="trailing" constant="10" id="kg1-zz-hjm"/>
-                    <constraint firstItem="ONN-ez-P3X" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="yob-Py-H7s"/>
+                    <constraint firstAttribute="trailing" secondItem="pFt-vw-DhU" secondAttribute="trailing" constant="14" id="kg1-zz-hjm"/>
+                    <constraint firstItem="ONN-ez-P3X" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="yob-Py-H7s"/>
                 </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="-10" y="59"/>

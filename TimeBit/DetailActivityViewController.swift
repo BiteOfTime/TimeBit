@@ -134,10 +134,18 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             cell.tillDateView?.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
             cell.tillDateView?.layer.shadowRadius = 10
             cell.tillDateView?.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
+            cell.layer.borderColor = CustomUIFunctions.getlineColor()
+            cell.layer.borderWidth = CustomUIFunctions.getlineWidth()
             
-            cell.dailyCount?.text = today_Count
-            cell.weeklyCount?.text = weekly_count
-            cell.sinceCreationCount?.text = tillDate_Count
+            var todayCountArr = today_Count?.components(separatedBy: " ")
+            cell.dailyCount?.text = todayCountArr?.first
+            cell.todayTimeLabel?.text = todayCountArr?.last
+            var weeklyCountArr = weekly_count?.components(separatedBy: " ")
+            cell.weeklyCount?.text = weeklyCountArr?.first
+            cell.weekTimeLabel.text = weeklyCountArr?.last
+            var sinceCreationCountArr = tillDate_Count?.components(separatedBy: " ")
+            cell.sinceCreationCount?.text = sinceCreationCountArr?.first
+            cell.sinceCreationTimeLabel.text = sinceCreationCountArr?.last
             
             cell.selectionStyle = .none
             
@@ -149,6 +157,8 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             cell.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
             cell.layer.shadowOpacity = 1.0
             cell.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+            cell.layer.borderColor = CustomUIFunctions.getlineColor()
+            cell.layer.borderWidth = CustomUIFunctions.getlineWidth()
             
             cell.selectionStyle = .none
             
@@ -160,6 +170,8 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             cell.layer.shadowColor = UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
             cell.layer.shadowOpacity = 1.0
             cell.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+            cell.layer.borderColor = CustomUIFunctions.getlineColor()
+            cell.layer.borderWidth = CustomUIFunctions.getlineWidth()
             
             cell.selectionStyle = .none
             
