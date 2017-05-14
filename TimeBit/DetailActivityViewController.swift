@@ -90,7 +90,7 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
             }
             
             self.today_Count = ActivityLog.getTimeSpentToday(activityLog: self.activityToday)
-            self.weekly_count = ActivityLog.getTimeSpentToday(activityLog: activities )
+            self.weekly_count = ActivityLog.getTimeSpentPastSevenDay(activityLog: activities )
             self.tillDate_Count = ActivityLog.getTimeSpentTillNow(activityLog: activities)
             
             DispatchQueue.main.async(execute: {
@@ -228,6 +228,11 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             navigationController?.pushViewController(gvc, animated: true)
         } else if indexPath.section == 2 {
             print("Share with friends")
+            let gvc = ReportViewController(nibName: "ReportViewController", bundle: nil)
+            gvc.activity_name = activity_name
+            gvc.activityLog = activityToday
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+            navigationController?.pushViewController(gvc, animated: true)
         }
     }
     
