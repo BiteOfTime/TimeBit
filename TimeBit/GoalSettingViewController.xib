@@ -200,7 +200,7 @@
                         <action selector="onSetReminderButton:" destination="-1" eventType="touchUpInside" id="6GV-7y-SdX"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I want to spend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mT5-bV-8dx">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I want to spend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mT5-bV-8dx">
                     <rect key="frame" x="110" y="304" width="100" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="3IQ-pC-dlw"/>
@@ -211,17 +211,17 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <pickerView contentMode="scaleToFill" semanticContentAttribute="playback" translatesAutoresizingMaskIntoConstraints="NO" id="wKe-lr-LfZ">
-                    <rect key="frame" x="0.0" y="326" width="320" height="234"/>
+                    <rect key="frame" x="0.0" y="304" width="320" height="229"/>
                 </pickerView>
                 <pickerView contentMode="scaleToFill" semanticContentAttribute="playback" translatesAutoresizingMaskIntoConstraints="NO" id="4SX-k9-uKr">
-                    <rect key="frame" x="0.0" y="332" width="320" height="201"/>
+                    <rect key="frame" x="0.0" y="313" width="320" height="220"/>
                 </pickerView>
             </subviews>
             <color key="backgroundColor" red="0.015686274509803921" green="0.082352941176470587" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="wKe-lr-LfZ" secondAttribute="bottom" constant="8" id="12p-Yp-UMn"/>
-                <constraint firstItem="wKe-lr-LfZ" firstAttribute="top" secondItem="mT5-bV-8dx" secondAttribute="bottom" constant="2" id="4h6-fP-Ppc"/>
+                <constraint firstAttribute="bottom" secondItem="wKe-lr-LfZ" secondAttribute="bottom" constant="35" id="12p-Yp-UMn"/>
+                <constraint firstItem="wKe-lr-LfZ" firstAttribute="top" secondItem="mT5-bV-8dx" secondAttribute="bottom" constant="-20" id="4h6-fP-Ppc"/>
                 <constraint firstAttribute="bottom" secondItem="4SX-k9-uKr" secondAttribute="bottom" constant="35" id="5mG-M6-0TU"/>
                 <constraint firstItem="wGN-Da-BEn" firstAttribute="leading" secondItem="e8I-Qk-1Id" secondAttribute="trailing" constant="16" id="7BE-Cq-nPf"/>
                 <constraint firstItem="e8I-Qk-1Id" firstAttribute="centerY" secondItem="wGN-Da-BEn" secondAttribute="centerY" id="9xh-bj-dHp"/>
@@ -232,7 +232,7 @@
                 <constraint firstItem="cv3-6k-lz8" firstAttribute="height" secondItem="06Y-X9-h5Y" secondAttribute="height" id="P2q-7S-YuP"/>
                 <constraint firstItem="Htl-OM-rgV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-4" id="PSL-Ng-ntR"/>
                 <constraint firstItem="4SX-k9-uKr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="RW6-5f-1T4"/>
-                <constraint firstItem="4SX-k9-uKr" firstAttribute="top" secondItem="mT5-bV-8dx" secondAttribute="bottom" constant="8" id="RxJ-NL-mhd"/>
+                <constraint firstItem="4SX-k9-uKr" firstAttribute="top" secondItem="mT5-bV-8dx" secondAttribute="bottom" constant="-11" id="RxJ-NL-mhd"/>
                 <constraint firstItem="Zgk-Yo-kp9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-3" id="Vhe-tJ-8CT"/>
                 <constraint firstAttribute="trailing" secondItem="4SX-k9-uKr" secondAttribute="trailing" id="afF-dN-H1l"/>
                 <constraint firstAttribute="trailing" secondItem="4SX-k9-uKr" secondAttribute="trailing" id="fgI-2s-R6B"/>
