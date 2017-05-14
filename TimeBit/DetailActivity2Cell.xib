@@ -18,23 +18,38 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ThR-62-GM3">
-                        <rect key="frame" x="14" y="11" width="291" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ThR-62-GM3">
+                        <rect key="frame" x="6" y="11" width="126.5" height="22"/>
                         <attributedString key="attributedText">
                             <fragment content="Set/ update goal">
                                 <attributes>
                                     <color key="NSColor" red="0.9957583243" green="0.99682741119999996" blue="0.98612939710000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    <font key="NSFont" size="14" name="AvenirNext-Bold"/>
+                                    <font key="NSFont" size="16" name="Avenir-Heavy"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="ClO-ed-HJe">
+                        <rect key="frame" x="290" y="12" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="HFf-jg-d5z"/>
+                            <constraint firstAttribute="width" constant="20" id="fDI-GV-oet"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.027450980392156862" green="0.074509803921568626" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                <constraints>
+                    <constraint firstItem="ThR-62-GM3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="O1M-A3-QbN"/>
+                    <constraint firstItem="ThR-62-GM3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="apD-mg-Sfe"/>
+                    <constraint firstAttribute="trailing" secondItem="ClO-ed-HJe" secondAttribute="trailing" constant="10" id="clV-XJ-mSa"/>
+                    <constraint firstItem="ClO-ed-HJe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="kAh-vC-MSb"/>
+                </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.027450980392156862" green="0.074509803921568626" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="RightArrow" width="29" height="29"/>
+    </resources>
 </document>

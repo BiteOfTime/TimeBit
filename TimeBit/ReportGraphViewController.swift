@@ -332,7 +332,8 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
             imageFile.getDataInBackground(block: { (data, error) in
                 if error == nil {
                     let image = UIImage(data: data!)
-                    cell.activityImageView.image = image
+                    cell.activityImageInnerView.image = image
+                    //cell.activityImageView.image = image
                     cell.activityImageView?.backgroundColor = colorArray[randomIndex]
                     // TODO added recently
                     cell.activityImageView?.layer.cornerRadius = 0.5 * (cell.activityImageView?.bounds.size.width)!

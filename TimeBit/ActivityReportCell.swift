@@ -16,6 +16,8 @@ class ActivityReportCell: UITableViewCell {
     @IBOutlet weak var timespentTillNowLabel: UILabel!
     @IBOutlet weak var timespentInSevenDaysLabel: UILabel!
     @IBOutlet weak var timespentTodayLabel: UILabel!
+    @IBOutlet weak var activityImageInnerView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
