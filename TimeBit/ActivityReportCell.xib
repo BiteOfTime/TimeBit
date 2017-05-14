@@ -128,6 +128,10 @@
                             <constraint firstAttribute="height" constant="1" id="yJ3-KO-vmf"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o4w-7o-SLx">
+                        <rect key="frame" x="29" y="60" width="29" height="33"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.031372549019607843" green="0.082352941176470587" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 <constraints>
@@ -151,6 +155,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityImageInnerView" destination="o4w-7o-SLx" id="Vmh-q4-pSQ"/>
                 <outlet property="activityImageView" destination="G3h-TL-bhb" id="1nW-Mb-dto"/>
                 <outlet property="activityNameLabel" destination="3MY-kx-VP9" id="PsG-YM-b1K"/>
                 <outlet property="descriptionLabel" destination="wc7-pz-Akx" id="UxC-ib-kRZ"/>
