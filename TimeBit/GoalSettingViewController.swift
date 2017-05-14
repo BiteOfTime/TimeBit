@@ -64,6 +64,12 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         //set Navigation bar title
         self.navigationItem.title = "Goal Setting"
         
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+            // Enable or disable features based on authorization.
+        }
+
+        
         let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.plain, target: self, action: #selector(onSaveBarButton))
 
         self.navigationItem.rightBarButtonItem =  saveButton
@@ -80,12 +86,15 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         setGoalButton.backgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
         setReminderButton.backgroundColor = UIColor.clear
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         //Check if goal exist, then update or else add a new goal.
         getCurrentGoal()
         DispatchQueue.main.async(execute: {
             self.goalFrequency = "Daily"
             self.datePickerView.isHidden = true
-        
+            
             // Connect data:
             self.goalpickerView.delegate = self
             self.goalpickerView.dataSource = self
@@ -95,11 +104,11 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
             self.loadPicker()
             self.currentGoalLabel.text = "No goal set"
             self.requestIdentifier = self.activityName
-        
+            
         })
         
         setProgressView()
-        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -239,18 +248,40 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                     }
                 })
             }
+            self.goalFrequency = frequency!
+            self.goalLimit = limit!
+            self.goalHrs = Int(hours)!
+            self.goalMins = Int(mins)!
+            let hrsString = "\(hours!)" + "hr "
+            let minsString = "\(mins!)" + "min "
+            let currentGoal = limit! + " " + hrsString + minsString + frequency!
+            self.currentGoalLabel.text = currentGoal
+            self.goalPercentageCompletion(goalFrequency: frequency!, goalHours: Int(hours)!, goalMins: Int(mins)!)
         } else {
-            setNotification()
+            if goalHrs != nil {
+                setNotification()
+                self.goalFrequency = frequency!
+                self.goalLimit = limit!
+                self.goalHrs = Int(hours)!
+                self.goalMins = Int(mins)!
+                let hrsString = "\(hours!)" + "hr "
+                let minsString = "\(mins!)" + "min "
+                let currentGoal = limit! + " " + hrsString + minsString + frequency!
+                self.currentGoalLabel.text = currentGoal
+                self.goalPercentageCompletion(goalFrequency: frequency!, goalHours: Int(hours)!, goalMins: Int(mins)!)
+            } else {
+                let alert = UIAlertController(title: "TimeBit",
+                                              message: "Please set a goal first",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                    print("OK")
+                })
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+            
         }
-        self.goalFrequency = frequency!
-        self.goalLimit = limit!
-        self.goalHrs = Int(hours)!
-        self.goalMins = Int(mins)!
-        let hrsString = "\(hours!)" + "hr "
-        let minsString = "\(mins!)" + "min "
-        let currentGoal = limit! + " " + hrsString + minsString + frequency!
-        self.currentGoalLabel.text = currentGoal
-        self.goalPercentageCompletion(goalFrequency: frequency!, goalHours: Int(hours)!, goalMins: Int(mins)!)
     }
     
     
@@ -383,9 +414,14 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         print("notification will be triggered")
         let content = UNMutableNotificationContent()
         content.title = "Its time for \(activityName!)"
-        //content.subtitle = "\(activityName) Activity Goal"
-        let hrsString = "\(goalHrs!)" + "hr "
-        let minsString = "\(goalMins!)" + "min "
+        //if goalHrs != nil {
+            let hrsString = "\(goalHrs!)" + "hr "
+            let minsString = "\(goalMins!)" + "min "
+            content.body = "Your goal is \(goalLimit!) \(hrsString)\(minsString)\(goalFrequency!)"
+//        } else {
+//            print("No goal set")
+//            content.body = "No goal set"
+//        }
         content.body = "Your goal is \(goalLimit!) \(hrsString)\(minsString)\(goalFrequency!)"
         content.sound = UNNotificationSound.default()
         content.setValue(true, forKeyPath: "shouldAlwaysAlertWhileAppIsForeground")
@@ -405,13 +441,8 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         if goalFrequency == "Weekly" {
             dateComponents.weekday = weekdayDictionary[notificationWeekday]
         }
-        print("date components")
-        print(dateComponents.hour)
-        print(dateComponents.minute)
-        print(dateComponents.weekday)
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-       // let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 5.0, repeats: false)
         let request = UNNotificationRequest(identifier: requestIdentifier, content: content, trigger: trigger)
         
         //Schedule the notification
@@ -420,24 +451,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         center.add(request)
         
     }
-    
-    
-    @IBAction func onNotifyMe(_ sender: Any) {
-        datePickerView.reloadAllComponents()
-        if datePickerView.isHidden {
-            animateMyViews(viewToHide: goalpickerView, viewToShow: datePickerView)
-            pickerHeaderLabel.text = "Remind me at"
-        }
-        else{
-            animateMyViews(viewToHide: datePickerView, viewToShow: goalpickerView)
-            pickerHeaderLabel.text = "I want to spend"
-            setNotification()
-        }
         
-        saveGoalButton.isEnabled = !saveGoalButton.isEnabled
-        
-    }
-    
     func animateMyViews(viewToHide: UIView, viewToShow: UIView) {
         let animationDuration = 0.35
         
@@ -520,13 +534,11 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         animateMyViews(viewToHide: goalpickerView, viewToShow: datePickerView)
         pickerHeaderLabel.text = "Remind me at"
         setReminderButton.backgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
-        //setGoalButton.backgroundColor = UIColor(red: 0.02, green: 0.09, blue: 0.17, alpha: 1.0)
-        //setGoalButton.backgroundColor = UIColor(red: 0.03, green: 0.18, blue: 0.33, alpha: 1.0)
-        //saveGoalButton.isEnabled = !saveGoalButton.isEnabled
         setGoalButton.backgroundColor = UIColor.clear
         setGoalButton.layer.borderWidth = 1.0
-        //setGoalButton.layer.borderColor = UIColor.darkGray.cgColor
-        //setGoalButton.layer.cornerRadius = 3
+        //let notificationEnabled = areNotificationsEnabled()
+        //print("notificationEnabled", notificationEnabled)
+        
     }
     
     @IBAction func onSetGoalButton(_ sender: Any) {
@@ -534,15 +546,17 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
         animateMyViews(viewToHide: datePickerView, viewToShow: goalpickerView)
         pickerHeaderLabel.text = "I want to spend"
         setGoalButton.backgroundColor = UIColor(displayP3Red: 0.05, green: 0.33, blue: 0.49, alpha: 1.0)
-        //setReminderButton.backgroundColor = UIColor(red: 0.03, green: 0.18, blue: 0.33, alpha: 1.0)
         setReminderButton.backgroundColor = UIColor.clear
         setReminderButton.layer.borderWidth = 1.0
-        //setReminderButton.layer.borderColor = UIColor.darkGray.cgColor
-        //setReminderButton.layer.cornerRadius = 3
     }
     
-    
-    
+    class func areNotificationsEnabled() -> Bool {
+        guard let settings = UIApplication.shared.currentUserNotificationSettings else {
+            return false
+        }
+        
+        return settings.types.intersection([.alert, .badge, .sound]).isEmpty != true
+    }
     
 
     /*
@@ -564,6 +578,8 @@ extension Double {
         return (self * divisor).rounded() / divisor
     }
 }
+
+
 
 extension GoalSettingViewController: UNUserNotificationCenterDelegate {
     

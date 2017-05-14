@@ -21,11 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.tintColor = UIColor.black
         UIApplication.shared.statusBarStyle = .lightContent
         
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
-            // Enable or disable features based on authorization.
-        }
-        
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isTranslucent = false
         let tabBarAppearance = UITabBar.appearance()
@@ -35,16 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.tabBar.layer.shadowRadius = 20
         tabBarController.tabBar.layer.shadowColor = UIColor.black.cgColor
         tabBarController.tabBar.layer.shadowOpacity = 0.8
-        
-//        UITabBar.appearance().backgroundImage = UIImage.colorForNavBar(color: UIColor(red: 4/255, green: 23/255, blue: 44/255, alpha: 1.0))
-//        UITabBar.appearance().shadowImage = UIImage.colorForNavBar(color: UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0))
-   
-//        tabBarAppearance.layer.masksToBounds = false
-//        tabBarAppearance.layer.shadowColor = UIColor.white.cgColor
-//            //UIColor(red: 2/255, green: 11/255, blue: 23/255, alpha: 1.0).cgColor
-//        tabBarAppearance.layer.shadowOpacity = 1.0
-//        tabBarAppearance.layer.shadowOffset = CGSize(width: 10.0, height: 10.0)
-//        tabBarAppearance.layer.shadowRadius = 20
         
         let tabViewController1 = UINavigationController(rootViewController: HomeViewController())
         let tabViewController2 = UINavigationController(rootViewController: ReportGraphViewController())
@@ -114,21 +99,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
-
-//extension UIImage {
-//    class func colorForNavBar(color: UIColor) -> UIImage {
-//        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
-//        //    Or if you need a thinner border :
-//        //    let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 0.5)
-//        UIGraphicsBeginImageContext(rect.size)
-//        let context = UIGraphicsGetCurrentContext()
-//        
-//        context!.setFillColor(color.cgColor)
-//        context!.fill(rect)
-//        
-//        let image = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        
-//        return image!
-//    }
-//}
