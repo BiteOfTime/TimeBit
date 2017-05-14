@@ -66,11 +66,14 @@ class ActivityLog: NSObject {
             return "0 sec"
         }
         var totalTimeSpentSevenDay: Int64 = 0
+        
+        /*
         for log in activityLog! {
             if log.activity_duration != nil {
                 totalTimeSpentSevenDay += Int64(log.activity_duration!)
             }
         }
+        */
         
         var weekDateRange = self.getPastDates(days: 7)
         activityLog?.forEach { x in

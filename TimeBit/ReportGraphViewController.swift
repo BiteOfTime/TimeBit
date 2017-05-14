@@ -247,13 +247,12 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
         cell.activityNameLabel.text = activity.activityName
         cell.activityImageView.tintColor = .white
         cell.activityNameLabel.text = activity.activityName
-        let activityLog = activitiesLogAll[activity.activityName!]
-        let totalTimeSpentToday = ActivityLog.getTimeSpentToday(activityLog: activityLog )
-        cell.timespentTodayLabel.text = totalTimeSpentToday
-        let totalTimePastSevenDay = ActivityLog.getTimeSpentToday(activityLog: activityLog )
-        cell.timespentInSevenDaysLabel.text = totalTimePastSevenDay
-        let totalTimeSpentTillNow = ActivityLog.getTimeSpentTillNow(activityLog: activityLog)
-        cell.timespentTillNowLabel.text = totalTimeSpentTillNow
+        let logForActivity = activitiesLogAll[activity.activityName!]
+        
+        cell.timespentTodayLabel.text = ActivityLog.getTimeSpentToday(activityLog: logForActivity)
+        cell.timespentInSevenDaysLabel.text = ActivityLog.getTimeSpentPastSevenDay(activityLog: logForActivity )
+        cell.timespentTillNowLabel.text = ActivityLog.getTimeSpentTillNow(activityLog: logForActivity)
+        
         cell.selectionStyle = .none
         
         return cell

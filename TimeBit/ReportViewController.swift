@@ -13,18 +13,34 @@ import ParseUI
 
 class ReportViewController: UIViewController {
 
-    
     @IBOutlet weak var graphView: BarChartView!
+    @IBOutlet weak var tillNowLabel: UILabel!
+    @IBOutlet weak var weeklyCountLabel: UILabel!
+    @IBOutlet weak var todyaCountLabel: UILabel!
+    @IBOutlet weak var tillNowCountView: UIView!
+    @IBOutlet weak var weeklyCountView: UIView!
+    @IBOutlet weak var dailyCountView: UIView!
+    @IBOutlet weak var outerImageView: UIImageView!
+    @IBOutlet weak var innerImageView: UIImageView!
     
     var months: [String] = ["Wed", "Tue", "Mon", "Sun", "Sat", "Fri", "Thr"]
     var durationForCharts: [Double] = []
     var yAxisCount: [Double] = []
     var activity_name: String!
     var activityLog: [ActivityLog]!
+    var activity: Activity!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getActivityCountsFromLog()
+        
         self.navigationItem.title = activity_name
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
+        navigationController?.navigationBar.layer.shadowRadius = 3
+        navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
+        navigationController?.navigationBar.layer.shadowOpacity = 0.8
+        
         self.months = ["Wed", "Tue", "Mon", "Sun", "Sat", "Fri", "Thr"]
         
         self.graphView.animate(yAxisDuration: 1.0)
@@ -52,6 +68,8 @@ class ReportViewController: UIViewController {
         limitLine.lineWidth = 1
         self.graphView.rightAxis.addLimitLine(limitLine)
         
+        
+        getActivityDetail()
         loadGraph()
         
     }
@@ -122,5 +140,36 @@ class ReportViewController: UIViewController {
         graphView.xAxis.labelPosition = .bottom
         graphView.rightAxis.enabled = false
         graphView.data?.setDrawValues(false)
+    }
+    
+    func getActivityCountsFromLog() {
+        todyaCountLabel.text = ActivityLog.getTimeSpentToday(activityLog: self.activityLog)
+        weeklyCountLabel.text = ActivityLog.getTimeSpentPastSevenDay(activityLog: self.activityLog)
+        tillNowLabel.text = ActivityLog.getTimeSpentTillNow(activityLog: self.activityLog)
+    }
+    
+    func getActivityDetail() {
+        ParseClient.sharedInstance.getActivityDetails(activityName: activity_name) { (activity: Activity?, error: Error?) -> Void in
+            if error != nil {
+                NSLog("No current activity from Parse")
+            } else {
+                self.activity = activity!
+                let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
+                let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
+                let pfImage = activity?.activityImageFile
+                if let imageFile : PFFile = pfImage{
+                    imageFile.getDataInBackground(block: { (data, error) in
+                        if error == nil {
+                            let image = UIImage(data: data!)
+                            self.innerImageView?.image = image
+                            self.outerImageView?.backgroundColor = colorArray[randomIndex]
+                            self.outerImageView?.layer.cornerRadius = 0.5 * (self.outerImageView?.bounds.size.width)!
+                        } else {
+                            print(error!.localizedDescription)
+                        }
+                    })
+                }
+            }
+        }
     }
 }

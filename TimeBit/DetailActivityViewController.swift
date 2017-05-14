@@ -90,7 +90,7 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
             }
             
             self.today_Count = ActivityLog.getTimeSpentToday(activityLog: self.activityToday)
-            self.weekly_count = ActivityLog.getTimeSpentToday(activityLog: activities )
+            self.weekly_count = ActivityLog.getTimeSpentPastSevenDay(activityLog: activities )
             self.tillDate_Count = ActivityLog.getTimeSpentTillNow(activityLog: activities)
             
             DispatchQueue.main.async(execute: {
