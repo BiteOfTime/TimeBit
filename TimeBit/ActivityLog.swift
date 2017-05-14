@@ -45,6 +45,102 @@ class ActivityLog: NSObject {
         }
         return logActivity
     }
+    
+    class func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
+        if(activityLog == nil || activityLog?.count == 0) {
+            return "0 sec"
+        }
+        let currentDate = Utils.formatDate(dateString: String(describing: Date()))
+        var totalTimeSpentToday: Int64 = 0
+        for log in activityLog! {
+            if (log.activity_duration != nil && log.activity_event_date == currentDate) {
+                totalTimeSpentToday += Int64(log.activity_duration!)
+            }
+        }
+        
+        return getTimeCount(duration: totalTimeSpentToday)
+    }
+    
+    class func getTimeSpentPastSevenDay(activityLog: [ActivityLog]?) -> String {
+        if(activityLog == nil || activityLog?.count == 0) {
+            return "0 sec"
+        }
+        var totalTimeSpentSevenDay: Int64 = 0
+        for log in activityLog! {
+            if log.activity_duration != nil {
+                totalTimeSpentSevenDay += Int64(log.activity_duration!)
+            }
+        }
+        
+        var weekDateRange = self.getPastDates(days: 7)
+        activityLog?.forEach { x in
+            if(weekDateRange.contains(x.activity_event_date)) {
+                totalTimeSpentSevenDay += Int64(x.activity_duration!)
+            }
+        }
+        
+        return getTimeCount(duration: totalTimeSpentSevenDay)
+    }
+    
+    class func getTimeSpentTillNow(activityLog: [ActivityLog]?) -> String {
+        if(activityLog == nil || activityLog?.count == 0) {
+            return "0 sec"
+        }
+        var totalTimeSpentTillNow: Int64 = 0
+        
+        for log in activityLog! {
+            if (log.activity_duration != nil) {
+                totalTimeSpentTillNow += Int64(log.activity_duration!)
+            }
+        }
+        
+        return getTimeCount(duration: totalTimeSpentTillNow)
+    }
 
+    class func getTimeCount(duration: Int64) -> String {
+        let seconds = duration % 60
+        let minutes = duration / 60
+        let hours = duration / 3600
+        
+        if hours > 0 {
+            return minutes > 0 ? "\(hours)hr \(minutes%60)min" : "\(hours)hr"
+        }
+        
+        if minutes > 0 {
+            return seconds > 0  ? "\(minutes)min \(seconds)sec" : "\(minutes)min"
+        }
+        
+        return "\(seconds)sec"
+    }
+    
+    class func getPastDates(days: Int) -> NSArray {
+        let cal = NSCalendar.current
+        var today = cal.startOfDay(for: Date())
+        var arrayDate = [String]()
+        
+        for i in 1 ... days {
+            let day = cal.component(.day, from: today)
+            let month = cal.component(.month, from: today)
+            let year = cal.component(.year, from: today)
+            
+            var dayInString: String = "00"
+            var monthInString: String = "00"
+            if day <= 9 {
+                dayInString = "0"+String(day)
+            } else {
+                dayInString = String(day)
+            }
+            if month <= 9 {
+                monthInString = "0"+String(month)
+            } else {
+                monthInString = String(month)
+            }
+            
+            arrayDate.append(dayInString + "/" + monthInString+"/" + String(year))
+            // move back in time by one day:
+            today = cal.date(byAdding: .day, value: -1, to: today)!
+        }
+        return arrayDate as NSArray
+    }
 
 }
