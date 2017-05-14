@@ -16,6 +16,9 @@ class DetailActivity1Cell: UITableViewCell {
     @IBOutlet weak var dailyCount: UILabel!
     @IBOutlet weak var weeklyCount: UILabel!
     @IBOutlet weak var sinceCreationCount: UILabel!
+    @IBOutlet weak var todayTimeLabel: UILabel!
+    @IBOutlet weak var weekTimeLabel: UILabel!
+    @IBOutlet weak var sinceCreationTimeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

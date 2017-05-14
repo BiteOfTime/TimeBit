@@ -21,6 +21,7 @@ class DetailActivity4Cell: UITableViewCell {
     @IBOutlet weak var secondLabel: UILabel!
     @IBOutlet weak var minuteLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var lineView: UIView!
     
     weak var delegate: DetailActivity4CellDelegate?
     var activity_name: String!
@@ -43,6 +44,17 @@ class DetailActivity4Cell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        let shadowSize : CGFloat = 5.0
+        let shadowPath = UIBezierPath(rect: CGRect(x: -shadowSize / 2,
+                                                   y: -shadowSize / 2,
+                                                   width: self.lineView.frame.size.width + shadowSize,
+                                                   height: self.lineView.frame.size.height + shadowSize))
+        lineView.layer.masksToBounds = false
+        lineView.layer.shadowColor = UIColor(red: 0.12, green: 0.67, blue: 1.0, alpha: 1.0).cgColor
+        lineView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        lineView.layer.shadowRadius = 2
+        lineView.layer.shadowOpacity = 0.3
+        lineView.layer.shadowPath = shadowPath.cgPath
         // Initialization code
     }
 
