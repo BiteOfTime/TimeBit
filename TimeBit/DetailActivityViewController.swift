@@ -26,19 +26,14 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
     var activityStartTimeFromHomeScreen: Date!
     
     var detailActivity1Cell: DetailActivity1Cell!
-    //var detailActivity4Cell: DetailActivity4Cell!
     var delegate: DetailActivityViewControllerDelegate?
-    
     // Expecting this value from the calling screen.
     var activity_name: String!
-    //var activity_name: String = "Sport"
     var activityToday: [ActivityLog]!
     var today_Count: String?
     var tillDate_Count: String?
     var weekly_count: String?
-    var countDuration: Int64 = 0
-    var countDurationToday: Int64 = 0
-    var countDurationWeekly: Int64 = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,15 +54,12 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         tableView.register(UINib(nibName: "DetailActivity3Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity3Cell")
         tableView.register(UINib(nibName: "DetailActivity4Cell", bundle: nil), forCellReuseIdentifier: "DetailActivity4Cell")
         
-        todayCount()
-        getWeeklyCountForActivity()
-        tillDateCount()
+        loadLogForActivity()
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 200
         
         tableView.layer.borderWidth = 0.4
-        //tableView.layer.borderColor = UIColor(red: 54/255, green: 69/255, blue: 86/255, alpha: 1.0).cgColor
         tableView.layer.borderColor = UIColor(red:0.18, green:0.23, blue:0.29, alpha:1.0).cgColor
         
         tableView.reloadData()
@@ -86,47 +78,7 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         delegate?.detailActivityViewController?(startActivityName: startActivityName)
     }
     
-    func todayCount(){
-        today_Count = "0 sec"
-        var currentDate = formatDate(dateString: String(describing: Date()))
-        let params = ["activity_name": activity_name, "activity_event_date": currentDate] as [String : Any]
-        
-        ParseClient.sharedInstance.getTodayCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
-            if error != nil {
-                NSLog("Error getting activities from Parse")
-            } else {
-                self.activityToday = activities!
-                NSLog("Items from Parse \(self.activityToday)")
-                
-                self.activityToday.forEach { x in
-                    self.countDurationToday = self.countDurationToday + x.activity_duration!
-                }
-                
-                self.today_Count = self.calculateCount(duration: self.countDurationToday)
-            }
-            
-            DispatchQueue.main.async(execute: {
-                self.tableView.reloadData()
-            })
-            
-        }
-    }
-    
-    func formatDate(dateString: String) -> String? {
-        
-        let formatter = DateFormatter()
-        let currentDateFormat = DateFormatter.dateFormat(fromTemplate: "MMddyyyy", options: 0, locale: NSLocale(localeIdentifier: "en-GB") as Locale)
-        
-        formatter.dateFormat = currentDateFormat
-        let formattedDate = formatter.string(from: Date())
-        // contains the string "22/06/2014".
-        
-        return formattedDate
-    }
-    
-    func tillDateCount() {
-        tillDate_Count = "0 sec"
-        
+    func loadLogForActivity() {
         let params = ["activity_name": activity_name] as [String : Any]
         
         ParseClient.sharedInstance.getTotalCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
@@ -135,93 +87,16 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
             } else {
                 self.activityToday = activities!
                 NSLog("Items from Parse \(self.activityToday)")
-                
-                self.activityToday.forEach { x in
-                    self.countDuration = self.countDuration + x.activity_duration!
-                }
-                
-                self.tillDate_Count = self.calculateCount(duration: self.countDuration)
             }
+            
+            self.today_Count = ActivityLog.getTimeSpentToday(activityLog: self.activityToday)
+            self.weekly_count = ActivityLog.getTimeSpentToday(activityLog: activities )
+            self.tillDate_Count = ActivityLog.getTimeSpentTillNow(activityLog: activities)
             
             DispatchQueue.main.async(execute: {
                 self.tableView.reloadData()
             })
         }
-    }
-    
-    func getWeeklyCountForActivity() {
-        weekly_count = "0 sec"
-        
-        let params = ["activity_name": activity_name] as [String : Any]
-        
-        ParseClient.sharedInstance.getTotalCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
-            if error != nil {
-                NSLog("Error getting activities from Parse")
-            } else {
-                self.activityToday = activities!
-                NSLog("Items from Parse \(self.activityToday)")
-                
-                var weekDateRange = self.getPastDates(days: 7)
-                
-                self.activityToday.forEach { x in
-                    if(weekDateRange.contains(x.activity_event_date)) {
-                        self.countDurationWeekly = self.countDurationWeekly + x.activity_duration!
-                    }
-                }
-                self.weekly_count = self.calculateCount(duration: self.countDurationWeekly)
-            }
-            
-            DispatchQueue.main.async(execute: {
-                self.tableView.reloadData()
-            })
-        }
-    }
-    
-    func calculateCount(duration: Int64) -> String {
-        var displayStr = "0 sec"
-        let seconds = duration % 60
-        let minutes = duration / 60
-        let hours = duration / 3600
-        
-        if hours > 0 {
-            displayStr = minutes > 0 ? "\(hours)hr \(minutes)min" : "\(hours)hr"
-        } else if minutes > 0 {
-            displayStr = seconds > 0  ? "\(minutes)min \(seconds)sec" : "\(minutes)min"
-        } else {
-            displayStr = "\(seconds)sec"
-        }
-        
-        return displayStr
-    }
-    
-    func getPastDates(days: Int) -> NSArray {
-        let cal = NSCalendar.current
-        var today = cal.startOfDay(for: Date())
-        var arrayDate = [String]()
-        
-        for i in 1 ... days {
-            let day = cal.component(.day, from: today)
-            let month = cal.component(.month, from: today)
-            let year = cal.component(.year, from: today)
-            
-            var dayInString: String = "00"
-            var monthInString: String = "00"
-            if day <= 9 {
-                dayInString = "0"+String(day)
-            } else {
-                dayInString = String(day)
-            }
-            if month <= 9 {
-                monthInString = "0"+String(month)
-            } else {
-                monthInString = String(month)
-            }
-            
-            arrayDate.append(dayInString + "/" + monthInString+"/" + String(year))
-                        // move back in time by one day:
-            today = cal.date(byAdding: .day, value: -1, to: today)!
-        }
-        return arrayDate as NSArray
     }
     
 }
@@ -317,10 +192,7 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
                 } else {
                     print("No timer started for this activity")
                 }
-
             }
-            
-                
             return cell
         }
     }
@@ -345,8 +217,6 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
         } else if indexPath.section == 2 {
             print("Share with friends")
         }
-        
-        //tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{

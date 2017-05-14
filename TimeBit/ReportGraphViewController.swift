@@ -73,7 +73,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         limitLine.lineWidth = 1
         self.graphView.rightAxis.addLimitLine(limitLine)
         
-        loadActivityLog()
+        //loadActivityLog()
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -161,7 +161,6 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
                             self.activitiesLogAll[activity.activity_name!] = activityLogs
                             
                         }
-                        //NSLog("Items from Parse for getTodayCountForActivity \(self.activitiesLogAll)")
                         
                         NSLog("Activity log request finished")
                         
@@ -182,106 +181,8 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         }
     }
     
-    
-    func getTimeSpentToday(activityLog: [ActivityLog]?) -> String {
-        if(activityLog == nil || activityLog?.count == 0) {
-            return "0 sec"
-        }
-        let currentDate = Utils.formatDate(dateString: String(describing: Date()))
-        var totalTimeSpentToday: Int64 = 0
-        for log in activityLog! {
-            if (log.activity_duration != nil && log.activity_event_date == currentDate) {
-                totalTimeSpentToday += Int64(log.activity_duration!)
-            }
-        }
-        
-        return getTimeCount(duration: totalTimeSpentToday)
-    }
-    
-    func getTimeSpentPastSevenDay(activityLog: [ActivityLog]?) -> String {
-        if(activityLog == nil || activityLog?.count == 0) {
-            return "0 sec"
-        }
-        var totalTimeSpentSevenDay: Int64 = 0
-        for log in activityLog! {
-            if log.activity_duration != nil {
-                totalTimeSpentSevenDay += Int64(log.activity_duration!)
-            }
-        }
-        
-        var weekDateRange = self.getPastDates(days: 7)
-        self.activityLog.forEach { x in
-            if(weekDateRange.contains(x.activity_event_date)) {
-                totalTimeSpentSevenDay += Int64(x.activity_duration!)
-            }
-        }
-        
-        return getTimeCount(duration: totalTimeSpentSevenDay)
-    }
-    
-    func getTimeSpentTillNow(activityLog: [ActivityLog]?) -> String {
-        if(activityLog == nil || activityLog?.count == 0) {
-            return "0 sec"
-        }
-        var totalTimeSpentTillNow: Int64 = 0
-        
-        for log in activityLog! {
-            if (log.activity_duration != nil) {
-                totalTimeSpentTillNow += Int64(log.activity_duration!)
-            }
-        }
-        
-        return getTimeCount(duration: totalTimeSpentTillNow)
-    }
-    
-    func getTimeCount(duration: Int64) -> String {
-        let seconds = duration % 60
-        let minutes = duration / 60
-        let hours = duration / 3600
-        
-        if hours > 0 {
-            return minutes > 0 ? "\(hours)hr \(minutes)min" : "\(hours)hr"
-        }
-        
-        if minutes > 0 {
-            return seconds > 0  ? "\(minutes)min \(seconds)sec" : "\(minutes)min"
-        }
-        
-        return "\(seconds)sec"
-    }
-    
-    func getPastDates(days: Int) -> NSArray {
-        let cal = NSCalendar.current
-        var today = cal.startOfDay(for: Date())
-        var arrayDate = [String]()
-        
-        for i in 1 ... days {
-            let day = cal.component(.day, from: today)
-            let month = cal.component(.month, from: today)
-            let year = cal.component(.year, from: today)
-            
-            var dayInString: String = "00"
-            var monthInString: String = "00"
-            if day <= 9 {
-                dayInString = "0"+String(day)
-            } else {
-                dayInString = String(day)
-            }
-            if month <= 9 {
-                monthInString = "0"+String(month)
-            } else {
-                monthInString = String(month)
-            }
-            
-            arrayDate.append(dayInString + "/" + monthInString+"/" + String(year))
-            // move back in time by one day:
-            today = cal.date(byAdding: .day, value: -1, to: today)!
-        }
-        return arrayDate as NSArray
-    }
-    
     func fetchBarChartData(activityLog: [ActivityLog]?) {
-        var dates = getPastDates(days: 7)
+        var dates = ActivityLog.getPastDates(days: 7)
         
         self.durationForCharts.removeAll()
         
@@ -347,11 +248,11 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
         cell.activityImageView.tintColor = .white
         cell.activityNameLabel.text = activity.activityName
         let activityLog = activitiesLogAll[activity.activityName!]
-        let totalTimeSpentToday = getTimeSpentToday(activityLog: activityLog )
+        let totalTimeSpentToday = ActivityLog.getTimeSpentToday(activityLog: activityLog )
         cell.timespentTodayLabel.text = totalTimeSpentToday
-        let totalTimePastSevenDay = getTimeSpentToday(activityLog: activityLog )
-        cell.timespentInSevenDaysLabel.text = getTimeSpentPastSevenDay(activityLog: activityLog)
-        let totalTimeSpentTillNow = getTimeSpentTillNow(activityLog: activityLog)
+        let totalTimePastSevenDay = ActivityLog.getTimeSpentToday(activityLog: activityLog )
+        cell.timespentInSevenDaysLabel.text = totalTimePastSevenDay
+        let totalTimeSpentTillNow = ActivityLog.getTimeSpentTillNow(activityLog: activityLog)
         cell.timespentTillNowLabel.text = totalTimeSpentTillNow
         cell.selectionStyle = .none
         
