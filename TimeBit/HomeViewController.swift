@@ -16,6 +16,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var timerView: TimerView!
+    @IBOutlet weak var activityLineView: UIView!
     
     var roundButton = UIButton()
     var reusableView : UICollectionReusableView? = nil
@@ -57,6 +58,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.addSubview(roundButton)
         timerView.delegate = self
         
+        let shadowSize : CGFloat = 5.0
+        let shadowPath = UIBezierPath(rect: CGRect(x: -shadowSize / 2,
+                                                   y: -shadowSize / 2,
+                                                   width: self.activityLineView.frame.size.width + shadowSize,
+                                                   height: self.activityLineView.frame.size.height + shadowSize))
+        activityLineView.layer.masksToBounds = false
+        activityLineView.layer.shadowColor = UIColor(red: 0.12, green: 0.67, blue: 1.0, alpha: 1.0).cgColor
+        activityLineView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        activityLineView.layer.shadowRadius = 2
+        activityLineView.layer.shadowOpacity = 0.3
+        activityLineView.layer.shadowPath = shadowPath.cgPath
+        
         loadActivities()
         addLongPressGesture()
         addTapGesture()
@@ -83,6 +96,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func loadActivities () {
         if User.currentUser == nil {
             print("User is looged in for first time")
+            let overlayViewController = OverlayView(nibName: "OverlayView", bundle: nil)
+            overlayViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            self.present(overlayViewController, animated: true, completion: nil)
+            
             let activities = defaultActivitiesList()
             // Save default activities
             
@@ -322,37 +339,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return activities.count
     }
     
-    func changeColorOfCell(activityCell: ActivityCell, index: Int) {
-        let mod = index % 6
-        switch mod {
-        case 0:
-            // blue
-            activityCell.activityImageView.backgroundColor = UIColor(red: 255/255, green: 55/255, blue: 96/255, alpha: 1.0)
-            activityCell.activityImage.backgroundColor = UIColor(red: 255/255, green: 55/255, blue: 96/255, alpha: 1.0)
-        case 1:
-            // red
-            activityCell.activityImageView.backgroundColor = UIColor(red: 10/255, green: 204/255, blue: 247/255, alpha: 1.0)
-            activityCell.activityImage.backgroundColor = UIColor(red: 10/255, green: 204/255, blue: 247/255, alpha: 1.0)
-        case 2:
-            // yellow
-            activityCell.activityImageView.backgroundColor = UIColor(red: 255/255, green: 223/255, blue: 0/255, alpha: 1.0)
-            activityCell.activityImage.backgroundColor = UIColor(red: 255/255, green: 223/255, blue: 0/255, alpha: 1.0)
-        case 3:
-            // green
-            activityCell.activityImageView.backgroundColor = UIColor(red: 66/255, green: 188/255, blue: 88/255, alpha: 1.0)
-            activityCell.activityImage.backgroundColor = UIColor(red: 66/255, green: 188/255, blue: 88/255, alpha: 1.0)
-        case 4:
-            //purple
-            activityCell.activityImageView.backgroundColor = UIColor(red: 196/255, green: 44/255, blue: 196/255, alpha: 1.0)
-            activityCell.activityImage.backgroundColor = UIColor(red: 196/255, green: 44/255, blue: 196/255, alpha: 1.0)
-        default:
-            //orange
-            activityCell.activityImageView.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
-            activityCell.activityImage.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
-        }
-        
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ActivityCell", for: indexPath) as! ActivityCell
         cell.delegate = self
@@ -362,7 +348,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //        if currentActivityIndex != indexPath.row {
 //            changeColorOfCell(activityCell: cell, index: indexPath.row)
 //        }
-        changeColorOfCell(activityCell: cell, index: indexPath.row)
+        
         //cell.activityImage.isSelected = indexPath.row == currentActivityIndex
         
         //Loading PFFile to PFImageView
@@ -374,6 +360,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     let image = UIImage(data: data!)
                     cell.activityImage.image = image
                     cell.activityImage.image = cell.activityImage.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                    cell.activityImage.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                    cell.activityImageView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
                     cell.activityImage.tintColor = .white
                 } else {
                     print(error!.localizedDescription)
@@ -402,6 +390,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.transform = (cell.transform.scaledBy(x: 0.9, y: 0.9))
             })
             cell.deleteActivityButton.isHidden = false
+            
         } else if !cell.deleteActivityButton.isHidden {
             UIView.animate(withDuration: 0.25, animations: { () -> Void in
                 cell.transform = CGAffineTransform.identity
@@ -451,7 +440,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     func detailActivityViewController(stopActivityDetails: Dictionary<String, Any>) {
         currentActivityIndex = -1
-        timerView.activityNameLabel.text = "Start an Activity"
+        timerView.activityNameLabel.text = "START AN ACTIVITY"
         
         timerView.isRunning = false
         timerView.timer.invalidate()
@@ -495,7 +484,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             currentActivityIndex = -1
             //print("Timer Stopped")
             //timerView.stopLabel.isHidden = true
-            timerView.activityNameLabel.text = "Start an Activity"
+            timerView.activityNameLabel.text = "START AN ACTIVITY"
             let currentDate = Utils.formatDate(dateString: String(describing: Date()))
             let activityName = activityRunning["activity_name"] as! String
             if (!activityName.isEmpty) {

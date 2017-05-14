@@ -189,31 +189,6 @@ class AddNewActivityViewController: UIViewController, UITextFieldDelegate, UICol
         }
     }
     
-    func changeColorOfCell(defaultImagesCell: DefaultImagesCell, index: Int) {
-        let mod = index % 6
-        switch mod {
-        case 0:
-            // blue
-            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 255/255, green: 55/255, blue: 96/255, alpha: 1.0)
-        case 1:
-            // red
-            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 10/255, green: 204/255, blue: 247/255, alpha: 1.0)
-        case 2:
-            // yellow
-            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 255/255, green: 223/255, blue: 0/255, alpha: 1.0)
-        case 3:
-            // green
-            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 66/255, green: 188/255, blue: 88/255, alpha: 1.0)
-        case 4:
-            //purple
-            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 196/255, green: 44/255, blue: 196/255, alpha: 1.0)
-        default:
-            //orange
-            defaultImagesCell.defaultImage.backgroundColor = UIColor(red: 232/255, green: 134/255, blue: 3/255, alpha: 1.0)
-        }
-        
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (defaultImages?.count)!
     }
@@ -225,7 +200,8 @@ class AddNewActivityViewController: UIViewController, UITextFieldDelegate, UICol
         cell.defaultImage.setImage(defaultImage, for: .normal)
         cell.defaultImage.setImage(defaultImage, for: .selected)
         cell.defaultImage.isUserInteractionEnabled = false
-        changeColorOfCell(defaultImagesCell: cell, index: indexPath.row)
+        
+        cell.defaultImage.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
         
         return cell
     }
