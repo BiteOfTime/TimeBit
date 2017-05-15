@@ -17,11 +17,11 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var graphView: BarChartView!
     
     @IBOutlet weak var yLabel: UILabel!
+    @IBOutlet weak var graphActivityName: UILabel!
+    // For the chart
     var activity_name = "Internet"
     var activities: [Activity] = []
     var activityLog: [ActivityLog] = []
-    
-    // For the chart
     var activityForChart: [ActivityLog]!
     var count: Int64 = 0
     var arrayDataForChart = [Int64]()
@@ -111,6 +111,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: activity_name)
+        self.graphActivityName.text = activity_name
         let chartData = BarChartData(dataSet: chartDataSet)
         chartDataSet.barBorderWidth = 0.1
         chartDataSet.barShadowColor = UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)

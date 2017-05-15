@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportGraphViewController" customModule="TimeBit" customModuleProvider="target">
             <connections>
+                <outlet property="graphActivityName" destination="L1e-Ao-Zs7" id="sPT-CJ-fra"/>
                 <outlet property="graphView" destination="TOf-t4-lYx" id="AkE-oH-MOU"/>
                 <outlet property="tableView" destination="pXP-Ws-pQh" id="ECv-XA-mDi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -39,8 +40,24 @@
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOf-t4-lYx" customClass="BarChartView" customModule="Charts">
                             <rect key="frame" x="20" y="10" width="345" height="160"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1e-Ao-Zs7">
+                                    <rect key="frame" x="40" y="142" width="63" height="14"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="Activity name">
+                                            <attributes>
+                                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <font key="NSFont" size="10" name="AvenirNext-DemiBold"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
                             <color key="backgroundColor" red="0.039215686274509803" green="0.086274509803921567" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="L1e-Ao-Zs7" secondAttribute="bottom" constant="4" id="Am1-Rw-tcm"/>
+                                <constraint firstItem="L1e-Ao-Zs7" firstAttribute="leading" secondItem="TOf-t4-lYx" secondAttribute="leading" constant="40" id="Psk-Mh-jF1"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Raj-Nc-JpF"/>
                             </constraints>
                         </view>

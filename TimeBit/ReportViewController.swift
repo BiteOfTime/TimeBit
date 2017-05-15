@@ -23,6 +23,7 @@ class ReportViewController: UIViewController {
     @IBOutlet weak var outerImageView: UIImageView!
     @IBOutlet weak var innerImageView: UIImageView!
     @IBOutlet weak var yLabel: UILabel!
+    @IBOutlet weak var graphActivityName: UILabel!
     
     var months: [String] = ["Wed", "Tue", "Mon", "Sun", "Sat", "Fri", "Thr"]
     var durationForCharts: [Double] = []
@@ -37,6 +38,7 @@ class ReportViewController: UIViewController {
         getActivityCountsFromLog()
         
         self.navigationItem.title = activity_name
+        graphActivityName.text = activity_name
         navigationController?.navigationBar.layer.shadowOffset = CGSize(width:0, height: 0)
         navigationController?.navigationBar.layer.shadowRadius = 3
         navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor

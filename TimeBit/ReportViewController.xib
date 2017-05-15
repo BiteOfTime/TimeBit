@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportViewController" customModule="TimeBit" customModuleProvider="target">
             <connections>
                 <outlet property="dailyCountView" destination="7K6-LW-Kt8" id="WeH-B2-3CZ"/>
+                <outlet property="graphActivityName" destination="mqc-mS-tBW" id="ZXk-So-Gz0"/>
                 <outlet property="graphView" destination="buK-L1-3x3" id="acT-AP-jzl"/>
                 <outlet property="innerImageView" destination="qBP-oZ-GIY" id="9jC-wE-b3d"/>
                 <outlet property="outerImageView" destination="r2D-CL-fHq" id="423-9n-GgI"/>
@@ -43,9 +44,25 @@
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="buK-L1-3x3" customClass="BarChartView" customModule="Charts">
                     <rect key="frame" x="20" y="10" width="345" height="400"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqc-mS-tBW">
+                            <rect key="frame" x="40" y="382" width="63" height="14"/>
+                            <attributedString key="attributedText">
+                                <fragment content="Activity name">
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" size="10" name="AvenirNext-DemiBold"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
                     <color key="backgroundColor" red="0.031372549019607843" green="0.082352941176470587" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="400" id="cWD-v7-Ily"/>
+                        <constraint firstItem="mqc-mS-tBW" firstAttribute="leading" secondItem="buK-L1-3x3" secondAttribute="leading" constant="40" id="dtj-SL-zRt"/>
+                        <constraint firstAttribute="bottom" secondItem="mqc-mS-tBW" secondAttribute="bottom" constant="4" id="rSl-x9-OcX"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4L7-pL-uNV">
