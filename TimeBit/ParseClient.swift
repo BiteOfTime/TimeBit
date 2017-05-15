@@ -267,13 +267,7 @@ class ParseClient: NSObject {
             if error != nil {
                 print(error!)
             } else {
-                do {
-                    try PFObject.deleteAll(objects)
-                } catch let error {
-                    print("There was a problem, check error.description", error.localizedDescription as Any)
-                    completion(nil, error)
-                    return
-                }
+                PFObject.deleteAll(inBackground: objects)
             }
         }
     }

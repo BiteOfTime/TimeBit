@@ -399,7 +399,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             })
             cell.deleteActivityButton.isHidden = false
             
-        } else if !cell.deleteActivityButton.isHidden {
+        } else if !longPressActive && !cell.deleteActivityButton.isHidden {
             UIView.animate(withDuration: 0.25, animations: { () -> Void in
                 cell.transform = CGAffineTransform.identity
             })
