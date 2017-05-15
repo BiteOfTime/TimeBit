@@ -288,6 +288,7 @@
 			children = (
 				93A1397D1EC18A530097ED2D /* ReportGraphViewController.swift */,
 				93A1397E1EC18A530097ED2D /* ReportGraphViewController.xib */,
+				6B4952411EB543C7006645D5 /* NotificationViewController.xib */,
 				F8A2C6A51EB5A62E005CC925 /* HomeViewController.xib */,
 				9303B90B1EB57B3C0086F0FB /* DetailActivityViewController.swift */,
 				9303B9151EB5BA8D0086F0FB /* DetailActivityViewController.xib */,
@@ -299,7 +300,6 @@
 				6B49523C1EB543A7006645D5 /* ReportViewController.swift */,
 				6B49523D1EB543A7006645D5 /* ReportViewController.xib */,
 				6B4952401EB543C7006645D5 /* NotificationViewController.swift */,
-				6B4952411EB543C7006645D5 /* NotificationViewController.xib */,
 				6B4952441EB5442C006645D5 /* GoalsViewController.swift */,
 				6B4952451EB5442C006645D5 /* GoalsViewController.xib */,
 				931F08F91EBEB87B00452F54 /* ActivityDetailViewcontrollerViewController.swift */,
@@ -446,6 +446,7 @@
 				TargetAttributes = {
 					6B4951F51EAE5F9B006645D5 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = WTS9L482TJ;
 						ProvisioningStyle = Automatic;
 					};
 					6B4952091EAE5F9B006645D5 = {
@@ -848,6 +849,7 @@
 			baseConfigurationReference = B08A7E26325A76113F4F7572 /* Pods-TimeBit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = WTS9L482TJ;
 				INFOPLIST_FILE = TimeBit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.biteoftime.TimeBit;
@@ -861,6 +863,7 @@
 			baseConfigurationReference = 6696D97FCBC1A0FF722CE363 /* Pods-TimeBit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = WTS9L482TJ;
 				INFOPLIST_FILE = TimeBit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.biteoftime.TimeBit;
