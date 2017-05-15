@@ -248,6 +248,7 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
                     cell.activityImageInnerView.tintColor = .white
                     cell.activityImageInnerView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
                     cell.activityImageView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+
                 } else {
                     print(error!.localizedDescription)
                 }
