@@ -12,6 +12,7 @@ import UIKit
     @objc optional func detailActivity4Cell(detailActivity4Cell:DetailActivity4Cell, didChangeValue value: Bool)
     @objc optional func detailActivity4Cell(stopActivityDetails: Dictionary<String, Any>)
     @objc optional func detailActivity4Cell(startActivityName: String)
+    @objc optional func detailActivity4Cell(alertForAlreadyRunning: Bool)
 }
 
 class DetailActivity4Cell: UITableViewCell {
@@ -42,6 +43,8 @@ class DetailActivity4Cell: UITableViewCell {
     var trackPassedSecond: Int64 = 0
     var startNewTimer: Bool = true
 
+    var isTimerOn: Int!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         let shadowSize : CGFloat = 5.0
@@ -55,6 +58,12 @@ class DetailActivity4Cell: UITableViewCell {
         lineView.layer.shadowRadius = 2
         lineView.layer.shadowOpacity = 0.3
         lineView.layer.shadowPath = shadowPath.cgPath
+        
+        startButton.setTitleColor(.white, for: .normal)
+        startButton.setTitleColor(.white, for: .selected)
+        startButton.setTitle("START", for: .normal)
+        startButton.setTitle("STOP", for: .selected)
+        
         // Initialization code
     }
 
@@ -64,10 +73,13 @@ class DetailActivity4Cell: UITableViewCell {
     }
     
     @IBAction func onButtonClick(_ sender: Any) {
-        print("Button is clicked before \(startActivity)")
+        //print("Button is clicked before \(startActivity)")
         startActivity = !startActivity
-        if(startActivity && startNewTimer) {
-            startButton.setTitle("STOP", for: UIControlState())
+        if (anyActivityRunning && isTimerOn == -1) {
+            delegate?.detailActivity4Cell?(alertForAlreadyRunning: true)
+        } else if(startActivity && startNewTimer) {
+            //startButton.setTitle("STOP", for: UIControlState())
+            startButton.isSelected = true
             startButton.layer.cornerRadius = 16.0
             startDate = Date()
             passedSeconds = 0
@@ -75,7 +87,8 @@ class DetailActivity4Cell: UITableViewCell {
             startActivityTimer()
             delegate?.detailActivity4Cell?(startActivityName: activity_name)
         } else {
-            startButton.setTitle("START", for: UIControlState())
+            startButton.isSelected = false
+            //startButton.setTitle("START", for: UIControlState())
             startButton.layer.cornerRadius = 16.0
             invalidateTimer()
             isActivityRunning = false
@@ -83,15 +96,15 @@ class DetailActivity4Cell: UITableViewCell {
             hourLabel.text = "00"
             secondLabel.text = "00"
             
-            var currentDate = formatDate(dateString: String(describing: Date()))
+            let currentDate = formatDate(dateString: String(describing: Date()))
             
             print("Saving the activity in db")
-            print("startDate \(startDate)")
+            print("startDate \(startDate!)")
             print("endDate \(Date())")
             print("duration \(passedSeconds)")
             
             if (!activity_name.isEmpty) {
-                let params = ["activity_name": activity_name, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate] as [String : Any]
+                let params = ["activity_name": activity_name, "activity_start_time": startDate!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as [String : Any]
                 ParseClient.sharedInstance.saveActivityLog(params: params as NSDictionary?) { (PFObject, Error) -> () in
                     if Error != nil {
                         NSLog("Error saving to the log for the activity \(self.activity_name)")

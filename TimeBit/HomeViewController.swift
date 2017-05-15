@@ -206,6 +206,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("passing the value of isTimerOn to detailVC \(currentActivityIndex)")
             if !self.activityRunning.isEmpty {
                 let activityRunning = self.activityRunning["activity_name"] as! String
+                detailActivityViewController.activityRunning = activityRunning
                 if (activityRunning == tapOnActivity && currentActivityIndex != -1) {
                     detailActivityViewController.isTimerOn = 0
                 } else {
@@ -458,6 +459,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         var activityLogs = self.activitiesTodayLog[activityName] ?? []
         activityLogs.append(ActivityLog(dictionary: stopActivityDetails))
         self.activitiesTodayLog[activityName] = activityLogs
+        self.activityRunning["activity_name"] = nil
+        self.activityRunning["activity_start_time"] = nil
         self.collectionView.reloadData()
     }
     
@@ -509,6 +512,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         NSLog("Error saving to the log for the activity")
                     } else {
                         NSLog("Saved the activity for", activityName)
+                        self.activityRunning["activity_name"] = nil
+                        self.activityRunning["activity_start_time"] = nil
                     }
                 }
             }
