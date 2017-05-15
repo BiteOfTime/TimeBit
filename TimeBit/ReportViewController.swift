@@ -167,7 +167,12 @@ class ReportViewController: UIViewController {
                         if error == nil {
                             let image = UIImage(data: data!)
                             self.innerImageView?.image = image
-                            self.outerImageView?.backgroundColor = colorArray[randomIndex]
+                            self.innerImageView.image = self.innerImageView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                            self.innerImageView?.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: randomIndex)
+                            self.outerImageView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: randomIndex)
+                            self.innerImageView.tintColor = .white
+                            //cell.activityImageView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                            //self.outerImageView?.backgroundColor = colorArray[randomIndex]
                             self.outerImageView?.layer.cornerRadius = 0.5 * (self.outerImageView?.bounds.size.width)!
                         } else {
                             print(error!.localizedDescription)

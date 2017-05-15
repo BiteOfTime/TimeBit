@@ -228,8 +228,8 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityReportCell", for: indexPath) as! ActivityReportCell
         cell.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
-        let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
-        let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
+        //let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
+        //let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
         let activity = activities[indexPath.row]
         let pfImage = activity.activityImageFile
         if let imageFile : PFFile = pfImage{
@@ -237,8 +237,11 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
                 if error == nil {
                     let image = UIImage(data: data!)
                     cell.activityImageInnerView.image = image
-                    //cell.activityImageView.image = image
-                    cell.activityImageView?.backgroundColor = colorArray[randomIndex]
+                    cell.activityImageInnerView.image = cell.activityImageInnerView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                    cell.activityImageView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                    cell.activityImageInnerView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                    cell.activityImageInnerView.tintColor = .white
+                    //cell.activityImageView?.backgroundColor = colorArray[randomIndex]
                     // TODO added recently
                     cell.activityImageView?.layer.cornerRadius = 0.5 * (cell.activityImageView?.bounds.size.width)!
                     
