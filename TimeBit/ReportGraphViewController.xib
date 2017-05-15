@@ -11,9 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportGraphViewController" customModule="TimeBit" customModuleProvider="target">
             <connections>
+                <outlet property="graphActivityName" destination="L1e-Ao-Zs7" id="sPT-CJ-fra"/>
                 <outlet property="graphView" destination="TOf-t4-lYx" id="AkE-oH-MOU"/>
                 <outlet property="tableView" destination="pXP-Ws-pQh" id="ECv-XA-mDi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="yLabel" destination="U8O-ti-z8t" id="WLf-jl-ZnB"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,21 +26,51 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6X6-yk-u83">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                     <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8O-ti-z8t">
+                            <rect key="frame" x="0.0" y="84.5" width="29.5" height="11"/>
+                            <attributedString key="attributedText">
+                                <fragment content="minutes">
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" size="8" name="AvenirNext-DemiBold"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOf-t4-lYx" customClass="BarChartView" customModule="Charts">
-                            <rect key="frame" x="10" y="10" width="355" height="160"/>
+                            <rect key="frame" x="20" y="10" width="345" height="160"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1e-Ao-Zs7">
+                                    <rect key="frame" x="40" y="142" width="63" height="14"/>
+                                    <attributedString key="attributedText">
+                                        <fragment content="Activity name">
+                                            <attributes>
+                                                <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <font key="NSFont" size="10" name="AvenirNext-DemiBold"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
                             <color key="backgroundColor" red="0.039215686274509803" green="0.086274509803921567" blue="0.17254901960784313" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
+                                <constraint firstAttribute="bottom" secondItem="L1e-Ao-Zs7" secondAttribute="bottom" constant="4" id="Am1-Rw-tcm"/>
+                                <constraint firstItem="L1e-Ao-Zs7" firstAttribute="leading" secondItem="TOf-t4-lYx" secondAttribute="leading" constant="40" id="Psk-Mh-jF1"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Raj-Nc-JpF"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.025369457900524139" green="0.072463259100914001" blue="0.14522320032119751" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
+                        <constraint firstItem="U8O-ti-z8t" firstAttribute="leading" secondItem="6X6-yk-u83" secondAttribute="leading" id="44V-IZ-HI5"/>
                         <constraint firstAttribute="bottom" secondItem="TOf-t4-lYx" secondAttribute="bottom" constant="10" id="MRf-ym-zfu"/>
                         <constraint firstAttribute="height" constant="180" id="Np6-zH-wYM"/>
-                        <constraint firstItem="TOf-t4-lYx" firstAttribute="leading" secondItem="6X6-yk-u83" secondAttribute="leading" constant="10" id="T5e-lD-JJn"/>
+                        <constraint firstItem="TOf-t4-lYx" firstAttribute="leading" secondItem="6X6-yk-u83" secondAttribute="leading" constant="20" id="T5e-lD-JJn"/>
                         <constraint firstItem="TOf-t4-lYx" firstAttribute="top" secondItem="6X6-yk-u83" secondAttribute="top" constant="10" id="XAc-L3-d5a"/>
                         <constraint firstAttribute="trailing" secondItem="TOf-t4-lYx" secondAttribute="trailing" constant="10" id="iNw-7t-qEf"/>
+                        <constraint firstItem="U8O-ti-z8t" firstAttribute="centerY" secondItem="TOf-t4-lYx" secondAttribute="centerY" id="tIP-Gn-7xh"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pXP-Ws-pQh">

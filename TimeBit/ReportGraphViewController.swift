@@ -16,11 +16,12 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var graphView: BarChartView!
     
+    @IBOutlet weak var yLabel: UILabel!
+    @IBOutlet weak var graphActivityName: UILabel!
+    // For the chart
     var activity_name = "Internet"
     var activities: [Activity] = []
     var activityLog: [ActivityLog] = []
-    
-    // For the chart
     var activityForChart: [ActivityLog]!
     var count: Int64 = 0
     var arrayDataForChart = [Int64]()
@@ -45,6 +46,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         
         tableView.register(UINib(nibName: "ActivityReportCell", bundle: nil), forCellReuseIdentifier: "ActivityReportCell")
         
+        yLabel.transform=CGAffineTransform(rotationAngle: CGFloat(M_PI * 3/2));
         //Adding code to load the graph skeleton
         self.months = ["Wed", "Tue", "Mon", "Sun", "Sat", "Fri", "Thr"]
         
@@ -109,6 +111,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: activity_name)
+        self.graphActivityName.text = activity_name
         let chartData = BarChartData(dataSet: chartDataSet)
         chartDataSet.barBorderWidth = 0.1
         chartDataSet.barShadowColor = UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)
@@ -200,7 +203,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
                     }
                 }
                 
-                self.durationForCharts.append(Double(totalCount))
+                self.durationForCharts.append(Double(totalCount) / 60)
             }
         }
 
