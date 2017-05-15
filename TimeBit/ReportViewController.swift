@@ -109,7 +109,7 @@ class ReportViewController: UIViewController {
                     }
                 }
                 
-                self.durationForCharts.append(Double(totalCount))
+                self.durationForCharts.append(Double(totalCount)/60)
             }
         }
     }

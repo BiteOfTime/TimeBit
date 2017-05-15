@@ -200,7 +200,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
                     }
                 }
                 
-                self.durationForCharts.append(Double(totalCount))
+                self.durationForCharts.append(Double(totalCount) / 60)
             }
         }
 
