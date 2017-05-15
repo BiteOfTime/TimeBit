@@ -42,7 +42,10 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         navigationController?.navigationBar.layer.shadowOpacity = 0.8
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 200
+        tableView.estimatedRowHeight = 120
+        tableView.layer.masksToBounds = true
+        tableView.layer.borderColor = UIColor(red: 4/255, green: 23/255, blue: 44/255, alpha: 1.0).cgColor
+        tableView.layer.borderWidth = 0.5
         
         tableView.register(UINib(nibName: "ActivityReportCell", bundle: nil), forCellReuseIdentifier: "ActivityReportCell")
         
@@ -113,12 +116,13 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         let chartDataSet = BarChartDataSet(values: dataEntries, label: activity_name)
         self.graphActivityName.text = activity_name
         let chartData = BarChartData(dataSet: chartDataSet)
+        chartData.barWidth = 0.6
         chartDataSet.barBorderWidth = 0.1
-        chartDataSet.barShadowColor = UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)
-        chartDataSet.colors = [UIColor(red:0.19, green:0.42, blue:0.91, alpha:1.0)]
+        chartDataSet.barShadowColor = UIColor(red:0.10, green:0.44, blue:0.92, alpha:1.0)
+        chartDataSet.colors = [UIColor(red:0.10, green:0.44, blue:0.91, alpha:1.0)]
         
-        chartDataSet.highlightColor = NSUIColor.white
-        
+        chartDataSet.highlightColor = NSUIColor.darkGray
+
         graphView.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
         graphView.xAxis.granularity = 1
         graphView.setYAxisMinWidth(YAxis.AxisDependency(rawValue: 1)!, width: 1)
@@ -227,9 +231,12 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivityReportCell", for: indexPath) as! ActivityReportCell
-        cell.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
-        let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
-        let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
+        cell.layer.borderColor = CustomUIFunctions.getlineColor()
+        cell.layer.borderWidth = CustomUIFunctions.getlineWidth()
+
+        //cell.backgroundColor = UIColor(red: 9/255, green: 37/255, blue: 62/255, alpha: 1.0)
+        //let colorArray = [UIColor.cyan, UIColor.yellow, UIColor.orange, UIColor.green, UIColor.red]
+        //let randomIndex = Int(arc4random_uniform(UInt32(colorArray.count)))
         let activity = activities[indexPath.row]
         let pfImage = activity.activityImageFile
         if let imageFile : PFFile = pfImage{
@@ -237,11 +244,10 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
                 if error == nil {
                     let image = UIImage(data: data!)
                     cell.activityImageInnerView.image = image
-                    //cell.activityImageView.image = image
-                    cell.activityImageView?.backgroundColor = colorArray[randomIndex]
-                    // TODO added recently
-                    cell.activityImageView?.layer.cornerRadius = 0.5 * (cell.activityImageView?.bounds.size.width)!
-                    
+                    cell.activityImageInnerView.image = cell.activityImageInnerView.image!.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+                    cell.activityImageInnerView.tintColor = .white
+                    cell.activityImageInnerView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
+                    cell.activityImageView.backgroundColor = CustomUIFunctions.imageBackgroundColor(index: indexPath.row)
                 } else {
                     print(error!.localizedDescription)
                 }
@@ -261,9 +267,9 @@ extension ReportGraphViewController: UITableViewDataSource, UITableViewDelegate 
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
-        return 120
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+//        //return 120
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("indexPath clicked is \(activities[indexPath.row].activityName)")

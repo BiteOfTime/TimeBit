@@ -21,6 +21,8 @@ class ActivityReportCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        activityImageView?.layer.cornerRadius = 0.5 * activityImageView.bounds.size.width
+        activityImageInnerView?.tintColor = .white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
