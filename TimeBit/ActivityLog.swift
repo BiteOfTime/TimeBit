@@ -106,11 +106,11 @@ class ActivityLog: NSObject {
         let hours = duration / 3600
         
         if hours > 0 {
-            return minutes > 0 ? "\((Double(hours) + (Double(minutes)) / 60.0).roundto(places: 1)) Hours" : "\(hours) Hours"
+            return minutes > 0 ? "\((Double(hours) + (Double(minutes % 60)) / 60.0).roundto(places: 1)) Hours" : "\(hours) Hours"
         }
         
         if minutes > 0 {
-            return seconds > 0 ? "\((Double(minutes) + (Double(seconds)) / 60.0).roundto(places: 1)) Minutes" : "\(minutes) Minutes"
+            return seconds > 0 ? "\((Double(minutes % 60) + (Double(seconds)) / 60.0).roundto(places: 1)) Minutes" : "\(minutes) Minutes"
         }
         
         return "\(seconds) Seconds"
