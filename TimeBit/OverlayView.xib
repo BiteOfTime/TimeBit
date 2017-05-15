@@ -12,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OverlayView" customModule="TimeBit" customModuleProvider="target">
             <connections>
                 <outlet property="overlayImage" destination="UD1-0r-IE8" id="rDF-RA-CxE"/>
-                <outlet property="removerOverlayButton" destination="Esz-D2-j4L" id="hSx-UO-6vS"/>
                 <outlet property="view" destination="gdb-lG-hb0" id="PrN-Fd-4Mz"/>
             </connections>
         </placeholder>
@@ -21,36 +20,31 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay" translatesAutoresizingMaskIntoConstraints="NO" id="UD1-0r-IE8">
-                    <rect key="frame" x="0.0" y="60" width="375" height="557"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="overlay-guide-drag-drop" translatesAutoresizingMaskIntoConstraints="NO" id="UD1-0r-IE8">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <gestureRecognizers/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Esz-D2-j4L">
-                    <rect key="frame" x="341" y="64" width="30" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="2E8-pn-lnU"/>
-                        <constraint firstAttribute="height" constant="30" id="oPJ-7b-7bA"/>
-                    </constraints>
-                    <color key="tintColor" red="1" green="1" blue="1" alpha="0.89813784246575346" colorSpace="calibratedRGB"/>
-                    <state key="normal" image="delete"/>
-                    <connections>
-                        <action selector="onRemove:" destination="-1" eventType="touchUpInside" id="hjt-uF-cVL"/>
-                    </connections>
-                </button>
             </subviews>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="UD1-0r-IE8" firstAttribute="leading" secondItem="gdb-lG-hb0" secondAttribute="leading" id="9oj-1Y-9FI"/>
                 <constraint firstAttribute="trailing" secondItem="UD1-0r-IE8" secondAttribute="trailing" id="O9K-3r-xQq"/>
-                <constraint firstAttribute="trailing" secondItem="Esz-D2-j4L" secondAttribute="trailing" constant="4" id="Smf-WF-ZBY"/>
-                <constraint firstItem="UD1-0r-IE8" firstAttribute="top" secondItem="gdb-lG-hb0" secondAttribute="top" constant="60" id="Y8p-Yu-Snb"/>
-                <constraint firstAttribute="bottom" secondItem="UD1-0r-IE8" secondAttribute="bottom" constant="50" id="YGc-27-u8i"/>
-                <constraint firstItem="Esz-D2-j4L" firstAttribute="top" secondItem="gdb-lG-hb0" secondAttribute="top" constant="64" id="hz3-Ui-cMy"/>
+                <constraint firstItem="UD1-0r-IE8" firstAttribute="top" secondItem="gdb-lG-hb0" secondAttribute="top" id="Y8p-Yu-Snb"/>
+                <constraint firstAttribute="bottom" secondItem="UD1-0r-IE8" secondAttribute="bottom" id="YGc-27-u8i"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="yAA-2Z-Eny" appends="YES" id="VIx-NS-Q4c"/>
+            </connections>
             <point key="canvasLocation" x="-295.5" y="-157.5"/>
         </view>
+        <tapGestureRecognizer id="yAA-2Z-Eny">
+            <connections>
+                <action selector="onTap:" destination="-1" id="yGG-Ix-O2a"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
-        <image name="delete" width="64" height="64"/>
-        <image name="overlay" width="638" height="912"/>
+        <image name="overlay-guide-drag-drop" width="644" height="1180"/>
     </resources>
 </document>

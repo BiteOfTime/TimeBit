@@ -63,7 +63,6 @@ class AddNewActivityViewController: UIViewController, UITextFieldDelegate, UICol
         navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         navigationController?.navigationBar.layer.shadowOpacity = 0.8
         
-        selectButton.tintColor = .white
         selectButton.setImage(#imageLiteral(resourceName: "more"), for: .normal)
         selectButton.setImage(#imageLiteral(resourceName: "less"), for: .selected)
         
@@ -93,21 +92,6 @@ class AddNewActivityViewController: UIViewController, UITextFieldDelegate, UICol
     
     func dismissKeyboard() {
         view.endEditing(true)
-    }
-    
-    func addTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapGesture(sender:)))
-        selectButton.addGestureRecognizer(tapGesture)
-    }
-    
-    func onTapGesture(sender: UITapGestureRecognizer) {
-        if !collectionView.isHidden {
-            UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-                self.collectionView.alpha = 0.0
-            }, completion: { finished in
-                self.collectionView.isHidden = true
-            })
-        }
     }
     
     @IBAction func onSelectImage(_ sender: UIButton) {

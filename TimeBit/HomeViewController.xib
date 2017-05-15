@@ -26,13 +26,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" restorationIdentifier="TimerView" translatesAutoresizingMaskIntoConstraints="NO" id="wSo-Ep-3vm" customClass="TimerView" customModule="TimeBit" customModuleProvider="target">
-                            <rect key="frame" x="12" y="14" width="351" height="200"/>
+                            <rect key="frame" x="12" y="14" width="351" height="196"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="200" id="sYN-Sc-O8X"/>
+                                <constraint firstAttribute="height" constant="196" id="sYN-Sc-O8X"/>
                             </constraints>
                         </view>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="IuE-KY-Qaf">
-                            <rect key="frame" x="0.0" y="270" width="375" height="395"/>
+                            <rect key="frame" x="0.0" y="266" width="375" height="399"/>
                             <color key="backgroundColor" red="0.016555594280362129" green="0.088341794908046722" blue="0.1713746190071106" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="lL8-gB-sR1">
                                 <size key="itemSize" width="160" height="130"/>
@@ -42,13 +42,13 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGz-bb-uAx">
-                            <rect key="frame" x="160" y="226" width="55" height="22"/>
+                            <rect key="frame" x="160" y="222" width="55" height="22"/>
                             <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MuF-gp-kH6">
-                            <rect key="frame" x="142.5" y="252" width="90" height="2"/>
+                            <rect key="frame" x="142.5" y="248" width="90" height="2"/>
                             <color key="backgroundColor" red="0.043137254901960784" green="0.67843137254901964" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="90" id="aHC-9U-Ue7"/>
@@ -56,7 +56,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cng-qA-wZh">
-                            <rect key="frame" x="0.0" y="269.5" width="375" height="0.5"/>
+                            <rect key="frame" x="0.0" y="265.5" width="375" height="0.5"/>
                             <color key="backgroundColor" red="0.21176470588235294" green="0.27058823529411763" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="YKu-lm-bTp"/>
