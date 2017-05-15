@@ -22,6 +22,7 @@ class ReportViewController: UIViewController {
     @IBOutlet weak var dailyCountView: UIView!
     @IBOutlet weak var outerImageView: UIImageView!
     @IBOutlet weak var innerImageView: UIImageView!
+    @IBOutlet weak var yLabel: UILabel!
     
     var months: [String] = ["Wed", "Tue", "Mon", "Sun", "Sat", "Fri", "Thr"]
     var durationForCharts: [Double] = []
@@ -40,6 +41,8 @@ class ReportViewController: UIViewController {
         navigationController?.navigationBar.layer.shadowRadius = 3
         navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         navigationController?.navigationBar.layer.shadowOpacity = 0.8
+        
+        yLabel.transform=CGAffineTransform(rotationAngle: CGFloat(M_PI * 3/2));
         
         self.months = ["Wed", "Tue", "Mon", "Sun", "Sat", "Fri", "Thr"]
         

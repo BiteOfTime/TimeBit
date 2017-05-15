@@ -16,6 +16,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var graphView: BarChartView!
     
+    @IBOutlet weak var yLabel: UILabel!
     var activity_name = "Internet"
     var activities: [Activity] = []
     var activityLog: [ActivityLog] = []
@@ -45,6 +46,7 @@ class ReportGraphViewController: UIViewController, ChartViewDelegate {
         
         tableView.register(UINib(nibName: "ActivityReportCell", bundle: nil), forCellReuseIdentifier: "ActivityReportCell")
         
+        yLabel.transform=CGAffineTransform(rotationAngle: CGFloat(M_PI * 3/2));
         //Adding code to load the graph skeleton
         self.months = ["Wed", "Tue", "Mon", "Sun", "Sat", "Fri", "Thr"]
         
