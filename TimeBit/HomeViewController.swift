@@ -261,18 +261,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         } else if sender.state == .changed {
             
             let isInsideCollectionView = locationInView.y > collectionViewLocation.y
-            
             var center = cellSnapshot?.center
             center?.y = center!.y + (locationInView.y - touchLocation!.y)
             center?.x = center!.x + (locationInView.x - touchLocation!.x)
             touchLocation = locationInView
             cellSnapshot?.center = center!
             if (isInsideCollectionView) {
+                if currentActivityIndex == -1 {
+                    timerView.zoomOutTimerView()
+                }
                 let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
                 if ((indexPath != nil) && (indexPath != initialIndexPath)) {
                     //swap(&activities[indexPath!.row], &activities[initialIndexPath!.row])
                     collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
                     initialIndexPath = indexPath
+                }
+            } else {
+                // if any activity is not running then only zoomin the clock
+                if currentActivityIndex == -1 {
+                     timerView.zoomInTimerView()
                 }
             }
         } else if sender.state == .ended {
@@ -283,6 +290,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //print("collection view location", collectionViewLocation)
             
             if (isInsideCollectionView) {
+                // if any activity is not running then only zoomout the clock
+                if currentActivityIndex == -1 {
+                    timerView.zoomOutTimerView()
+                }
+                
                 let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
                 
                 let locationOnScreen = cell.convert(cell.bounds.origin, to: view)
@@ -319,7 +331,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         self.cellSnapshot?.removeFromSuperview()
                         self.cellSnapshot = nil
                         self.startTimer(activityName: cell.activityNameLabel.text!, cellIndex: cellIndex!)
-                        
+        
                         self.collectionView.reloadData()
                     }
                 })
@@ -447,10 +459,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return "\(seconds)sec today"
         
     }
+    
     func detailActivityViewController(stopActivityDetails: Dictionary<String, Any>) {
         currentActivityIndex = -1
         timerView.activityNameLabel.text = "START AN ACTIVITY"
-        
         timerView.isRunning = false
         timerView.timer.invalidate()
         timerView.resetTimer()
@@ -470,7 +482,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         startDate = Date()
         activityRunning["activity_name"] = startActivityName
         activityRunning["activity_start_time"] = startDate
-        timerView.activityNameLabel.text = startActivityName.capitalized
+        timerView.activityNameLabel.text = "\(startActivityName.capitalized) in progress!"
         //timerView.stopLabel.isHidden = false
         timerView.onStartTimer()
     }
@@ -483,44 +495,48 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             startDate = Date()
             activityRunning["activity_name"] = activityName
             activityRunning["activity_start_time"] = startDate
-            timerView.activityNameLabel.text = activityName.capitalized
+            timerView.activityNameLabel.text = "\(activityName.capitalized) in progress!"
             //timerView.stopLabel.isHidden = false
             timerView.onStartTimer()
+        } else {
+            let activityAlreadyRunning = activityRunning["activity_name"] as! String
+            let alert = UIAlertController(title: "TimeBit",
+                                          message: "'\(activityAlreadyRunning.capitalized)' already running. Stop '\(activityAlreadyRunning.capitalized)' to start '\(activityName)'",
+                preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                print("OK")
+            })
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
         }
     }
     
     func timerView(onStop passedSeconds: Int64) {
-        if currentActivityIndex == currentActivityIndex {
-            //activityCell.activityImage.isSelected = false
-            currentActivityIndex = -1
-            //print("Timer Stopped")
-            //timerView.stopLabel.isHidden = true
-            timerView.activityNameLabel.text = "START AN ACTIVITY"
-            let currentDate = Utils.formatDate(dateString: String(describing: Date()))
-            let activityName = activityRunning["activity_name"] as! String
-            if (!activityName.isEmpty) {
-                let params = ["activity_name": activityName, "activity_start_time":activityRunning["activity_start_time"]!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary
-                
-                //Showing locally
-                var activityLogs = self.activitiesTodayLog[activityName] ?? []
-                activityLogs.append(ActivityLog(dictionary: params))
-                self.activitiesTodayLog[activityName] = activityLogs
-                self.collectionView.reloadData()
-                
-                ParseClient.sharedInstance.saveActivityLog(params: params as NSDictionary?) { (PFObject, Error) -> () in
-                    if Error != nil {
-                        NSLog("Error saving to the log for the activity")
-                    } else {
-                        NSLog("Saved the activity for", activityName)
-                        self.activityRunning["activity_name"] = nil
-                        self.activityRunning["activity_start_time"] = nil
-                    }
+        currentActivityIndex = -1
+        //print("Timer Stopped")
+        timerView.activityNameLabel.text = "START AN ACTIVITY"
+        let currentDate = Utils.formatDate(dateString: String(describing: Date()))
+        let activityName = activityRunning["activity_name"] as! String
+        if (!activityName.isEmpty) {
+            let params = ["activity_name": activityName, "activity_start_time":activityRunning["activity_start_time"]!, "activity_end_time": Date(), "activity_duration": passedSeconds, "activity_event_date": currentDate!] as Dictionary
+            
+            //Showing locally
+            var activityLogs = self.activitiesTodayLog[activityName] ?? []
+            activityLogs.append(ActivityLog(dictionary: params))
+            self.activitiesTodayLog[activityName] = activityLogs
+            self.collectionView.reloadData()
+            
+            ParseClient.sharedInstance.saveActivityLog(params: params as NSDictionary?) { (PFObject, Error) -> () in
+                if Error != nil {
+                    NSLog("Error saving to the log for the activity")
+                } else {
+                    NSLog("Saved the activity for", activityName)
+                    self.activityRunning["activity_name"] = nil
+                    self.activityRunning["activity_start_time"] = nil
                 }
             }
-            
-            startDate = nil
         }
-
+        startDate = nil
     }
     
 //    func activityCell(onStartStop activityCell: ActivityCell) {
@@ -570,6 +586,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             let index = self.collectionView.indexPath(for: activityCell)!.row
             self.activities.remove(at: index)
+
             let params = ["activityName": activityCell.activityNameLabel!.text!] as [String : Any]
             ParseClient.sharedInstance.deleteActivity(params: params as NSDictionary?, completion: { (PFObject, Error) -> () in
                 if Error != nil {

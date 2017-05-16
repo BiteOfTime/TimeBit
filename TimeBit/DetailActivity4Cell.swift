@@ -12,7 +12,7 @@ import UIKit
     @objc optional func detailActivity4Cell(detailActivity4Cell:DetailActivity4Cell, didChangeValue value: Bool)
     @objc optional func detailActivity4Cell(stopActivityDetails: Dictionary<String, Any>)
     @objc optional func detailActivity4Cell(startActivityName: String)
-    @objc optional func detailActivity4Cell(alertForAlreadyRunning: Bool)
+    @objc optional func detailActivity4Cell(alertForAlreadyRunning: Bool, currentActivity: String)
 }
 
 class DetailActivity4Cell: UITableViewCell {
@@ -76,7 +76,7 @@ class DetailActivity4Cell: UITableViewCell {
         //print("Button is clicked before \(startActivity)")
         startActivity = !startActivity
         if (anyActivityRunning && isTimerOn == -1) {
-            delegate?.detailActivity4Cell?(alertForAlreadyRunning: true)
+            delegate?.detailActivity4Cell?(alertForAlreadyRunning: true, currentActivity: activity_name)
         } else if(startActivity && startNewTimer) {
             //startButton.setTitle("STOP", for: UIControlState())
             startButton.isSelected = true
@@ -112,6 +112,7 @@ class DetailActivity4Cell: UITableViewCell {
                         NSLog("Saved the activity for \(self.activity_name)")
                     }
                 }
+                startTimeBlinkAnimation(start: false)
                 delegate?.detailActivity4Cell?(stopActivityDetails: params)
             }
             
@@ -132,21 +133,25 @@ class DetailActivity4Cell: UITableViewCell {
     }
     
     func startActivityTimer() {
+        startTimeBlinkAnimation(start: true)
+        
         activityTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(DetailActivity4Cell.updateLabel), userInfo: nil, repeats: true)
     }
     
     
     func updateLabel() {
+        startTimeBlinkAnimation(start: true)
+
         passedSeconds += 1
         
-        let second = passedSeconds % 60
+        let seconds = passedSeconds % 60
         let minutes = (passedSeconds / 60) % 60
         let hours = passedSeconds / 3600
         
-        if second <= 9 {
-            secondLabel.text = "0" + String(second)
+        if seconds <= 9 {
+            secondLabel.text = "0" + String(seconds)
         } else {
-            secondLabel.text = String(second)
+            secondLabel.text = String(seconds)
         }
         
         if minutes <= 9 {
@@ -160,8 +165,30 @@ class DetailActivity4Cell: UITableViewCell {
         } else {
             hourLabel.text = String(hours)
         }
+
+
     }
     
+    func startTimeBlinkAnimation(start: Bool) {
+        if start {
+            secondLabel.alpha = 1
+            minuteLabel.alpha = 1
+            hourLabel.alpha = 1
+            UIView.animate(withDuration: 0.5, delay: 0.2, options:[.repeat, .autoreverse], animations: { _ in
+                self.secondLabel.alpha = 0
+                self.minuteLabel.alpha = 0
+                self.hourLabel.alpha = 0
+            }, completion: nil)
+        }
+        else {
+            secondLabel.alpha = 1
+            minuteLabel.alpha = 1
+            hourLabel.alpha = 1
+            secondLabel.layer.removeAllAnimations()
+            minuteLabel.layer.removeAllAnimations()
+            hourLabel.layer.removeAllAnimations()
+        }
+    }
     
     func formatDate(dateString: String) -> String? {
         
