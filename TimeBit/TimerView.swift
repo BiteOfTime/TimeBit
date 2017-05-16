@@ -85,8 +85,38 @@ class TimerView: UIView{
         }
     }
     
+    func zoomInTimerView() {
+        if circleTimerView.transform == CGAffineTransform.identity {
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                self.circleTimerView.transform = self.circleTimerView.transform.scaledBy(x: 1.1, y: 1.1)
+            })
+        }
+    }
+    
+    func zoomOutTimerView() {
+        if circleTimerView.transform != CGAffineTransform.identity {
+            UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                self.circleTimerView.transform = CGAffineTransform.identity
+            })
+        }
+    }
+    
+    func startTimeBlinkAnimation(start: Bool) {
+        if start {
+            timerLabel.alpha = 1
+            UIView.animate(withDuration: 0.5, delay: 0.2, options:[.repeat, .autoreverse], animations: { _ in
+                self.timerLabel.alpha = 0
+            }, completion: nil)
+        }
+        else {
+            timerLabel.alpha = 1
+            timerLabel.layer.removeAllAnimations()
+        }
+    }
     
     func onStartTimer() {
+        startTimeBlinkAnimation(start: true)
+        zoomInTimerView()
         isRunning = true
         passedSeconds = 0
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(TimerView.updateTimer), userInfo: nil, repeats: true)
@@ -101,6 +131,7 @@ class TimerView: UIView{
     }
     
     func updateTimer() {
+        startTimeBlinkAnimation(start: true)
         seconds += 1
         if seconds == 60 {
             minutes += 1
@@ -124,6 +155,8 @@ class TimerView: UIView{
     }
     
     func resetTimer() {
+        zoomOutTimerView()
+        startTimeBlinkAnimation(start: false)
         seconds = 0
         minutes = 0
         hours = 0

@@ -83,9 +83,9 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
         delegate?.detailActivityViewController?(startActivityName: startActivityName)
     }
     
-    func detailActivity4Cell(alertForAlreadyRunning: Bool) {
+    func detailActivity4Cell(alertForAlreadyRunning: Bool, currentActivity: String) {
         let alert = UIAlertController(title: "TimeBit",
-                                      message: "'\(activityRunning.capitalized)' already running",
+                                      message: "'\(activityRunning.capitalized)' already running. Stop '\(activityRunning.capitalized)' to start '\(currentActivity)'",
                                       preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
             print("OK")
@@ -197,6 +197,7 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
             cell.selectionStyle = .none
             cell.startButton.layer.cornerRadius = 16.0
             cell.delegate = self
+            cell.activity_name = activity_name
             cell.isTimerOn = isTimerOn
 
             if anyActivityRunning && isTimerOn == -1 {
@@ -205,13 +206,12 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
                 //cell.startButton.isEnabled = false
             } else {
                 cell.startButton.isEnabled = true
-                cell.activity_name = activity_name
                 print("value of isTimerOn in home screen is \(isTimerOn)")
                 if isTimerOn != -1 {
                     print("Timer is started at the home screen for activity \(activity_name) and time is \(currentTimeOnTimer)")
-                    cell.hourLabel.text = String(currentHour)
-                    cell.minuteLabel.text = String(currentMinute)
-                    cell.secondLabel.text = String(currentSec)
+                    cell.hourLabel.text = currentHour > 9 ? "\(currentHour!)" : "0\(currentHour!)"
+                    cell.minuteLabel.text = currentHour > 9 ? "\(currentMinute!)" : "0\(currentMinute!)"
+                    cell.secondLabel.text = currentSec > 9 ? "\(currentSec!)" : "0\(currentSec!)"
                     
                     //cell.startButton.setTitle("Stop", for: UIControlState())
                     cell.startButton.isSelected = true
@@ -222,7 +222,8 @@ extension DetailActivityViewController : UITableViewDelegate, UITableViewDataSou
                     cell.invalidateTimer()
                     cell.startActivityTimer()
                 } else {
-                    cell.startActivity = !cell.startActivity
+                    // Marking cell.startActivity to !cell.startActivity in start button click 
+                    cell.startActivity = false
                     cell.startNewTimer = true
                     print("No timer started for this activity")
                 }
