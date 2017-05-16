@@ -74,6 +74,7 @@ class DetailActivityViewController: UIViewController, DetailActivity4CellDelegat
     func detailActivity4Cell(stopActivityDetails: Dictionary<String, Any>) {
         anyActivityRunning = false
         isTimerOn = -1
+        loadLogForActivity()
         tableView.reloadData()
         delegate?.detailActivityViewController?(stopActivityDetails: stopActivityDetails)
     }
