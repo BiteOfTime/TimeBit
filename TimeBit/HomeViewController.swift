@@ -34,6 +34,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var longPressActive = false
     var touchLocation:CGPoint? = nil
     
+    var rearrangeCellSelectedIndex:Int? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -204,6 +206,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("passing the value of isTimerOn to detailVC \(currentActivityIndex)")
             if !self.activityRunning.isEmpty {
                 let activityRunning = self.activityRunning["activity_name"] as! String
+                detailActivityViewController.activityRunning = activityRunning
                 if (activityRunning == tapOnActivity && currentActivityIndex != -1) {
                     detailActivityViewController.isTimerOn = 0
                 } else {
@@ -236,6 +239,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if sender.state == .began {
             touchLocation = locationInView
             let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
+            rearrangeCellSelectedIndex = indexPath?.row
             if indexPath != nil {
                 initialIndexPath = indexPath
                 let cell = collectionView.cellForItem(at: indexPath!)
@@ -267,8 +271,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
                 if ((indexPath != nil) && (indexPath != initialIndexPath)) {
                     //swap(&activities[indexPath!.row], &activities[initialIndexPath!.row])
-                    //collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
-                    //initialIndexPath = indexPath
+                    collectionView.moveItem(at: initialIndexPath!, to: indexPath!)
+                    initialIndexPath = indexPath
                 }
             }
         } else if sender.state == .ended {
@@ -279,7 +283,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //print("collection view location", collectionViewLocation)
             
             if (isInsideCollectionView) {
-                //let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
+                let indexPath = collectionView.indexPathForItem(at: locationInCollectionView)
                 
                 let locationOnScreen = cell.convert(cell.bounds.origin, to: view)
                 let cellBounds = cell.bounds
@@ -290,6 +294,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     self.cellSnapshot?.center = center
                 }, completion: { (finished) -> Void in
                     if finished {
+                        if (indexPath?.row != self.rearrangeCellSelectedIndex) {
+                            self.activities.rearrange(from: self.rearrangeCellSelectedIndex!, to: indexPath!.row)
+                        }
+                        self.rearrangeCellSelectedIndex = nil
                         self.initialIndexPath = nil
                         self.cellSnapshot?.removeFromSuperview()
                         self.cellSnapshot = nil
@@ -300,6 +308,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
             else {
                 longPressActive = false
+                rearrangeCellSelectedIndex = nil
                 UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     self.cellSnapshot?.transform = (self.cellSnapshot?.transform.scaledBy(x: 0.4, y: 0.4))!
                     self.cellSnapshot?.alpha = 0
@@ -391,7 +400,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             })
             cell.deleteActivityButton.isHidden = false
             
-        } else if !cell.deleteActivityButton.isHidden {
+        } else if !longPressActive && !cell.deleteActivityButton.isHidden {
             UIView.animate(withDuration: 0.25, animations: { () -> Void in
                 cell.transform = CGAffineTransform.identity
             })
@@ -450,6 +459,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         var activityLogs = self.activitiesTodayLog[activityName] ?? []
         activityLogs.append(ActivityLog(dictionary: stopActivityDetails))
         self.activitiesTodayLog[activityName] = activityLogs
+        self.activityRunning["activity_name"] = nil
+        self.activityRunning["activity_start_time"] = nil
         self.collectionView.reloadData()
     }
     
@@ -501,6 +512,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         NSLog("Error saving to the log for the activity")
                     } else {
                         NSLog("Saved the activity for", activityName)
+                        self.activityRunning["activity_name"] = nil
+                        self.activityRunning["activity_start_time"] = nil
                     }
                 }
             }
@@ -612,5 +625,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         addNewActivityViewController.delegate = self
         
+    }
+}
+
+extension Array {
+    mutating func rearrange(from: Int, to: Int) {
+        insert(remove(at: from), at: to)
     }
 }
