@@ -268,7 +268,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 let minsString = "\(mins!)" + "min "
                 let currentGoal = limit! + " " + hrsString + minsString + frequency!
                 self.currentGoalLabel.text = currentGoal
-                self.goalPercentageCompletion(goalFrequency: frequency!, goalHours: Int(hours)!, goalMins: Int(mins)!)
+                //self.goalPercentageCompletion(goalFrequency: frequency!, goalHours: Int(hours)!, goalMins: Int(mins)!)
             } else {
                 let alert = UIAlertController(title: "TimeBit",
                                               message: "Please set a goal first",
@@ -303,7 +303,7 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
     func todayGoalPercentageCompletion(goalHours: Int, goalMins: Int){
         let currentDate = formatDate(dateString: String(describing: Date()))
         let params = ["activity_name": activityName!, "activity_event_date": currentDate] as [String : Any]
-        
+        self.countDurationToday = 0
         ParseClient.sharedInstance.getTodayCountForActivity(params: params as NSDictionary?) { (activities: [ActivityLog]?, error: Error?) -> Void in
             if error != nil {
                 NSLog("Error getting activities from Parse")
@@ -321,7 +321,6 @@ class GoalSettingViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 }
                 let percentageCompletion = Double(self.countDurationToday) / Double(goalInSec) * 100
                 let completionPercentage = Double(percentageCompletion).roundTo(places: 1)
-                //self.goalCompletionPercentageLabel.text = "\(completionPercentage)%"
                 self.goalCompletionPercentageLabel.text = "\(String(format: "%.0f", completionPercentage))%"
 
                 let completion = completionPercentage / 100
