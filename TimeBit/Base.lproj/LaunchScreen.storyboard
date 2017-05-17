@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,29 +21,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright © 2017 Anisha Jain, Krishna Alex &amp; Namrata Mehta. All rights reserved." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="pLK-E6-JiX">
-                                <rect key="frame" x="24" y="588" width="335" height="71"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="71" id="Lf1-au-twk"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TimeBit" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="Zzd-mL-pnX">
                                 <rect key="frame" x="122" y="312" width="131" height="43"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreenImage" translatesAutoresizingMaskIntoConstraints="NO" id="ykP-Yu-hBr">
+                                <rect key="frame" x="146" y="231" width="83" height="73"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="73" id="6Dt-3L-fOV"/>
+                                    <constraint firstAttribute="width" constant="83" id="aDz-ka-73H"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.016959890719999999" green="0.080443866550000007" blue="0.1634721458" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Zzd-mL-pnX" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4AH-8p-OlI"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="pLK-E6-JiX" secondAttribute="bottom" constant="8" symbolic="YES" id="Oqb-yf-c9S"/>
+                            <constraint firstItem="Zzd-mL-pnX" firstAttribute="top" secondItem="ykP-Yu-hBr" secondAttribute="bottom" constant="8" symbolic="YES" id="5Pt-60-Jeb"/>
                             <constraint firstItem="Zzd-mL-pnX" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="i5U-7p-vmW"/>
-                            <constraint firstItem="pLK-E6-JiX" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="8" id="oa9-dW-rNm"/>
-                            <constraint firstItem="pLK-E6-JiX" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="xe7-lO-kun"/>
+                            <constraint firstItem="Zzd-mL-pnX" firstAttribute="centerX" secondItem="ykP-Yu-hBr" secondAttribute="centerX" id="mHR-38-VBd"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -53,4 +49,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="LaunchScreenImage" width="60" height="60"/>
+    </resources>
 </document>
