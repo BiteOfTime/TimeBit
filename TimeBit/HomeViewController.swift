@@ -658,7 +658,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         roundButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             roundButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            roundButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -3),
+            roundButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -8),
             roundButton.widthAnchor.constraint(equalToConstant: 40),
             roundButton.heightAnchor.constraint(equalToConstant:40)])
     }

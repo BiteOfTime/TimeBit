@@ -28,10 +28,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQj-Aq-XO0">
-                                <rect key="frame" x="140" y="0.0" width="20" height="20"/>
+                                <rect key="frame" x="128" y="0.0" width="32" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="4Mq-KD-pAC"/>
-                                    <constraint firstAttribute="width" constant="20" id="x7s-aM-Qfy"/>
+                                    <constraint firstAttribute="height" constant="32" id="4Mq-KD-pAC"/>
+                                    <constraint firstAttribute="width" constant="32" id="x7s-aM-Qfy"/>
                                 </constraints>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Delete" image="delete"/>
