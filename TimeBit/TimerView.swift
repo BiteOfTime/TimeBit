@@ -89,7 +89,7 @@ class TimerView: UIView{
     func zoomInTimerView() {
         if circleTimerView.transform == CGAffineTransform.identity {
             UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                self.circleTimerView.transform = self.circleTimerView.transform.scaledBy(x: 1.1, y: 1.1)
+                self.circleTimerView.transform = self.circleTimerView.transform.scaledBy(x: 1.05, y: 1.05)
             })
         }
     }
