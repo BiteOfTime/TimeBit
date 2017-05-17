@@ -32,6 +32,8 @@ class AddNewActivityViewController: UIViewController, UITextFieldDelegate, UICol
         super.viewDidLoad()
         newActivityText.delegate = self
         newActivityText.becomeFirstResponder()
+        newActivityText.keyboardAppearance = UIKeyboardAppearance.dark
+        newActivityDesc.keyboardAppearance = UIKeyboardAppearance.dark
 
         collectionView.register(UINib(nibName: "DefaultImagesCell", bundle: nil), forCellWithReuseIdentifier: "DefaultImagesCell")
         collectionView.delegate = self
