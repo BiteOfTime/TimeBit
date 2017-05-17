@@ -23,6 +23,9 @@ class DetailActivity4Cell: UITableViewCell {
     @IBOutlet weak var minuteLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var hourGlass1View: UIImageView!
+    @IBOutlet weak var hourGlass2View: UIImageView!
+    
     
     weak var delegate: DetailActivity4CellDelegate?
     var activity_name: String!
@@ -80,6 +83,7 @@ class DetailActivity4Cell: UITableViewCell {
         } else if(startActivity && startNewTimer) {
             //startButton.setTitle("STOP", for: UIControlState())
             startButton.isSelected = true
+            startButton.showsTouchWhenHighlighted = true
             startButton.layer.cornerRadius = 16.0
             startDate = Date()
             passedSeconds = 0
@@ -134,9 +138,8 @@ class DetailActivity4Cell: UITableViewCell {
     
     func startActivityTimer() {
         UIView.animate(withDuration: 0.5) {
-            self.secondLabel.alpha = 0
-            self.minuteLabel.alpha = 0
-            self.hourLabel.alpha = 0
+            self.hourGlass1View.alpha = 0
+            self.hourGlass2View.alpha = 0
         }
         
         activityTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(DetailActivity4Cell.updateLabel), userInfo: nil, repeats: true)
@@ -175,22 +178,19 @@ class DetailActivity4Cell: UITableViewCell {
     
     func startTimeBlinkAnimation(start: Bool) {
         if start {
-            secondLabel.alpha = 1
-            minuteLabel.alpha = 1
-            hourLabel.alpha = 1
+            hourGlass1View.alpha = 1
+            hourGlass2View.alpha = 1
             UIView.animate(withDuration: 0.5, delay: 0.4, options:[.repeat, .autoreverse], animations: { _ in
-                self.secondLabel.alpha = 0
-                self.minuteLabel.alpha = 0
-                self.hourLabel.alpha = 0
+                self.hourGlass1View.alpha = 0
+                self.hourGlass2View.alpha = 0
+
             }, completion: nil)
         }
         else {
-            secondLabel.alpha = 1
-            minuteLabel.alpha = 1
-            hourLabel.alpha = 1
-            secondLabel.layer.removeAllAnimations()
-            minuteLabel.layer.removeAllAnimations()
-            hourLabel.layer.removeAllAnimations()
+            hourGlass1View.alpha = 1
+            hourGlass2View.alpha = 1
+            hourGlass1View.layer.removeAllAnimations()
+            hourGlass2View.layer.removeAllAnimations()
         }
     }
     
