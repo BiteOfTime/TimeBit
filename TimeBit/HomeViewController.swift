@@ -436,11 +436,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //print("totalTimeSpentToday:", totalTimeSpentToday)
         
         if hours > 0 {
-            return minutes > 0 ? "\(hours)hr \(minutes)min today" : "\(hours)hr today"
+            return minutes > 0 ? "\(hours)hr \(minutes % 60)min today" : "\(hours)hr today"
         }
         
         if minutes > 0 {
-            return seconds > 0  ? "\(minutes)min \(seconds)sec today" : "\(minutes)min today"
+            return seconds > 0  ? "\(minutes % 60)min \(seconds)sec today" : "\(minutes)min today"
         }
         
         
