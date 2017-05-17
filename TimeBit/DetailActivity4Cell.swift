@@ -83,7 +83,6 @@ class DetailActivity4Cell: UITableViewCell {
         } else if(startActivity && startNewTimer) {
             //startButton.setTitle("STOP", for: UIControlState())
             startButton.isSelected = true
-            startButton.showsTouchWhenHighlighted = true
             startButton.layer.cornerRadius = 16.0
             startDate = Date()
             passedSeconds = 0
