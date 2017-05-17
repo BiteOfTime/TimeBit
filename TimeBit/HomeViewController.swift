@@ -487,6 +487,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func detailActivityViewController(stopActivityDetails: Dictionary<String, Any>) {
         currentActivityIndex = -1
         timerView.activityNameLabel.text = "START AN ACTIVITY"
+        timerView.stopLabel.text = "Start"
         timerView.isRunning = false
         timerView.timer.invalidate()
         timerView.resetTimer()
@@ -507,6 +508,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         activityRunning["activity_name"] = startActivityName
         activityRunning["activity_start_time"] = startDate
         timerView.activityNameLabel.text = "\(startActivityName.capitalized) in progress!"
+        timerView.stopLabel.text = "Stop"
         //timerView.stopLabel.isHidden = false
         timerView.onStartTimer()
     }
@@ -520,6 +522,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             activityRunning["activity_name"] = activityName
             activityRunning["activity_start_time"] = startDate
             timerView.activityNameLabel.text = "\(activityName.capitalized) in progress!"
+            timerView.stopLabel.text = "Stop"
             //timerView.stopLabel.isHidden = false
             timerView.onStartTimer()
         } else {
@@ -539,6 +542,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         currentActivityIndex = -1
         //print("Timer Stopped")
         timerView.activityNameLabel.text = "START AN ACTIVITY"
+        timerView.stopLabel.text = "Start"
         let currentDate = Utils.formatDate(dateString: String(describing: Date()))
         let activityName = activityRunning["activity_name"] as! String
         if (!activityName.isEmpty) {
