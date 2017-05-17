@@ -24,7 +24,8 @@ class TimerView: UIView{
     weak var delegate: TimerViewDeleagte?
     var isRunning = false
     
-    var timer = Timer()
+    var timer: Timer!
+    
     var hours: Int = 0
     var minutes: Int = 0
     var seconds: Int = 0
@@ -119,15 +120,36 @@ class TimerView: UIView{
         zoomInTimerView()
         isRunning = true
         passedSeconds = 0
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(TimerView.updateTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
     
     func onStopTimer() -> Int64{
         passedSeconds = Int64(hours*60*60 + minutes*60 + seconds)
         print("passed seconds", passedSeconds)
-        timer.invalidate()
+        timer?.invalidate()
         resetTimer()
         return passedSeconds
+    }
+    
+    func updateBackgroundTimer (elapsedTime: Int64) {
+        UIView.animate(withDuration: 0.5) {
+            self.timerLabel.alpha = 0
+        }
+        let elapsedSeconds = elapsedTime % 60
+        let elapsedMinutes = (elapsedTime / 60) % 60
+        let elapsedHours = elapsedTime / 3600
+
+        seconds += Int(elapsedSeconds)
+        minutes += Int(elapsedMinutes)
+        hours += Int(elapsedHours)
+
+        let secondsString = seconds > 9 ? "\(seconds)" : "0\(seconds)"
+        let minutuesString = minutes > 9 ? "\(minutes)" : "0\(minutes)"
+        let hoursString = hours > 9 ? "\(hours)" : "0\(hours)"
+        
+        stopTimerString = "\(hoursString):\(minutuesString):\(secondsString)"
+        timerLabel.text = stopTimerString
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
     
     func updateTimer() {

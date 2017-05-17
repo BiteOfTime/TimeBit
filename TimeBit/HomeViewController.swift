@@ -78,6 +78,30 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.becomeFirstResponder()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(forName: AppDelegate.goingInBackground, object: nil, queue: OperationQueue.main) { (notification) in
+            if UserDefaults.standard.object(forKey: "FireBackgroundTime") != nil {
+                print("Delete previous ", UserDefaults.standard.object(forKey: "FireBackgroundTime")!)
+                UserDefaults.standard.removeObject(forKey: "FireBackgroundTime")
+            }
+            guard let timer = self.timerView.timer else {return}
+            UserDefaults.standard.set(timer.fireDate, forKey: "FireBackgroundTime")
+            print("FireDate when going in background", UserDefaults.standard.value(forKey: "FireBackgroundTime")!)
+            timer.invalidate()
+        }
+        
+        NotificationCenter.default.addObserver(forName: AppDelegate.comingToForeground, object: nil, queue: OperationQueue.main) { (notification) in
+            if let fireDate = UserDefaults.standard.object(forKey: "FireBackgroundTime") {
+                // setup a timer with the correct fire date
+                let elapsedTime = Date().timeIntervalSince(fireDate as! Date)
+                print("time gap", elapsedTime)
+                if elapsedTime > 0 {
+                    self.timerView.updateBackgroundTimer(elapsedTime: Int64(elapsedTime))
+                }
+            }
+        }
+    }
+    
     override var canBecomeFirstResponder: Bool {
         return true
     }
@@ -94,7 +118,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("Shaking")
         }
     }
-    
+
     func loadActivities () {
         if User.currentUser == nil {
             print("User is looged in for first time")
@@ -443,7 +467,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
         let seconds = totalTimeSpentToday % 60
-        let minutes = totalTimeSpentToday / 60
+        let minutes = (totalTimeSpentToday / 60) % 60
         let hours = totalTimeSpentToday / 3600
         //print("totalTimeSpentToday:", totalTimeSpentToday)
         

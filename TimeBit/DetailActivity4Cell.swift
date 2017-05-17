@@ -133,7 +133,11 @@ class DetailActivity4Cell: UITableViewCell {
     }
     
     func startActivityTimer() {
-        startTimeBlinkAnimation(start: true)
+        UIView.animate(withDuration: 0.5) {
+            self.secondLabel.alpha = 0
+            self.minuteLabel.alpha = 0
+            self.hourLabel.alpha = 0
+        }
         
         activityTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(DetailActivity4Cell.updateLabel), userInfo: nil, repeats: true)
     }
