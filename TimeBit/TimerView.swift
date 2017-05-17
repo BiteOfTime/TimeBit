@@ -105,7 +105,7 @@ class TimerView: UIView{
     func startTimeBlinkAnimation(start: Bool) {
         if start {
             timerLabel.alpha = 1
-            UIView.animate(withDuration: 0.5, delay: 0.2, options:[.repeat, .autoreverse], animations: { _ in
+            UIView.animate(withDuration: 0.5, delay: 0.4, options:[.repeat, .autoreverse], animations: { _ in
                 self.timerLabel.alpha = 0
             }, completion: nil)
         }

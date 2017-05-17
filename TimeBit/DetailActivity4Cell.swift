@@ -178,7 +178,7 @@ class DetailActivity4Cell: UITableViewCell {
             secondLabel.alpha = 1
             minuteLabel.alpha = 1
             hourLabel.alpha = 1
-            UIView.animate(withDuration: 0.5, delay: 0.2, options:[.repeat, .autoreverse], animations: { _ in
+            UIView.animate(withDuration: 0.5, delay: 0.4, options:[.repeat, .autoreverse], animations: { _ in
                 self.secondLabel.alpha = 0
                 self.minuteLabel.alpha = 0
                 self.hourLabel.alpha = 0

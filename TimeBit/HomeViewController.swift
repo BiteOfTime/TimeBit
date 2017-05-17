@@ -82,10 +82,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 print("Delete previous ", UserDefaults.standard.object(forKey: "FireBackgroundTime")!)
                 UserDefaults.standard.removeObject(forKey: "FireBackgroundTime")
             }
-            guard let timer = self.timerView.timer else {return}
-            UserDefaults.standard.set(Date(), forKey: "FireBackgroundTime")
-            print("FireDate when going in background", UserDefaults.standard.value(forKey: "FireBackgroundTime")!)
-            timer.invalidate()
+            if self.timerView.isRunning {
+                guard let timer = self.timerView.timer else {return}
+                UserDefaults.standard.set(Date(), forKey: "FireBackgroundTime")
+                print("FireDate when going in background", UserDefaults.standard.value(forKey: "FireBackgroundTime")!)
+                timer.invalidate()
+            }
         }
         
         NotificationCenter.default.addObserver(forName: AppDelegate.comingToForeground, object: nil, queue: OperationQueue.main) { (notification) in
