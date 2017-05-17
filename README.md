@@ -17,17 +17,22 @@ The following functionality will be implemented:
 - [X] User can view daily, weekly and till date progress report for each activity.
 - [X] User get notifications(daily/weekly) to perform activity goal according to the reminder set.
 - [X] User can delete an already set reminder notification. 
-- [ ] User can share their activity progress through message or tweet. (optional)
 - [ ] App will have day and night theme option on the basis of ambient light. (optional) 
-- [ ] User can end an already running activity by detecting shake event. (optional)
+- [X] User can end an already running activity by detecting shake event. (optional)
 - [ ] User can backup and restore data through iCloud. (optional)
+- [ ] User can share their activity progress through message or tweet. (optional)
+
+Here's a walkthrough:
+
+
+![Animated Screenshot](/TimeBitDemo.gif?raw=true "Animated Screenshot")
 
 App Design:
 
 ![App Design](/Allscreens.png?raw=true "App Design Screenshot")
+![App Design](/Allscreens1.png?raw=true "App Design Screenshot")
 
-
-Here's a walkthrough:
+Sprint2 walkthrough:
 
 ![Animated Screenshot](/TimeBitDemoSprint2.gif?raw=true "Animated Screenshot")
 
