@@ -76,16 +76,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         addLongPressGesture()
         addTapGesture()
         self.becomeFirstResponder()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        
         NotificationCenter.default.addObserver(forName: AppDelegate.goingInBackground, object: nil, queue: OperationQueue.main) { (notification) in
             if UserDefaults.standard.object(forKey: "FireBackgroundTime") != nil {
                 print("Delete previous ", UserDefaults.standard.object(forKey: "FireBackgroundTime")!)
                 UserDefaults.standard.removeObject(forKey: "FireBackgroundTime")
             }
             guard let timer = self.timerView.timer else {return}
-            UserDefaults.standard.set(timer.fireDate, forKey: "FireBackgroundTime")
+            UserDefaults.standard.set(Date(), forKey: "FireBackgroundTime")
             print("FireDate when going in background", UserDefaults.standard.value(forKey: "FireBackgroundTime")!)
             timer.invalidate()
         }
