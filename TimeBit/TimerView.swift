@@ -121,12 +121,13 @@ class TimerView: UIView{
         isRunning = true
         passedSeconds = 0
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
     }
     
     func onStopTimer() -> Int64{
         passedSeconds = Int64(hours*60*60 + minutes*60 + seconds)
         print("passed seconds", passedSeconds)
-        timer?.invalidate()
+        timer.invalidate()
         resetTimer()
         return passedSeconds
     }
@@ -142,6 +143,14 @@ class TimerView: UIView{
         seconds += Int(elapsedSeconds)
         minutes += Int(elapsedMinutes)
         hours += Int(elapsedHours)
+        if seconds >= 60 {
+            minutes += 1
+            seconds -=  60
+        }
+        if minutes >= 60 {
+            hours += 1
+            minutes -= 60
+        }
 
         let secondsString = seconds > 9 ? "\(seconds)" : "0\(seconds)"
         let minutuesString = minutes > 9 ? "\(minutes)" : "0\(minutes)"
@@ -150,6 +159,7 @@ class TimerView: UIView{
         stopTimerString = "\(hoursString):\(minutuesString):\(secondsString)"
         timerLabel.text = stopTimerString
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
     }
     
     func updateTimer() {
@@ -162,10 +172,6 @@ class TimerView: UIView{
         if minutes == 60 {
             hours += 1
             minutes = 0
-        }
-        
-        if hours == 24 {
-            hours = 0
         }
         
         let secondsString = seconds > 9 ? "\(seconds)" : "0\(seconds)"
